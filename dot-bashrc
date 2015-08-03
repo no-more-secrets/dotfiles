@@ -1,0 +1,52 @@
+# .bashrc
+
+# Source global definitions
+if [ -f /etc/bashrc ]; then
+	. /etc/bashrc
+fi
+
+# User specific aliases and functions
+
+alias  t="tree -C -A"
+alias t1="tree -L 1 -C -A"
+alias t2="tree -L 2 -C -A"
+
+alias mv="mv -i"
+alias vim=vimx
+alias ll="ls -l -h"
+alias lll="ls -la"
+alias make="~/dev/tools/colormake/colormake"
+
+################################################################################
+# grep
+################################################################################
+alias grep="grep --color=auto"
+alias egrep="egrep --color=auto"
+export GREP_COLORS="mt=01;32"
+
+################################################################################
+# squeeze
+################################################################################
+squeeze() {
+    sqz 110 $* | egrep "\.\.|\.\.\.|$"
+}
+
+################################################################################
+# Custom bash prompt via kirsle.net/wizards/ps1.html
+################################################################################
+export PS1="[\[$(tput setaf 7)\]\[$(tput bold)\]\u@\[$(tput setaf 3)\]\h \[$(tput setaf 4)\]\W\[$(tput setaf 7)\]]$ \[$(tput sgr0)\]"
+
+################################################################################
+# paths
+################################################################################
+export PATH=~/bin:~/opt/bin:~/dev/tools/ghc-7.10.1/bin:$PATH
+export LD_LIBRARY_PATH=~/lib:$LD_LIBRARY_PATH:/usr/local/lib
+################################################################################
+
+# This is so that we don't have windows popping up asking for passwords
+unset SSH_ASKPASS
+
+umask 077
+
+alias haskell="ghci -v0"
+alias ghci="ghci -v0"
