@@ -12,9 +12,10 @@ fi
 
 # User specific aliases and functions
 
-alias  t="tree -C -A"
+alias  t="tree      -C -A"
 alias t1="tree -L 1 -C -A"
 alias t2="tree -L 2 -C -A"
+alias t3="tree -L 3 -C -A"
 
 alias mv="mv -i"
 alias vim=vimx
@@ -29,12 +30,18 @@ alias grep="grep --color=auto"
 alias egrep="egrep --color=auto"
 export GREP_COLORS="mt=01;32"
 
+hilight() {
+    egrep "^|$1"
+}
+
 ################################################################################
 # squeeze
 ################################################################################
 squeeze() {
     sqz 110 $* | egrep "\.\.|\.\.\.|$"
 }
+
+alias clip='cut -c -$COLUMNS'
 
 ################################################################################
 # Custom bash prompt via kirsle.net/wizards/ps1.html
