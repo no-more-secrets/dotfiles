@@ -26,12 +26,17 @@ alias make="~/dev/tools/colormake/colormake"
 ################################################################################
 # grep
 ################################################################################
-alias grep="grep --color=auto"
+alias grep="grep --exclude-dir='.svn' --color=auto"
 alias egrep="egrep --color=auto"
 export GREP_COLORS="mt=01;32"
 
 hilight() {
-    egrep "^|$1"
+    arg="$1"; shift
+    egrep "^|$arg" --color=always "$@"
+}
+
+gr() { 
+    grep --color=auto -r "$@" .
 }
 
 ################################################################################
@@ -42,6 +47,11 @@ squeeze() {
 }
 
 alias clip='cut -c -$COLUMNS'
+
+links() {
+    links="$(find . -maxdepth 1 -type l)"
+    [ ! -z "$links" ] && echo "$links" | xargs ls -l | awk '{print $9, $10, $11}' | column -t | hilight '->';
+}
 
 ################################################################################
 # Custom bash prompt via kirsle.net/wizards/ps1.html
@@ -62,3 +72,5 @@ umask 077
 
 alias haskell="ghci -v0"
 alias ghci="ghci -v0"
+
+set -o emacs
