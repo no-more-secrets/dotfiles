@@ -5,6 +5,8 @@ set autoindent
 set sw=4
 set nowrap
 set hlsearch
+set splitbelow
+set splitright
 
 "colorscheme mytorte
 
