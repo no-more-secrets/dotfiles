@@ -74,3 +74,4 @@ alias haskell="ghci -v0"
 alias ghci="ghci -v0"
 
 set -o emacs
+set -o noclobber
