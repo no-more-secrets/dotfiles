@@ -5,11 +5,6 @@ if [ -f /etc/bashrc ]; then
 	. /etc/bashrc
 fi
 
-# Host-specific bashrc
-if [ -f ~/.bashrchost ]; then
-	. ~/.bashrchost
-fi
-
 # User specific aliases and functions
 
 alias  t="tree      -C -A"
@@ -17,61 +12,57 @@ alias t1="tree -L 1 -C -A"
 alias t2="tree -L 2 -C -A"
 alias t3="tree -L 3 -C -A"
 
+alias rm="rm -i"
 alias mv="mv -i"
-alias vim=vimx
-alias ll="ls -l -h"
-alias lll="ls -la"
-alias make="~/dev/tools/colormake/colormake"
+alias ls="ls -h --color=auto"
+alias ll="ls -l"
+
+alias grep="grep --exclude-dir='.svn' --color=auto"
+alias egrep="egrep --color=auto"
+
+alias ghci="ghci -v0"
+
+set -o noclobber
+
+umask 077
 
 ################################################################################
 # grep
 ################################################################################
-alias grep="grep --exclude-dir='.svn' --color=auto"
-alias egrep="egrep --color=auto"
-export GREP_COLORS="mt=01;32"
-
 hilight() {
     arg="$1"; shift
     egrep "^|$arg" --color=always "$@"
 }
 
-gr() { 
-    grep --color=auto -r "$@" .
-}
+gr() { grep --color=auto -r "$@" .; }
 
 ################################################################################
 # squeeze
 ################################################################################
-squeeze() {
-    sqz 110 $* | egrep "\.\.|\.\.\.|$"
-}
-
-alias clip='cut -c -$COLUMNS'
+squeeze() { sqz $COLUMNS "$@" | egrep "\.\.|\.\.\.|$"; }
 
 links() {
     links="$(find . -maxdepth 1 -type l)"
     [ ! -z "$links" ] && echo "$links" | xargs ls -l | awk '{print $9, $10, $11}' | column -t | hilight '->';
 }
 
+clip() { sed -r "s/(.{0,$COLUMNS}).*/\1/g"; }
+
+################################################################################
+# Variables
 ################################################################################
 # Custom bash prompt via kirsle.net/wizards/ps1.html
-################################################################################
 export PS1="[\[$(tput setaf 7)\]\[$(tput bold)\]\u@\[$(tput setaf 3)\]\h \[$(tput setaf 4)\]\W\[$(tput setaf 7)\]]$ \[$(tput sgr0)\]"
-
-################################################################################
-# paths
-################################################################################
-export PATH=~/bin:~/opt/bin:~/dev/tools/ghc-7.10.1/bin:$PATH
+export PATH=~/bin:~/opt/bin:$PATH
 export LD_LIBRARY_PATH=~/lib:$LD_LIBRARY_PATH:/usr/local/lib
-################################################################################
-
 # This is so that we don't have windows popping up asking for passwords
+export GREP_COLORS="mt=01;32"
+
 unset SSH_ASKPASS
 
-umask 077
-
-alias haskell="ghci -v0"
-alias ghci="ghci -v0"
-
-set -o emacs
-set -o noclobber
+################################################################################
+# Should be last: Host-specific bashrc
+################################################################################
+if [ -f ~/.bashrchost ]; then
+	. ~/.bashrchost
+fi
