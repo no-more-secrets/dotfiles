@@ -18,10 +18,8 @@ alias ls="ls -h --color=auto"
 alias ll="ls -l"
 alias df="df -Ph"
 
-alias grep="grep --exclude-dir='.svn' --color=auto"
-alias egrep="egrep --color=auto"
-
-alias ghci="ghci -v0"
+alias grep="grep   --exclude-dir='.svn' --color=auto"
+alias egrep="egrep --exclude-dir='.svn' --color=auto"
 
 set -o noclobber
 
@@ -40,8 +38,6 @@ gr() { grep --color=auto -r "$@" .; }
 ################################################################################
 # squeeze
 ################################################################################
-squeeze() { sqz $COLUMNS "$@" | egrep "\.\.|\.\.\.|$"; }
-
 links() {
     links="$(find . -maxdepth 1 -type l)"
     [ ! -z "$links" ] && echo "$links" | xargs ls -l | awk '{print $9, $10, $11}' | column -t | hilight '->';
@@ -55,7 +51,6 @@ clip() { sed -r "s/(.{0,$COLUMNS}).*/\1/g"; }
 # Custom bash prompt via kirsle.net/wizards/ps1.html
 export PS1="\`if [ \$? != 0 ]; then echo \[\e[31m\]:\( \[\e[0m\]; fi\`[\[$(tput setaf 7)\]\[$(tput bold)\]\u@\[$(tput setaf 3)\]\h \[$(tput setaf 4)\]\W\[$(tput setaf 7)\]]$ \[$(tput sgr0)\]"
 export PATH=~/bin:~/opt/bin:$PATH
-export LD_LIBRARY_PATH=~/lib:$LD_LIBRARY_PATH:/usr/local/lib
 # This is so that we don't have windows popping up asking for passwords
 export GREP_COLORS="mt=01;32"
 export EDITOR=vim
