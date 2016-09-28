@@ -1,10 +1,7 @@
 [user]
 	name = David P. Sicilia
-	email = dpsicilia@gmail.com
 [color]
 	ui = true
 [alias]
     st = status
-    br = branch
     lg = "log --oneline --decorate --color=auto --graph"
-
