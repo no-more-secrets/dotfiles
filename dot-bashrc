@@ -17,8 +17,8 @@ alias ls="ls -h --color=auto"
 alias ll="ls -l"
 alias df="df -Ph"
 
-alias grep="grep --exclude-dir='.svn' --color=auto"
-alias egrep="egrep --color=auto"
+alias grep="grep   --exclude-dir='.svn' --color=auto"
+alias egrep="egrep --exclude-dir='.svn' --color=auto"
 
 set -o noclobber
 
