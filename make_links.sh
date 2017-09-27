@@ -1,13 +1,38 @@
 #!/bin/bash
-rm $HOME/.bashrc
-ln -s $(pwd)/dot-bashrc $HOME/.bashrc
-rm $HOME/.ghc/ghci.conf
-ln -s $(pwd)/dot-ghc-slash-ghci.conf $HOME/.ghc/ghci.conf
-rm $HOME/.gitconfig
-ln -s $(pwd)/dot-gitconfig $HOME/.gitconfig
-rm $HOME/.ssh/config
-ln -s $(pwd)/dot-ssh-slash-config $HOME/.ssh/config
-rm -rf $HOME/.vim
-ln -s $(pwd)/dot-vim-folder $HOME/.vim
-rm $HOME/.vimrc
-ln -s $(pwd)/dot-vimrc $HOME/.vimrc
+unalias -a
+
+error() {
+    echo "ERROR: $1" >&2
+    exit 1
+}
+
+check() {
+    local msg="$1"
+    [[ $? != 0 ]] && error "failed to $msg"
+    echo "succeeded to $msg"
+}
+
+safe_link() {
+    # src --> target
+    local target="$(pwd)/$1"; local src="$HOME/$2"
+    [[ -e "$src" ]] && {
+        # Source file exists
+        [[ ! -L "$src" ]] && {
+            # Source file exists and is not a link, so to be safe,
+            # let's just exit with an error.
+            error "file $src already exists and is not a link."
+        }
+        # Source file exists and is a link, so remove the link and proceed.
+        rm "$src"; check "remove $src"
+    }
+    ln -s "$target" "$src"; check "create link $src"
+}
+
+safe_link  dot-bashrc               .bashrc
+safe_link  dot-ghc-slash-ghci.conf  .ghc/ghci.conf
+safe_link  dot-gitconfig            .gitconfig
+safe_link  dot-ssh-slash-config     .ssh/config
+safe_link  dot-vim-folder           .vim
+safe_link  dot-vimrc                .vimrc
+safe_link  dot-tmux-conf            .tmux.conf
+true

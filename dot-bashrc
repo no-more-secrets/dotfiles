@@ -1,70 +1,39 @@
-# .bashrc
+# ===============================================================
+#                              Global
+[[ -f /etc/bashrc ]] && source /etc/bashrc
+# ===============================================================
 
-# Source global definitions
-if [ -f /etc/bashrc ]; then
-	. /etc/bashrc
-fi
+set -o noclobber
 
-# User specific aliases and functions
-
-alias  t="tree      -C -A"
-alias t1="tree -L 1 -C -A"
-alias t2="tree -L 2 -C -A"
-alias t3="tree -L 3 -C -A"
-
-alias rm="recycle"
+# ===============================================================
+#                             Aliases
+# ===============================================================
+alias t="tree      -C -A"
 alias mv="mv -i"
 alias ls="ls -h --color=auto"
 alias ll="ls -l"
 alias df="df -Ph"
-
-alias grep="grep --exclude-dir='.svn' --color=auto"
+alias grep="grep --exclude-dir=.svn --exclude-dir=.stack-work --exclude-dir=.git --color=auto"
 alias egrep="egrep --color=auto"
+alias clip='sed -r "s/(.{0,$COLUMNS}).*/\1/g"'
 
-alias ghci="ghci -v0"
+# ===============================================================
+#                           Functions
+# ===============================================================
+gr() { grep -r "$@" .; }
 
-set -o noclobber
-
-umask 077
-
-################################################################################
-# grep
-################################################################################
-hilight() {
-    arg="$1"; shift
-    egrep "^|$arg" --color=always "$@"
-}
-
-gr() { grep --color=auto -r "$@" .; }
-
-################################################################################
-# squeeze
-################################################################################
-squeeze() { sqz $COLUMNS "$@" | egrep "\.\.|\.\.\.|$"; }
-
-links() {
-    links="$(find . -maxdepth 1 -type l)"
-    [ ! -z "$links" ] && echo "$links" | xargs ls -l | awk '{print $9, $10, $11}' | column -t | hilight '->';
-}
-
-clip() { sed -r "s/(.{0,$COLUMNS}).*/\1/g"; }
-
-################################################################################
-# Variables
-################################################################################
-# Custom bash prompt via kirsle.net/wizards/ps1.html
-export PS1="\`if [ \$? != 0 ]; then echo \[\e[31m\]:\( \[\e[0m\]; fi\`[\[$(tput setaf 7)\]\[$(tput bold)\]\u@\[$(tput setaf 3)\]\h \[$(tput setaf 4)\]\W\[$(tput setaf 7)\]]$ \[$(tput sgr0)\]"
-export PATH=~/bin:~/opt/bin:$PATH
-export LD_LIBRARY_PATH=~/lib:$LD_LIBRARY_PATH:/usr/local/lib
-# This is so that we don't have windows popping up asking for passwords
+# ===============================================================
+#                          Variables
+# ===============================================================
+export PS1="\$? [\u@\h \W]$ "
+export PATH=~/bin:~/opt/bin:~/.local/bin:$PATH
+export LD_LIBRARY_PATH=~/lib
 export GREP_COLORS="mt=01;32"
 export EDITOR=vim
+# This is so that we don't have windows popping up asking for passwords
+unset  SSH_ASKPASS
 
-unset SSH_ASKPASS
-
-################################################################################
-# Should be last: Host-specific bashrc
-################################################################################
-if [ -f ~/.bashrchost ]; then
-	. ~/.bashrchost
-fi
+# ===============================================================
+#                            Local
+[[ -f ~/.bashrclocal ]] && source ~/.bashrclocal
+# ===============================================================

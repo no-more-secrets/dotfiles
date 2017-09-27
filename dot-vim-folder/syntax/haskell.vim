@@ -188,8 +188,11 @@ endif
 highlight def link haskellBottom Macro
 highlight def link haskellQuasiQuoteDelimiters Boolean
 highlight def link haskellTHQuasiQuotes Boolean
+highlight def link haskellQuasiQuote String
 highlight def link haskellBlockKeywords Structure
-highlight def link haskellIdentifier Identifier
+" 2017-05-12 David Sicilia -- changed to add better highlighting of function names in type signature; use to be:
+"highlight def link haskellIdentifier Identifier
+highlight def link haskellIdentifier Function
 highlight def link haskellImportKeywords Structure
 highlight def link haskellForeignKeywords Structure
 highlight def link haskellNewtype Structure
@@ -217,6 +220,8 @@ highlight def link haskellBacktick Operator
 highlight def link haskellPreProc Macro
 highlight def link haskellTodo Todo
 highlight def link haskellAssocType Structure
+" 2017-05-12 David Sicilia -- added this line for better highlighting of function names in type signature
+highlight def link haskellFunction Function
 
 if exists('g:haskell_enable_quantification') && g:haskell_enable_quantification == 1
   highlight def link haskellForall Operator
