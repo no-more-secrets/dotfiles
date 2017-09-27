@@ -7,8 +7,9 @@ error() {
 }
 
 check() {
+    error_code=$?
     local msg="$1"
-    [[ $? != 0 ]] && error "failed to $msg"
+    [[ $error_code != 0 ]] && error "failed to $msg"
     echo "succeeded to $msg"
 }
 
