@@ -213,7 +213,8 @@ highlight def link haskellDot Operator
 highlight def link haskellType Include
 highlight def link haskellLineComment Comment
 highlight def link haskellBlockComment Comment
-highlight def link haskellPragma SpecialComment
+" *** DS - highlight def link haskellPragma SpecialComment
+highlight def link haskellPragma Operator
 highlight def link haskellString String
 highlight def link haskellChar String
 highlight def link haskellBacktick Operator
