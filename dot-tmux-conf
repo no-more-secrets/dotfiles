@@ -2,6 +2,23 @@
 unbind C-b
 set -g prefix C-a
 # Bind 'C-a C-a' to type 'C-a'
-bind C-a send-prefix
+#bind C-a send-prefix
 
 setw -g mode-keys vi
+
+bind L split-window -h
+bind J split-window -v
+unbind '"'
+unbind %
+
+bind l select-pane -R
+bind h select-pane -L
+bind j select-pane -D
+bind k select-pane -U
+
+bind r source-file ~/.tmux.conf \; display-message "Config reloaded."
+
+# start window indexing at one instead of zero
+set -g base-index 1
+
+source-file ${HOME}/.tmux/powerline-default-blue.tmuxtheme

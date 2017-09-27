@@ -36,4 +36,5 @@ safe_link  dot-ssh-slash-config     .ssh/config
 safe_link  dot-vim-folder           .vim
 safe_link  dot-vimrc                .vimrc
 safe_link  dot-tmux-conf            .tmux.conf
+safe_link  dot-tmux-folder          .tmux
 true
