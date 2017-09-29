@@ -2,14 +2,25 @@
 unbind C-b
 set -g prefix C-a
 # Bind 'C-a C-a' to type 'C-a'
-#bind C-a send-prefix
+bind C-a send-prefix
 
 setw -g mode-keys vi
 
+# Mouse integration
+set -g mouse-resize-pane on
+set -g mouse-select-pane on
+set -g mouse-select-window on
+set -g mode-mouse on
+
+# Splitting windows
 bind C-l split-window -h
 bind C-j split-window -v
 unbind '"'
 unbind %
+
+# Moving windows
+bind 0 next
+bind 9 prev
 
 bind l select-pane -R
 bind h select-pane -L
