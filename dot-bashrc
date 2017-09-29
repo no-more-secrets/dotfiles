@@ -17,6 +17,7 @@ alias df="df -Ph"
 alias grep="grep --exclude-dir=.svn --exclude-dir=.stack-work --exclude-dir=.git --color=auto"
 alias egrep="egrep --color=auto"
 alias clip='sed -r "s/(.{0,$COLUMNS}).*/\1/g"'
+alias tmux='tmux -2'
 
 # ===============================================================
 #                           Functions

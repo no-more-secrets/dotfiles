@@ -32,7 +32,6 @@ safe_link() {
 safe_link  dot-bashrc               .bashrc
 safe_link  dot-ghc-slash-ghci.conf  .ghc/ghci.conf
 safe_link  dot-gitconfig            .gitconfig
-safe_link  dot-ssh-slash-config     .ssh/config
 safe_link  dot-vim-folder           .vim
 safe_link  dot-vimrc                .vimrc
 safe_link  dot-tmux-conf            .tmux.conf
