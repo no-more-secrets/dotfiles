@@ -53,7 +53,7 @@ hi Statement      guifg=#418db3   guibg=NONE      guisp=NONE      gui=NONE   cte
 hi Identifier     guifg=#5f875f   guibg=NONE      guisp=NONE      gui=NONE   ctermfg=65     ctermbg=NONE   cterm=NONE
 hi Type           guifg=#babaa2   guibg=NONE      guisp=NONE      gui=NONE   ctermfg=144    ctermbg=NONE   cterm=NONE
 hi Special        guifg=#7a490d   guibg=NONE      guisp=NONE      gui=NONE   ctermfg=3      ctermbg=NONE   cterm=NONE
-hi String         guifg=#7e8c2d   guibg=NONE      guisp=NONE      gui=NONE   ctermfg=100    ctermbg=NONE   cterm=NONE
+hi String         guifg=#7e8c2d   guibg=NONE      guisp=NONE      gui=NONE   ctermfg=88     ctermbg=NONE   cterm=NONE
 hi Comment        guifg=#576157   guibg=NONE      guisp=NONE      gui=NONE   ctermfg=241    ctermbg=NONE   cterm=NONE
 hi Todo           guifg=#a1481e   guibg=NONE      guisp=NONE      gui=NONE   ctermfg=130    ctermbg=NONE   cterm=NONE
 
