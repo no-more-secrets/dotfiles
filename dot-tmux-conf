@@ -15,6 +15,9 @@ bind -t vi-copy 'y' copy-selection
 #set -g mode-mouse on
 set -g mouse on
 
+# Prevent tmux from automatically renaming windows
+set-option -g allow-rename off
+
 # Splitting windows
 bind C-l split-window -h
 bind C-j split-window -v
