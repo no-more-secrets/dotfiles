@@ -1,6 +1,6 @@
-" ===============================================================
-"                             Options
-" ===============================================================
+" ╔═════════════════════════════════════════════════════════════╗
+" ║                           Options                           ║
+" ╚═════════════════════════════════════════════════════════════╝
 set enc=utf-8           "set UTF-8 encoding
 set fenc=utf-8
 set termencoding=utf-8
@@ -14,6 +14,8 @@ set autoindent
 set sw=4
 set nowrap
 set hlsearch
+set incsearch
+set ignorecase          " Ignore case when searching (\c)
 set splitbelow
 set splitright
 set sidescroll=1
@@ -24,9 +26,9 @@ set showmatch           " highlight matching braces
 
 syntax on " turn syntax highlighting on
 
-" ===============================================================
-"                          Key Mappings
-" ===============================================================
+" ╔═════════════════════════════════════════════════════════════╗
+" ║                        Key Mappings                         ║
+" ╚═════════════════════════════════════════════════════════════╝
 nnoremap \ i <ESC>l
 nnoremap ( O<ESC>j
 nnoremap } $
@@ -47,27 +49,96 @@ nnoremap ] :tabn<CR>
 
 vnoremap <F12> :!sfmt 65<CR>
 
-" ===============================================================
-"                             Buffers
-" ===============================================================
+map <C-n> :NERDTreeToggle<CR>
+
+" ╔═════════════════════════════════════════════════════════════╗
+" ║                          Functions                          ║
+" ╚═════════════════════════════════════════════════════════════╝
+function DS_title_box()
+    execute "normal! :center 61\<CR>"
+    execute "normal! O\<ESC>S╔═════════════════════════════════════════════════════════════╗\<ESC>"
+    execute "normal! j0i║\<ESC>A                                                                                    ║\<ESC>"
+    execute "normal! o\<ESC>0i╚═════════════════════════════════════════════════════════════╝\<ESC>"
+    execute "normal! kdwk0"
+    execute "normal! i" printf( g:commentstring, getline( '.' ) ) "\<ESC>D0xj0"
+    execute "normal! i" printf( g:commentstring, getline( '.' ) ) "\<ESC>D0xj0"
+    execute "normal! i" printf( g:commentstring, getline( '.' ) ) "\<ESC>D0xj0"
+endfunction
+
+" ╔═════════════════════════════════════════════════════════════╗
+" ║                         Leader Keys                         ║
+" ╚═════════════════════════════════════════════════════════════╝
+let mapleader = ','
+map <Leader>t :call DS_title_box()<CR>
+
+" ╔═════════════════════════════════════════════════════════════╗
+" ║                           Buffers                           ║
+" ╚═════════════════════════════════════════════════════════════╝
 " Set C++11 syntax file for C++
 au BufNewFile,BufRead *.cpp,*.hpp,*.h set syntax=cpp11
-au BufNewFile,BufRead *.lhs set syntax=haskell_lit
-au BufNewFile,BufRead *.hs set syntax=haskell
-au BufNewFile,BufRead *.mkh set ft=make
+au BufNewFile,BufRead *.lhs           set syntax=haskell_lit
+au BufNewFile,BufRead *.hs            set syntax=haskell
+au BufNewFile,BufRead *.mkh           set ft=make
 
-" Return to last edit position when opening files
+au FileType vim     let g:commentstring="\" %s"
+au FileType sh      let g:commentstring="# %s"
+au FileType python  let g:commentstring="# %s"
+au FileType haskell let g:commentstring="-- %s"
+au FileType cpp     let g:commentstring="// %s"
+
+" Return to last edit position when opening files and make that
+" line in the center of the screen.
 autocmd BufReadPost *
      \ if line("'\"") > 0 && line("'\"") <= line("$") |
-     \   exe "normal! g`\"" |
+     \   exe "normal! g`\"z." |
      \ endif
 
-" ===============================================================
-"                        Themes and Colors
-" ===============================================================
+" ╔═════════════════════════════════════════════════════════════╗
+" ║                            netrw                            ║
+" ╚═════════════════════════════════════════════════════════════╝
+" Default file manager
+let g:netrw_banner=0        " no useless banner
+let g:netrw_liststyle=3     " tree view
+let g:netrw_browse_split=4  " open in prior window
+let g:netrw_altv=2          " open splits to the right
+let g:netrw_list_hide=netrw_gitignore#Hide()
+
+" ╔═════════════════════════════════════════════════════════════╗
+" ║                      Themes and Colors                      ║
+" ╚═════════════════════════════════════════════════════════════╝
 set background=dark
 
 "colorscheme wombat256      " 4/5
 "colorscheme sourcerer      " 4/5
 colorscheme hipster      " 4/5
 "colorscheme scheakur       " 4/5
+
+hi IncSearch cterm=NONE ctermfg=black ctermbg=yellow
+hi    Search cterm=NONE ctermfg=black ctermbg=yellow
+
+" ╔═════════════════════════════════════════════════════════════╗
+" ║                           Vundle                            ║
+" ╚═════════════════════════════════════════════════════════════╝
+" Brief help
+" :PluginList       - lists configured plugins
+" :PluginInstall    - installs plugins
+" :PluginUpdate     - update plugins
+" :PluginClean      - confirms removal of unused plugins
+filetype off                  " required
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+
+call vundle#begin()
+    " Note: Vundle needs to manage Vundle
+    Plugin 'VundleVim/Vundle.vim'
+    Plugin 'godlygeek/tabular'
+    Plugin 'tpope/vim-fugitive'
+    Plugin 'scrooloose/nerdtree'
+call vundle#end()            " required
+
+filetype plugin indent on    " required
+
+" ╔═════════════════════════════════════════════════════════════╗
+" ║                            Misc                             ║
+" ╚═════════════════════════════════════════════════════════════╝
