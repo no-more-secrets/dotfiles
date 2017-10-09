@@ -2,11 +2,6 @@
 # ╔═════════════════════════════════════════════════════════════╗
 # ║                    Dotfiles Setup Script                    ║
 # ╚═════════════════════════════════════════════════════════════╝
-
-# Change to Script Folder
-script_dir=$(dirname $0)
-cd $script_dir || { echo 'error changing directory.'; exit 1; }
-
 source scripts/utils.sh
 msg 'Setting up environment...'
 
@@ -22,6 +17,5 @@ source ~/.bashrc; check 'source new .bashrc'
 # Install all the vim plugins.
 bash scripts/vundle.sh; check 'setup vundle'
 
-msg 'Finished.'
 # Exit with success
 true
