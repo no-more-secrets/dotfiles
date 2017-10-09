@@ -42,7 +42,7 @@ safe_link() {
 # ║                           Driver                            ║
 # ╚═════════════════════════════════════════════════════════════╝
 main() {
-    echo -e "${green}Making symlinks...${normal}"
+    msg "Making symlinks..."
 
     list='
         bashrc

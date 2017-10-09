@@ -2,9 +2,6 @@
 # ╔═════════════════════════════════════════════════════════════╗
 # ║                          Utilities                          ║
 # ╚═════════════════════════════════════════════════════════════╝
-green='\e[32m'
-normal='\e[00m'
-
 error() {
     echo "ERROR: $1" >&2
     exit 1
@@ -18,7 +15,7 @@ check() {
 }
 
 msg() {
-    green="\e[32m"
-    normal="\e[00m"
+    green="$(tput setaf 3)"
+    normal="$(tput sgr0)"
     echo -e "${green}$1${normal}"
 }
