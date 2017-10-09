@@ -7,9 +7,18 @@
 script_dir=$(dirname $(readlink -f $0))
 cd $script_dir || { echo 'error changing directory.'; exit 1; }
 
+source scripts/utils.sh
+
 # Run setup scripts
-bash scripts/make_links.sh
-bash scripts/vundle.sh
+bash scripts/make_links.sh; check 'make symlinks'
+
+# Now  that  we  probably  have a new bashrc file let's source it
+# since we will need some of the settings in there for subsequent
+# commands.
+source ~/.bashrc; check 'source new .bashrc'
+
+# Install all the vim plugins.
+bash scripts/vundle.sh; check 'setup vundle'
 
 # Exit with success
 true
