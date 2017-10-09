@@ -3,7 +3,6 @@
 # ║                          Utilities                          ║
 # ╚═════════════════════════════════════════════════════════════╝
 set -e
-set -x
 
 msg() {
     green="\e[32m"
@@ -16,11 +15,11 @@ msg() {
 # ╚═════════════════════════════════════════════════════════════╝
 if [[ ! -d ~/.vim/bundle/Vundle.vim ]]; then
     echo 'Installing Vundle...'
-    git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+    git clone --quiet https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 else
     echo 'Updating Vundle...'
     pushd ~/.vim/bundle/Vundle.vim
-    git pull origin master
+    git pull --quiet origin master
     popd
 fi
 
