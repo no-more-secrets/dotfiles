@@ -1,12 +1,13 @@
 #!/bin/bash
+# Must be run from dotfiles root folder.
 unalias -a
-
-green='\e[32m'
-normal='\e[00m'
 
 # ╔═════════════════════════════════════════════════════════════╗
 # ║                          Utilities                          ║
 # ╚═════════════════════════════════════════════════════════════╝
+green='\e[32m'
+normal='\e[00m'
+
 error() {
     echo "ERROR: $1" >&2
     exit 1
@@ -24,7 +25,7 @@ check() {
 # ╚═════════════════════════════════════════════════════════════╝
 safe_link() {
     # src --> target
-    local target="$(pwd)/$1"
+    local target="$(pwd)/dot/$1"
     local src="$HOME/.$1"
     if [[ ! -e "$src" ]]; then
         # At this point the file does not exist, however we  will
