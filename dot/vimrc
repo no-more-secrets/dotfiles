@@ -64,12 +64,25 @@ function DS_title_box()
     execute "normal! i" printf( g:commentstring, getline( '.' ) ) "\<ESC>D0xj0"
 endfunction
 
+function DS_section_box()
+    execute "normal! :center 63\<CR>"
+    "execute "normal! :s/\t/    /g\<CR>"
+    execute "normal! O\<ESC>A━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\<ESC>"
+    execute "normal! j0"
+    execute "normal! o\<ESC>0i━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\<ESC>"
+    execute "normal! kk0"
+    execute "normal! i" printf( g:commentstring, getline( '.' ) ) "\<ESC>D0xj0"
+    execute "normal! i" printf( g:commentstring, getline( '.' ) ) "\<ESC>D0xj0"
+    execute "normal! i" printf( g:commentstring, getline( '.' ) ) "\<ESC>D0xj0"
+endfunction
+
 " ╔═════════════════════════════════════════════════════════════╗
 " ║                         Leader Keys                         ║
 " ╚═════════════════════════════════════════════════════════════╝
 let mapleader = ','
 
-map      <Leader>t :call DS_title_box()<CR>
+map      <Leader>T :call DS_title_box()<CR>
+map      <Leader>t :call DS_section_box()<CR>
 vnoremap <Leader>f :!sfmt 65<CR>
 
 " ╔═════════════════════════════════════════════════════════════╗
