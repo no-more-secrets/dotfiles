@@ -47,7 +47,11 @@ nnoremap <F3> ^xj
 nnoremap [ :tabp<CR>
 nnoremap ] :tabn<CR> 
 
-map <C-n> :NERDTreeToggle<CR>
+" Tab will auto-complete from words in file
+inoremap <Tab> <C-n>
+
+" Re-map C-n from autocomplete to the nerd tree.
+nnoremap <C-n> :NERDTreeToggle<CR>
 
 " ╔═════════════════════════════════════════════════════════════╗
 " ║                          Functions                          ║
