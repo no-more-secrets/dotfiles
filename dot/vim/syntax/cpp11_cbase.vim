@@ -361,7 +361,8 @@ hi def link cIncluded		cString
 hi def link cError		Error
 hi def link cStatement		Statement
 hi def link cPreCondit		PreCondit
-hi def link cType		Type
+"hi def link cType		Type
+hi def link cType		Function
 hi def link cConstant		Constant
 hi def link cCommentString	cString
 hi def link cComment2String	cString

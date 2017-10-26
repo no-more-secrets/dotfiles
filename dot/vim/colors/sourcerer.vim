@@ -107,7 +107,8 @@ hi pythonDecorator  guifg=#888555 guibg=NONE gui=NONE
 hi link pythonDecoratorFunction pythonDecorator
 
 "  █▓▒░ 256 colors 
-hi Normal                 cterm=NONE             ctermbg=NONE  ctermfg=145
+"hi Normal                 cterm=NONE             ctermbg=NONE  ctermfg=145
+hi Normal                 cterm=NONE             ctermbg=NONE  ctermfg=255
 hi ColorColumn            cterm=NONE             ctermbg=16    ctermfg=NONE
 hi Cursor                 cterm=NONE             ctermbg=241   ctermfg=fg
 hi CursorColumn           cterm=NONE             ctermbg=16    ctermfg=fg
@@ -149,17 +150,20 @@ hi WarningMsg             cterm=NONE             ctermbg=234   ctermfg=208
 hi WildMenu               cterm=NONE             ctermbg=116   ctermfg=16
 hi ExtraWhitespace        cterm=NONE             ctermbg=66    ctermfg=fg
 
-hi Comment                cterm=NONE             ctermbg=NONE  ctermfg=59
+"hi Comment                cterm=NONE             ctermbg=NONE  ctermfg=59
+hi Comment                cterm=NONE             ctermbg=NONE  ctermfg=241
 hi Boolean                cterm=NONE             ctermbg=NONE  ctermfg=208
 hi String                 cterm=NONE             ctermbg=NONE  ctermfg=101
-hi Identifier             cterm=NONE             ctermbg=NONE  ctermfg=145
+"hi Identifier             cterm=NONE             ctermbg=NONE  ctermfg=145
+hi Identifier             cterm=NONE             ctermbg=NONE  ctermfg=255
 hi Function               cterm=NONE             ctermbg=NONE  ctermfg=230
 hi Type                   cterm=NONE             ctermbg=NONE  ctermfg=103
 hi Statement              cterm=NONE             ctermbg=NONE  ctermfg=110
 hi Keyword                cterm=NONE             ctermbg=NONE  ctermfg=110
 hi Constant               cterm=NONE             ctermbg=NONE  ctermfg=208
 hi Number                 cterm=NONE             ctermbg=NONE  ctermfg=172
-hi Special                cterm=NONE             ctermbg=NONE  ctermfg=64
+"hi Special                cterm=NONE             ctermbg=NONE  ctermfg=64
+hi Special                cterm=NONE             ctermbg=NONE  ctermfg=55
 hi PreProc                cterm=NONE             ctermbg=NONE  ctermfg=66
 hi Todo                   cterm=bold,underline   ctermbg=234   ctermfg=96
 
