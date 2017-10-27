@@ -6,8 +6,8 @@ gr() { grep -r "$@" .; }
 # resulting from the `ls` along with their frequencies.
 lsext() {
     # Use unaliased version of ls.
-    command ls "$@" | sed -n 's/.*\(\.[^.].*\)$/\1/p' \
-                    | sort                            \
-                    | uniq -c                         \
+    command ls "$@" | sed -n 's/.*\(\.[^./].*\)$/\1/p' \
+                    | sort                             \
+                    | uniq -c                          \
                     | sort -nr
 }
