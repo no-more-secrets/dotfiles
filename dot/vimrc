@@ -128,9 +128,9 @@ let g:netrw_altv=2          " open splits to the right
 set background=dark
 
 "colorscheme wombat256      " 4/5
-colorscheme sourcerer      " 4/5
+"colorscheme sourcerer      " 4/5
 "colorscheme hipster      " 4/5
-"colorscheme scheakur       " 4/5
+colorscheme scheakur       " 4/5
 
 hi IncSearch cterm=NONE ctermfg=black ctermbg=yellow
 hi    Search cterm=NONE ctermfg=black ctermbg=yellow

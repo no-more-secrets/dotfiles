@@ -162,8 +162,7 @@ hi Statement              cterm=NONE             ctermbg=NONE  ctermfg=110
 hi Keyword                cterm=NONE             ctermbg=NONE  ctermfg=110
 hi Constant               cterm=NONE             ctermbg=NONE  ctermfg=208
 hi Number                 cterm=NONE             ctermbg=NONE  ctermfg=172
-"hi Special                cterm=NONE             ctermbg=NONE  ctermfg=64
-hi Special                cterm=NONE             ctermbg=NONE  ctermfg=55
+hi Special                cterm=NONE             ctermbg=NONE  ctermfg=64
 hi PreProc                cterm=NONE             ctermbg=NONE  ctermfg=66
 hi Todo                   cterm=bold,underline   ctermbg=234   ctermfg=96
 
