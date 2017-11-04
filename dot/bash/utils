@@ -11,3 +11,32 @@ lsext() {
                     | uniq -c                          \
                     | sort -nr
 }
+
+# Abbreviate a path if it is  too long by reducing each component
+# to only the first letter.
+abbr_path() {
+    local max="$1"; local result="$2"
+
+    # If the path is not considered too long then don't  condense
+    # it at all.
+    (( ${#result} < max )) && {
+        echo "$result"
+        return 0
+    }
+
+    # Keep repeating while we find sequences of two or  more  non
+    # forward-slash characters. Each time  we  find one, the last
+    # character of it will be  removed,  so  it may take multiple
+    # iterations  just  to abbreviate a single path component. If
+    # we could somehow make the initial (.*) not greedy then this
+    # would take fewer iterations of the loop.
+    while [[ "$result" =~ (.*)([^/])[^/]+(.*) ]]; do
+        local part1="${BASH_REMATCH[1]}"
+        local part2="${BASH_REMATCH[2]}"
+        local part3="${BASH_REMATCH[3]}"
+        result="$part1$part2$part3"
+    done
+
+    # This is how we return the result.
+    echo "$result"
+}
