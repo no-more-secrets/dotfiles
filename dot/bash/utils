@@ -40,3 +40,18 @@ abbr_path() {
     # This is how we return the result.
     echo "$result"
 }
+
+# This is the one we will call from inside of the PS1 variable.
+ps1_path() {
+    local max="$1"; local path="$2"
+
+    # Use  value  in  COLUMNS  env variable if it is set. Ideally
+    # here we'd like to get  the  length  of  the PS1 prefix (non
+    # path component) and then subtract  that,  but it is kind of
+    # hard to do that without evaluating PS1 and  going  into  an
+    # infinite  loop  (since  evaluation  of the PS1 variable may
+    # call this function).
+    (( COLUMNS > 0 )) && max=$(( COLUMNS - 38 ))
+
+    abbr_path "$max" "$path"
+}
