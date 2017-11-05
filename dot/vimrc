@@ -25,6 +25,10 @@ set showmatch           " highlight matching braces
 set backspace=indent,eol,start
 " set smartindent
 
+" An  arbitrary key that we use as a namespace for additional key-
+" bindings to avoid conflicts with the standard n/v modes.
+let mapleader = ','
+
 syntax on " turn syntax highlighting on
 
 " ╔═════════════════════════════════════════════════════════════╗
@@ -42,6 +46,8 @@ nnoremap <C-k> 13k
 vnoremap <C-j> 13j
 vnoremap <C-k> 13k
 
+nnoremap Y y$
+
 nnoremap <F4> ^i#<ESC>j
 nnoremap <F3> ^xj
 
@@ -53,6 +59,8 @@ inoremap <Tab> <C-n>
 
 " Re-map C-n from autocomplete to the nerd tree.
 nnoremap <C-n> :NERDTreeToggle<CR>
+
+vnoremap <Leader>f :!sfmt 65<CR>
 
 " ╔═════════════════════════════════════════════════════════════╗
 " ║                          Functions                          ║
@@ -81,14 +89,31 @@ function DS_section_box()
     execute "normal! i" printf( g:commentstring, getline( '.' ) ) "\<ESC>D0xj0"
 endfunction
 
-" ╔═════════════════════════════════════════════════════════════╗
-" ║                         Leader Keys                         ║
-" ╚═════════════════════════════════════════════════════════════╝
-let mapleader = ','
+map <Leader>T :call DS_title_box()<CR>
+map <Leader>t :call DS_section_box()<CR>
 
-map      <Leader>T :call DS_title_box()<CR>
-map      <Leader>t :call DS_section_box()<CR>
-vnoremap <Leader>f :!sfmt 65<CR>
+" ╔═════════════════════════════════════════════════════════════╗
+" ║                          Clipboard                          ║
+" ╚═════════════════════════════════════════════════════════════╝
+" If  vim has clipboard support then just use that by default for
+" yanking.
+if has( 'clipboard' )
+    set clipboard=unnamed
+end
+
+" When we either don't have clipboard support or vim can't access
+" the system clipboard then we will use these  bindings  to  simu-
+" late  it using a temporary file. Note we don't support deleting
+" here,  and  also  these only support entire lines as opposed to
+" selections within a line.
+
+" Standard paste below cursor
+nnoremap <Leader>p  :r     ~/.vimbuf<CR>
+" Standard paste above cursor
+nnoremap <Leader>P  :.-1r  ~/.vimbuf<CR>
+" Yank into tmp file (will yank entire line always)
+vnoremap <Leader>y  :w!    ~/.vimbuf<CR>
+nmap     <Leader>yy  V<Leader>y
 
 " ╔═════════════════════════════════════════════════════════════╗
 " ║                           Buffers                           ║
