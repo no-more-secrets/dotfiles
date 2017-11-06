@@ -55,3 +55,24 @@ ps1_path() {
 
     abbr_path "$max" "$path"
 }
+
+# Given a URL to an SVN repository this will  find  the  revision
+# and folder from which it was copied. Doesn't really make  sense
+# to  run  this on trunk, and doing so would probably hang anyway,
+# so it checks for that and aborts if necessary.
+svn_copied_from() {
+    local what="$1"
+    [[ "$what" =~ .*trunk.* ]] && {
+        echo 'should not run this on trunk' >&2
+        return 1
+    }
+    local svn_log="svn log -l1 -r1:HEAD --stop-on-copy --verbose"
+    local rev=$($svn_log "$what" | grep '(from ')
+    regex='.* \(from /([^:]+):([0-9]+)\)$'
+    [[ "$rev" =~ $regex ]] || {
+        echo 'failed' >&2
+        return 1
+    }
+    echo "folder: ${BASH_REMATCH[1]}"
+    echo "rev:    ${BASH_REMATCH[2]}"
+}
