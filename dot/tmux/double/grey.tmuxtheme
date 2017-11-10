@@ -58,7 +58,7 @@ set -g display-panes-colour colour233
 set -g display-panes-active-colour colour245
 
 # Clock mode
-set -g clock-mode-colour color255
+set -g clock-mode-colour colour255
 set -g clock-mode-style 24
 
 # Message
@@ -70,5 +70,5 @@ set -g message-command-bg colour255
 set -g message-command-fg black
 
 # Mode
-set -g mode-bg color255
+set -g mode-bg colour255
 set -g mode-fg colour235
