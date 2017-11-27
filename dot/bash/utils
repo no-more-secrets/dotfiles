@@ -85,3 +85,7 @@ f() {
         find . -name "*$1*" | grep "$1"
     fi
 }
+
+# Remove from working copy
+exclude()   { svn update --set-depth=exclude "$@"; }
+exclude_r() { exclude "$@" && rm -rf "$@";         }
