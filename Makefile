@@ -1,0 +1,2 @@
+_:
+	bash sync
