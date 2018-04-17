@@ -27,7 +27,7 @@ shopt -s checkwinsize
 alias t="tree      -C -A"
 alias mv="mv -i"
 alias ls="ls -h --color=auto"
-alias ll="ls -l"
+alias ll="ls -lh"
 alias df="df -Ph"
 alias grep="grep --exclude-dir=.svn --exclude-dir=.stack-work --exclude-dir=.git --color=auto"
 alias egrep="egrep --color=auto"
