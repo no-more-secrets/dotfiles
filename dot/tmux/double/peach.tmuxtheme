@@ -25,7 +25,7 @@ set -g status-left "#[fg=colour233,bg=colour223,bold] #S #[fg=colour223,bg=colou
 set -g status-right-bg colour233
 set -g status-right-fg colour243
 set -g status-right-length 150
-set -g status-right "#[fg=colour235,bg=colour233]#[fg=colour240,bg=colour235] %H:%M:%S #[fg=colour240,bg=colour235]#[fg=colour233,bg=colour240] %d-%b-%y #[fg=colour223,bg=colour240]#[fg=colour233,bg=colour223,bold] #H "
+set -g status-right "#[fg=colour235,bg=colour233]#[fg=colour240,bg=colour235] %H:%M:%S #[fg=colour240,bg=colour235]#[fg=colour233,bg=colour240] %d-%b-%y #[fg=colour223,bg=colour240]#[fg=colour233,bg=colour223,bold] #h "
 
 # Window status
 set -g window-status-format "  #I:#W#F  "
