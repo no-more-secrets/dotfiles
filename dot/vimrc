@@ -156,6 +156,7 @@ call vundle#begin()
     Plugin 'godlygeek/tabular'
     Plugin 'tpope/vim-fugitive'
     Plugin 'scrooloose/nerdtree'
+    Plugin 'easymotion/vim-easymotion'
 call vundle#end()            " required
 
 filetype plugin indent on    " required
