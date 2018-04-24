@@ -45,14 +45,15 @@ main() {
     msg "Making symlinks..."
 
     list='
+        bash
         bashrc
+        config/fish
         ghc
         gitconfig
+        tmux
+        tmux.conf
         vim
         vimrc
-        tmux.conf
-        tmux
-        bash
     '
 
     for f in $list; do safe_link $f; done

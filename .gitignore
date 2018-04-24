@@ -3,3 +3,5 @@ dot/vim/bundle
 dot/vim/cache
 
 dot/ghc/ghci_history
+
+dot/config/fish/fishd.*
