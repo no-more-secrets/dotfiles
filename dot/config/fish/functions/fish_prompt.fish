@@ -18,8 +18,8 @@ function fish_prompt --description 'Write out the prompt'
             end
             set suffix '#'
         case '*'
-            set color_cwd $fish_color_cwd
-            set suffix '>'
+            set color_cwd 77F #$fish_color_cwd
+            set suffix ':'
     end
 
     echo -n -s "$USER" @ (set_color f4e49d) "office" (set_color normal) ' ' (set_color $color_cwd) (prompt_pwd) (set_color normal) "$suffix "
