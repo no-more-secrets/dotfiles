@@ -125,19 +125,6 @@ let g:netrw_browse_split=4  " open in prior window
 let g:netrw_altv=2          " open splits to the right
 
 " ╔═════════════════════════════════════════════════════════════╗
-" ║                      Themes and Colors                      ║
-" ╚═════════════════════════════════════════════════════════════╝
-set background=dark
-
-"colorscheme wombat256      " 4/5
-"colorscheme sourcerer      " 4/5
-"colorscheme hipster      " 4/5
-colorscheme scheakur       " 4/5
-
-hi IncSearch cterm=NONE ctermfg=black ctermbg=yellow
-hi    Search cterm=NONE ctermfg=black ctermbg=yellow
-
-" ╔═════════════════════════════════════════════════════════════╗
 " ║                           Vundle                            ║
 " ╚═════════════════════════════════════════════════════════════╝
 " Brief help
@@ -178,6 +165,25 @@ au FileType python  let g:commentstring="# %s"
 au FileType haskell let g:commentstring="-- %s"
 au FileType cpp     let g:commentstring="// %s"
 au FileType make    let g:commentstring="# %s"
+
+" ╔═════════════════════════════════════════════════════════════╗
+" ║                      Themes and Colors                      ║
+" ╚═════════════════════════════════════════════════════════════╝
+set background=dark
+
+"colorscheme wombat256      " 4/5
+"colorscheme sourcerer      " 4/5
+"colorscheme hipster      " 4/5
+colorscheme scheakur       " 4/5
+"colorscheme primary " google-primary colors
+
+" These set file-type-specific rules for colorschemes
+autocmd BufEnter *.hs  colorscheme scheakur
+autocmd BufEnter *.sh  colorscheme sourcerer
+autocmd BufEnter *.py  colorscheme hipster
+
+hi IncSearch cterm=NONE ctermfg=black ctermbg=yellow
+hi    Search cterm=NONE ctermfg=black ctermbg=yellow
 
 " Return to last edit position when opening files and make that
 " line in the center of the screen.

@@ -2,6 +2,46 @@ function fish_prompt --description 'Write out the prompt'
 	# Save our status
     set -l last_status $status
 
+    # Hack; fish_config only copies the fish_prompt function (see #736)
+    if not set -q -g __fish_classic_git_functions_defined
+        set -g __fish_classic_git_functions_defined
+
+        function __fish_repaint_user --on-variable fish_color_user --description "Event handler, repaint when fish_color_user changes"
+            if status --is-interactive
+                commandline -f repaint ^/dev/null
+            end
+        end
+
+        function __fish_repaint_host --on-variable fish_color_host --description "Event handler, repaint when fish_color_host changes"
+            if status --is-interactive
+                commandline -f repaint ^/dev/null
+            end
+        end
+
+        function __fish_repaint_status --on-variable fish_color_status --description "Event handler; repaint when fish_color_status changes"
+            if status --is-interactive
+                commandline -f repaint ^/dev/null
+            end
+        end
+
+        function __fish_repaint_bind_mode --on-variable fish_key_bindings --description "Event handler; repaint when fish_key_bindings changes"
+            if status --is-interactive
+                commandline -f repaint ^/dev/null
+            end
+        end
+
+        # initialize our new variables
+        if not set -q __fish_classic_git_prompt_initialized
+            set -qU fish_color_user
+            or set -U fish_color_user -o green
+            set -qU fish_color_host
+            or set -U fish_color_host -o cyan
+            set -qU fish_color_status
+            or set -U fish_color_status red
+            set -U __fish_classic_git_prompt_initialized
+        end
+    end
+
     set -l last_status_string ""
     if [ $last_status -ne 0 ]
         printf "%s(%d)%s " (set_color red --bold) $last_status (set_color normal)
@@ -22,5 +62,9 @@ function fish_prompt --description 'Write out the prompt'
             set suffix ':'
     end
 
-    echo -n -s "$USER" @ (set_color f4e49d) "office" (set_color normal) ' ' (set_color $color_cwd) (prompt_pwd) (set_color normal) "$suffix "
+    echo -n -s "$USER" @ (set_color f4e49d) "office"(set_color normal) (__terlar_git_prompt) ' ' (set_color $color_cwd) (prompt_pwd) (set_color normal) "$suffix "
+    #echo -n -s (set_color $fish_color_user) "$USER" $normal @ (set_color $fish_color_host) (prompt_hostname) $normal ' ' (set_color $color_cwd) (prompt_pwd) $normal (__fish_vcs_prompt) $normal $prompt_status $suffix " "
+    #__terlar_git_prompt
+    #__fish_vcs_prompt
+
 end
