@@ -178,9 +178,10 @@ colorscheme scheakur       " 4/5
 "colorscheme primary " google-primary colors
 
 " These set file-type-specific rules for colorschemes
-autocmd BufEnter *.hs  colorscheme scheakur
-autocmd BufEnter *.sh  colorscheme sourcerer
-autocmd BufEnter *.py  colorscheme hipster
+autocmd BufEnter *.hs   colorscheme hipster
+autocmd BufEnter *.sh   colorscheme sourcerer
+autocmd BufEnter *.py   colorscheme hipster
+autocmd BufEnter *.fish colorscheme hipster
 
 hi IncSearch cterm=NONE ctermfg=black ctermbg=yellow
 hi    Search cterm=NONE ctermfg=black ctermbg=yellow
@@ -209,3 +210,7 @@ endif
 if filereadable(glob("~/.vimrclocal"))
     source ~/.vimrclocal
 endif
+
+" Somehow we need this after the .vimrclocal otherwise it gets
+" disabled, and then only for some fish files... strange.
+au BufNewFile,BufRead *.fish set syntax=fish

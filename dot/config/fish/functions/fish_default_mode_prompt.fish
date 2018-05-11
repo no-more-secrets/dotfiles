@@ -11,7 +11,7 @@ function fish_default_mode_prompt --description "Display the default mode for th
         or test "$fish_key_bindings" = "fish_hybrid_key_bindings"
         switch $fish_bind_mode
             case default
-                set_color --bold --background red white
+                set_color --bold --background yellow white
                 echo '[N]'
 				set_color normal
 				echo -n ' '
@@ -20,7 +20,7 @@ function fish_default_mode_prompt --description "Display the default mode for th
                 #echo '[I]'
 				set_color normal
             case replace_one
-                set_color --bold --background yellow white
+                set_color --bold --background cyan white
                 echo '[R]'
 				set_color normal
 				echo -n ' '
