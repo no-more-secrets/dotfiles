@@ -7,10 +7,10 @@ endif
 
 let g:colors_name = 'scheakur'
 
-hi Normal guifg=#dadad5 guibg=#121713 gui=none ctermfg=255 ctermbg=16 cterm=none
+hi Normal guifg=#dadad5 guibg=#121713 gui=none ctermfg=255 ctermbg=234 cterm=none
 hi ColorColumn guibg=#262f21 ctermbg=235
 hi Comment guifg=#707073 ctermfg=241
-hi Conceal guifg=#91b5d4 guibg=#121713 gui=none ctermfg=109 ctermbg=233
+hi Conceal guifg=#91b5d4 guibg=#121713 gui=none ctermfg=109 ctermbg=234
 hi Constant guifg=#70a395 ctermfg=66
 hi Cursor guibg=#f39812 ctermbg=172
 hi CursorColumn guibg=#23343d ctermbg=235
@@ -46,10 +46,10 @@ hi Search guifg=#121713 guibg=#c9c73c ctermfg=233 ctermbg=142
 hi SignColumn guifg=#7c8884 guibg=#132423 ctermfg=66 ctermbg=234
 hi Special guifg=#a7a053 ctermfg=101
 hi SpecialKey guifg=#3a4857 ctermfg=59
-hi SpellBad guifg=#ff8485 guibg=#121713 gui=undercurl ctermfg=174 ctermbg=233 guisp=#ff8485 cterm=underline
-hi SpellCap guifg=#a7a053 guibg=#121713 gui=undercurl ctermfg=101 ctermbg=233 guisp=#a7a053 cterm=underline
-hi SpellLocal guifg=#fdfec9 guibg=#121713 gui=undercurl ctermfg=187 ctermbg=233 guisp=#fdfec9 cterm=underline
-hi SpellRare guifg=#a0cab0 guibg=#121713 gui=undercurl ctermfg=109 ctermbg=233 guisp=#a0cab0 cterm=underline
+hi SpellBad guifg=#ff8485 guibg=#121713 gui=undercurl ctermfg=174 ctermbg=234 guisp=#ff8485 cterm=underline
+hi SpellCap guifg=#a7a053 guibg=#121713 gui=undercurl ctermfg=101 ctermbg=234 guisp=#a7a053 cterm=underline
+hi SpellLocal guifg=#fdfec9 guibg=#121713 gui=undercurl ctermfg=187 ctermbg=234 guisp=#fdfec9 cterm=underline
+hi SpellRare guifg=#a0cab0 guibg=#121713 gui=undercurl ctermfg=109 ctermbg=234 guisp=#a0cab0 cterm=underline
 hi Statement guifg=#91b5d4 gui=none ctermfg=109
 hi StatusLine guifg=#b2b5b2 guibg=#292c2f gui=none ctermfg=247 ctermbg=237
 hi StatusLineNC guifg=#727572 guibg=#020508 gui=italic ctermfg=235 ctermbg=232 cterm=none
