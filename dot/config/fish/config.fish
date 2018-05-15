@@ -7,10 +7,13 @@ function my_vi_bindings
     bind -M visual  \cf forward-char
 end
 
-function fish_greeting
-end
-
 set -g fish_key_bindings my_vi_bindings
 #set -g fish_key_bindings fish_vi_key_bindings
 
 alias t="tree -A -C"
+
+set -l fish_local_config ~/.config/fish/local-config.fish
+
+if test -e $fish_local_config
+    source $fish_local_config
+end

@@ -6,3 +6,4 @@ dot/ghc/ghci_history
 
 dot/config/fish/fishd.*
 dot/config/fish/fish_history
+dot/config/fish/local-config.fish
