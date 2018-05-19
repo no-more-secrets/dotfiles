@@ -53,7 +53,8 @@ hi SpellRare guifg=#a0cab0 guibg=#121713 gui=undercurl ctermfg=109 ctermbg=234 g
 hi Statement guifg=#91b5d4 gui=none ctermfg=109
 hi StatusLine guifg=#b2b5b2 guibg=#292c2f gui=none ctermfg=247 ctermbg=237
 hi StatusLineNC guifg=#727572 guibg=#020508 gui=italic ctermfg=235 ctermbg=232 cterm=none
-hi String guifg=#a7a053 ctermfg=101
+"hi String guifg=#a7a053 ctermfg=101
+hi String guifg=#a7a053 ctermfg=107
 hi TabLine guifg=#b2b5b2 guibg=#292c2f gui=none ctermfg=247 ctermbg=237
 hi TabLineFill guifg=#b2b5b2 guibg=#292c2f gui=none ctermfg=247 ctermbg=237
 hi TabLineSel guifg=#d789c8 gui=none ctermfg=139

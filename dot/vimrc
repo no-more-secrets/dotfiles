@@ -153,7 +153,8 @@ filetype plugin indent on    " required
 " ╚═════════════════════════════════════════════════════════════╝
 " Put these after the plugin stuff above since it looks like some
 " syntax settings can be overwridden there.
-au BufNewFile,BufRead *.cpp,*.hpp,*.h set syntax=cpp11
+au BufNewFile,BufRead *.cc,*.cpp,*.hpp,*.h set syntax=cpp11
+au BufNewFile,BufRead *.cc,*.cpp,*.hpp,*.h set ft=cpp
 au BufNewFile,BufRead *.lhs           set syntax=haskell_lit
 au BufNewFile,BufRead *.hs            set syntax=haskell
 au BufNewFile,BufRead *.mkh           set ft=make
