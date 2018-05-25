@@ -55,12 +55,23 @@ nnoremap [ :tabp<CR>
 nnoremap ] :tabn<CR> 
 
 " Tab will auto-complete from words in file
-inoremap <Tab> <C-n>
+"inoremap <Tab> <C-n>
 
 " Re-map C-n from autocomplete to the nerd tree.
 nnoremap <C-n> :NERDTreeToggle<CR>
 
 vnoremap <Leader>f :!sfmt 65<CR>
+
+" These are `back` and `forward` actions, analogous to web browsing.
+" However we swap them because <C-I> "should" represent `back` because it
+" is to the left of the 'O' key and the `back` button is always positioned
+" to the left of the `forward` button in a web browser.
+nnoremap <C-I> <C-O>
+nnoremap <C-O> <C-I>
+
+nnoremap <Leader>eg :YcmCompleter GoTo<CR>
+nnoremap <Leader>et :YcmCompleter GetType<CR>
+nnoremap <Leader>ef :YcmCompleter FixIt<CR>
 
 " ╔═════════════════════════════════════════════════════════════╗
 " ║                          Functions                          ║
