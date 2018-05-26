@@ -74,36 +74,6 @@ nnoremap <Leader>et :YcmCompleter GetType<CR>
 nnoremap <Leader>ef :YcmCompleter FixIt<CR>
 
 " ╔═════════════════════════════════════════════════════════════╗
-" ║                          Functions                          ║
-" ╚═════════════════════════════════════════════════════════════╝
-function DS_title_box()
-    execute "normal! :center 61\<CR>"
-    "execute "normal! :s/\t/    /g\<CR>"
-    execute "normal! O\<ESC>A╔═════════════════════════════════════════════════════════════╗\<ESC>"
-    execute "normal! j0i║\<ESC>A                                                                                    ║\<ESC>"
-    execute "normal! o\<ESC>0i╚═════════════════════════════════════════════════════════════╝\<ESC>"
-    execute "normal! kdwk0"
-    execute "normal! i" printf( g:commentstring, getline( '.' ) ) "\<ESC>D0xj0"
-    execute "normal! i" printf( g:commentstring, getline( '.' ) ) "\<ESC>D0xj0"
-    execute "normal! i" printf( g:commentstring, getline( '.' ) ) "\<ESC>D0xj0"
-endfunction
-
-function DS_section_box()
-    execute "normal! :center 63\<CR>"
-    "execute "normal! :s/\t/    /g\<CR>"
-    execute "normal! O\<ESC>A━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\<ESC>"
-    execute "normal! j0"
-    execute "normal! o\<ESC>0i━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\<ESC>"
-    execute "normal! kk0"
-    execute "normal! i" printf( g:commentstring, getline( '.' ) ) "\<ESC>D0xj0"
-    execute "normal! i" printf( g:commentstring, getline( '.' ) ) "\<ESC>D0xj0"
-    execute "normal! i" printf( g:commentstring, getline( '.' ) ) "\<ESC>D0xj0"
-endfunction
-
-map <Leader>T :call DS_title_box()<CR>
-map <Leader>t :call DS_section_box()<CR>
-
-" ╔═════════════════════════════════════════════════════════════╗
 " ║                          Clipboard                          ║
 " ╚═════════════════════════════════════════════════════════════╝
 " If  vim has clipboard support then just use that by default for
@@ -226,3 +196,6 @@ endif
 " Somehow we need this after the .vimrclocal otherwise it gets
 " disabled, and then only for some fish files... strange.
 au BufNewFile,BufRead *.fish set syntax=fish
+
+" This disables the intro message that appears when vim starts.
+set shortmess=I " Read :help shortmess for everything else.

@@ -12,7 +12,7 @@ function avg
 
     {
         val = $1
-        /* Trick for deciding whether val is a number. */
+        # Trick for deciding whether val is a number.
         if( val == val+0 ) {
             print val
             total    += val
@@ -38,7 +38,7 @@ function avg
     }
 
     END {
-        print "------------------------------------------------"
+        print ""
         print "total:  ", total
         print "min:    ", min
         print "max:    ", max
@@ -48,6 +48,5 @@ function avg
             std_dev = sqrt( total_sq/count - (avg*avg) )
             print "avg/dev:", avg, "+-", std_dev
         }
-        print "------------------------------------------------"
     }'
 end
