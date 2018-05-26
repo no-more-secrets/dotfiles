@@ -18,6 +18,10 @@ fi
 # ╔═════════════════════════════════════════════════════════════╗
 # ║                  Install or Update Plugins                  ║
 # ╚═════════════════════════════════════════════════════════════╝
+# Need this because the below apparently will invoke a shell and
+# this can cause problems if the current shell is e.g. fish.
+export SHELL=/bin/sh
+
 msg 'Installing plugins...'
 vim +PluginInstall +qall; check 'install plugins'
 msg 'Updating plugins...'
