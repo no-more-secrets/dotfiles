@@ -1,10 +1,10 @@
-" ╔═════════════════════════════════════════════════════════════╗
-" ║                           Options                           ║
-" ╚═════════════════════════════════════════════════════════════╝
-set enc=utf-8           "set UTF-8 encoding
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+"                            Options
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+set enc=utf-8
 set fenc=utf-8
 set termencoding=utf-8
-set nocompatible        " disable vi compatibility
+set nocompatible
 set t_Co=256
 set mouse=a
 set expandtab
@@ -24,16 +24,35 @@ set relativenumber      " line number deltas
 set showmatch           " highlight matching braces
 set backspace=indent,eol,start
 " set smartindent
+syntax on
+
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+"                              Undo
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+" For each edited file vim will persist all the undo info for
+" all history in a .*~ file in the same folder as the file.
+set undofile
+
+" The Undo diff view will be in a new window below the file being
+" edited instead of (the default, which is) to place it below the
+" graph view on the left.
+let g:mundo_preview_bottom = 1
+
+" This toggles the Mundo (plugin) undo tree  window.  The  reason
+" for the two <CR>'s is because this command  normally  seems  to
+" cause  a 'Press ENTER...' prompt to appear the first time it is
+" started in a vim session which is  somewhat  annoying,  and  so
+" this seems to be be a workaround that fixes that.
+nnoremap U :MundoToggle<CR><CR>
 
 " An  arbitrary key that we use as a namespace for additional key-
 " bindings to avoid conflicts with the standard n/v modes.
 let mapleader = ','
 
-syntax on " turn syntax highlighting on
-
-" ╔═════════════════════════════════════════════════════════════╗
-" ║                        Key Mappings                         ║
-" ╚═════════════════════════════════════════════════════════════╝
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+"                         Key Mappings
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 nnoremap \ i <ESC>l
 nnoremap ( O<ESC>j
 nnoremap } $
@@ -62,10 +81,11 @@ nnoremap <C-n> :NERDTreeToggle<CR>
 
 vnoremap <Leader>f :!sfmt 65<CR>
 
-" These are `back` and `forward` actions, analogous to web browsing.
-" However we swap them because <C-I> "should" represent `back` because it
-" is to the left of the 'O' key and the `back` button is always positioned
-" to the left of the `forward` button in a web browser.
+" These are `back` and `forward`  actions, analogous to web brows-
+" ing.  However  we  swap  them  because <C-I> "should" represent
+" `back` because it is to the left of the 'O' key and the  `back`
+" button is always positioned to the left of the `forward` button
+" in a web browser.
 nnoremap <C-I> <C-O>
 nnoremap <C-O> <C-I>
 
@@ -73,9 +93,9 @@ nnoremap <Leader>eg :YcmCompleter GoTo<CR>
 nnoremap <Leader>et :YcmCompleter GetType<CR>
 nnoremap <Leader>ef :YcmCompleter FixIt<CR>
 
-" ╔═════════════════════════════════════════════════════════════╗
-" ║                          Clipboard                          ║
-" ╚═════════════════════════════════════════════════════════════╝
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+"                           Clipboard
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 " If  vim has clipboard support then just use that by default for
 " yanking.
 if has( 'clipboard' )
@@ -96,18 +116,18 @@ nnoremap <Leader>P  :.-1r  ~/.vimbuf<CR>
 vnoremap <Leader>y  :w!    ~/.vimbuf<CR>
 nmap     <Leader>yy  V<Leader>y
 
-" ╔═════════════════════════════════════════════════════════════╗
-" ║                            netrw                            ║
-" ╚═════════════════════════════════════════════════════════════╝
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+"                             netrw
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 " Default file manager
 let g:netrw_banner=0        " no useless banner
 let g:netrw_liststyle=3     " tree view
 let g:netrw_browse_split=4  " open in prior window
 let g:netrw_altv=2          " open splits to the right
 
-" ╔═════════════════════════════════════════════════════════════╗
-" ║                           Vundle                            ║
-" ╚═════════════════════════════════════════════════════════════╝
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+"                            Vundle
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 " Brief help
 " :PluginList       - lists configured plugins
 " :PluginInstall    - installs plugins
@@ -121,25 +141,31 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
     " Note: Vundle needs to manage Vundle
     Plugin 'VundleVim/Vundle.vim'
-    Plugin 'godlygeek/tabular'
-    Plugin 'tpope/vim-fugitive'
-    Plugin 'scrooloose/nerdtree'
-    Plugin 'easymotion/vim-easymotion'
+    Plugin 'godlygeek/tabular'         " Auto alignment
+    Plugin 'tpope/vim-fugitive'        " Git integration
+    Plugin 'scrooloose/nerdtree'       " File manager
+    Plugin 'easymotion/vim-easymotion' " Web-browser-like navigation overlays
+    Plugin 'scrooloose/nerdcommenter'  " Auto comment manipulation
+    Plugin 'raimondi/delimitmate'      " Auto closing of quotes, parens, etc.
+    Plugin 'simnalamburt/vim-mundo'    " Undo tree interaction
+    " Colorschemes
+    Plugin 'morhetz/gruvbox'
 call vundle#end()            " required
 
 filetype plugin indent on    " required
 
-" ╔═════════════════════════════════════════════════════════════╗
-" ║                           Buffers                           ║
-" ╚═════════════════════════════════════════════════════════════╝
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+"                            Buffers
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 " Put these after the plugin stuff above since it looks like some
 " syntax settings can be overwridden there.
 au BufNewFile,BufRead *.cc,*.cpp,*.hpp,*.h set syntax=cpp11
 au BufNewFile,BufRead *.cc,*.cpp,*.hpp,*.h set ft=cpp
-au BufNewFile,BufRead *.lhs           set syntax=haskell_lit
-au BufNewFile,BufRead *.hs            set syntax=haskell
-au BufNewFile,BufRead *.mkh           set ft=make
-au BufNewFile,BufRead *.fish          set syntax=fish
+au BufNewFile,BufRead *.lhs                set syntax=haskell_lit
+au BufNewFile,BufRead *.hs                 set syntax=haskell
+au BufNewFile,BufRead *.hs                 set ft=haskell
+au BufNewFile,BufRead *.mkh                set ft=make
+au BufNewFile,BufRead *.fish               set syntax=fish
 
 au FileType vim     let g:commentstring="\" %s"
 au FileType sh      let g:commentstring="# %s"
@@ -148,37 +174,46 @@ au FileType haskell let g:commentstring="-- %s"
 au FileType cpp     let g:commentstring="// %s"
 au FileType make    let g:commentstring="# %s"
 
-" ╔═════════════════════════════════════════════════════════════╗
-" ║                      Themes and Colors                      ║
-" ╚═════════════════════════════════════════════════════════════╝
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+"                             Themes
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+" If there is no colorscheme already  set  then this will set one.
+" It  will  be  called as an auto command after the auto commands
+" used to set the colorscheme for particular file types.
+function SetDefaultColorScheme()
+    " colorschemes:
+    "    wombat256   sourcerer
+    "    hipster     scheakur
+    "    gruvbox     primary
+    try
+        echo g:colors_name
+    catch /E121/
+        colorscheme gruvbox
+    endtry
+endfunction
+
 set background=dark
 
-"colorscheme wombat256      " 4/5
-"colorscheme sourcerer      " 4/5
-"colorscheme hipster      " 4/5
-colorscheme scheakur       " 4/5
-"colorscheme primary " google-primary colors
-
 " These set file-type-specific rules for colorschemes
-autocmd BufEnter *.hs   colorscheme hipster
-autocmd BufEnter *.sh   colorscheme sourcerer
-autocmd BufEnter *.py   colorscheme hipster
-autocmd BufEnter *.fish colorscheme hipster
+au FileType haskell colorscheme hipster
+au BufEnter sh      colorscheme sourcerer
+
+au BufEnter * :call SetDefaultColorScheme()
 
 hi IncSearch cterm=NONE ctermfg=black ctermbg=yellow
 hi    Search cterm=NONE ctermfg=black ctermbg=yellow
 
-" Return to last edit position when opening files and make that
+" Return  to  last edit position when opening files and make that
 " line in the center of the screen.
 autocmd BufReadPost *
      \ if line("'\"") > 0 && line("'\"") <= line("$") |
      \   exe "normal! g`\"z." |
      \ endif
 
-" ╔═════════════════════════════════════════════════════════════╗
-" ║                            Misc                             ║
-" ╚═════════════════════════════════════════════════════════════╝
-" This was inserted to allow using the mouse to resize vim panes
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+"                              Misc
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+" This  was inserted to allow using the mouse to resize vim panes
 " from within a tmux pane.
 set mouse+=a
 if &term =~ '^screen'
@@ -186,16 +221,16 @@ if &term =~ '^screen'
     set ttymouse=xterm2
 endif
 
-" ╔═════════════════════════════════════════════════════════════╗
-" ║                            Local                            ║
-" ╚═════════════════════════════════════════════════════════════╝
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+"                             Local
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 if filereadable(glob("~/.vimrclocal"))
     source ~/.vimrclocal
 endif
 
-" Somehow we need this after the .vimrclocal otherwise it gets
+" Somehow we need this  after  the  .vimrclocal otherwise it gets
 " disabled, and then only for some fish files... strange.
 au BufNewFile,BufRead *.fish set syntax=fish
 
-" This disables the intro message that appears when vim starts.
+" This disables the intro  message  that  appears when vim starts.
 set shortmess=I " Read :help shortmess for everything else.
