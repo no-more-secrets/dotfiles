@@ -186,7 +186,7 @@ function SetDefaultColorScheme()
     "    hipster     scheakur
     "    gruvbox     primary
     try
-        echo g:colors_name
+        :silent echo g:colors_name
     catch /E121/
         colorscheme gruvbox
     endtry
