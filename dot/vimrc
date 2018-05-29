@@ -23,6 +23,11 @@ set number              " turn line numbers on
 set relativenumber      " line number deltas
 set showmatch           " highlight matching braces
 set backspace=indent,eol,start
+
+" This sets the window pane divider char to empty, instead of the
+" default |
+set fillchars+=vert:\   " Must be a space after \
+
 " set smartindent
 syntax on
 
