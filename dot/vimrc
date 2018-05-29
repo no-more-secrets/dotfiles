@@ -44,6 +44,10 @@ set undofile
 " graph view on the left.
 let g:mundo_preview_bottom = 1
 
+" Close the Undo view automatically when reverting (i.e., when
+" hitting enter on a node).
+let g:mundo_close_on_revert = 1
+
 " This toggles the Mundo (plugin) undo tree  window.  The  reason
 " for the two <CR>'s is because this command  normally  seems  to
 " cause  a 'Press ENTER...' prompt to appear the first time it is
@@ -97,6 +101,24 @@ nnoremap <C-O> <C-I>
 nnoremap <Leader>eg :YcmCompleter GoTo<CR>
 nnoremap <Leader>et :YcmCompleter GetType<CR>
 nnoremap <Leader>ef :YcmCompleter FixIt<CR>
+nnoremap <Leader>er :YcmForceCompileAndDiagnostics<CR>
+
+" This option controls the key mapping used to invoke the completion menu
+" for semantic completion. By default, semantic completion is triggered
+" automatically after typing ., -> and :: in insert mode (if semantic
+" completion support has been compiled in). This key mapping can be used to
+" trigger semantic completion anywhere. Useful for searching for top-level
+" functions and classes.  This applies in INSERT mode.
+let g:ycm_key_invoke_completion = '<C-L>'
+
+" This allows one to alternate between .cpp and .hpp files so long
+" as they are in the current directory.  It works by [e]diting the
+" file whose name is the current one except with the extension .cpp
+" changed to .hpp, and .hpp changed first to .X123X and then to .cpp.
+nnoremap <Leader>s :e %:p:s,.hpp$,.X123X,:s,.cpp$,.hpp,:s,.X123X$,.cpp,<CR>
+" This variant will do the same as above, but will search for the
+" token under the cursor in the new file (from the top) once loaded.
+nnoremap <Leader>S * :e %:p:s,.hpp$,.X123X,:s,.cpp$,.hpp,:s,.X123X$,.cpp,<CR>ggn
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 "                           Clipboard
