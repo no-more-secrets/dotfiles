@@ -175,6 +175,7 @@ call vundle#begin()
     Plugin 'scrooloose/nerdcommenter'  " Auto comment manipulation
     Plugin 'raimondi/delimitmate'      " Auto closing of quotes, parens, etc.
     Plugin 'simnalamburt/vim-mundo'    " Undo tree interaction
+    Plugin 'valloric/youcompleteme'
     " Colorschemes
     Plugin 'morhetz/gruvbox'
 call vundle#end()            " required
