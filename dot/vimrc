@@ -248,6 +248,19 @@ if &term =~ '^screen'
     set ttymouse=xterm2
 endif
 
+" If  NerdTree  is  the only open window then quit from it, effec-
+" tively quitting vim if only NerdTree is open.
+function ExitIfOnlyNerdTree()
+    if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree())
+        q
+    endif
+endfunction
+
+autocmd bufenter * :call ExitIfOnlyNerdTree()
+
+" This disables the intro  message  that  appears when vim starts.
+set shortmess=I " Read :help shortmess for everything else.
+
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 "                             Local
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -258,6 +271,3 @@ endif
 " Somehow we need this  after  the  .vimrclocal otherwise it gets
 " disabled, and then only for some fish files... strange.
 au BufNewFile,BufRead *.fish set syntax=fish
-
-" This disables the intro  message  that  appears when vim starts.
-set shortmess=I " Read :help shortmess for everything else.
