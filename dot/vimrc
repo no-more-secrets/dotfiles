@@ -163,6 +163,7 @@ let g:netrw_altv=2          " open splits to the right
 filetype off                  " required
 
 " If we are in the work environment then do things differently.
+let g:work_env = 0
 if $HOME =~ "oo"
   let g:work_env = 1
 endif
