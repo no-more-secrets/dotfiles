@@ -7,6 +7,8 @@ function my_vi_bindings
     bind -M visual  \cf forward-char
 end
 
+set fish_function_path $fish_function_path ~/.config/fish/functions/local
+
 set -g fish_key_bindings my_vi_bindings
 #set -g fish_key_bindings fish_vi_key_bindings
 
