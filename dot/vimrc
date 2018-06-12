@@ -82,6 +82,11 @@ nnoremap <F3> ^xj
 nnoremap [ :tabp<CR>
 nnoremap ] :tabn<CR> 
 
+" Shift-q will close all windows; this is useful when there are
+" multiple windows open and you want to exit vim without having
+" to type :q<CR> for each one of them.
+nnoremap Q :qa<CR>
+
 " Tab will auto-complete from words in file
 "inoremap <Tab> <C-n>
 
