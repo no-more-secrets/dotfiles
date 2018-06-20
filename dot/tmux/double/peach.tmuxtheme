@@ -19,7 +19,7 @@ set -g status-bg colour235
 set -g status-left-bg colour234
 set -g status-left-fg colour243
 set -g status-left-length 40
-set -g status-left "#[fg=colour234,bg=colour223,bold] #S #[fg=colour223,bg=colour240,nobold]#[fg=colour234,bg=colour240] #(whoami) #[fg=colour240,bg=colour237]#[fg=colour250,bg=colour237] #I:#P #[fg=colour237,bg=colour235,nobold]"
+set -g status-left "#[fg=colour234,bg=colour223,bold] #(whoami) #[fg=colour223,bg=colour240,nobold]#[fg=colour234,bg=colour240] %d-%b-%y #[fg=colour240,bg=colour237]#[fg=colour250,bg=colour237] %l:%M:%S %p #[fg=colour237,bg=colour235,nobold]"
 
 # Right side of status bar
 set -g status-right-bg colour234
