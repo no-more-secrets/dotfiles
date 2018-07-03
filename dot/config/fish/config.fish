@@ -16,6 +16,8 @@ alias t="tree -A -C"
 
 set -l fish_local_config ~/.config/fish/local-config.fish
 
+set PATH $PATH ~/bin
+
 if test -e $fish_local_config
     source $fish_local_config
 end
