@@ -19,18 +19,21 @@ set -g status-bg colour235
 set -g status-left-bg colour234
 set -g status-left-fg colour243
 set -g status-left-length 40
-set -g status-left "#[fg=colour234,bg=colour223,bold] #(whoami) #[fg=colour223,bg=colour240,nobold]#[fg=colour234,bg=colour240] %d-%b-%y #[fg=colour240,bg=colour237]#[fg=colour250,bg=colour237] %l:%M:%S %p #[fg=colour237,bg=colour235,nobold]"
+#set -g status-left "#[fg=colour234,bg=colour223,bold] #(whoami) #[fg=colour223,bg=colour240,nobold]#[fg=colour234,bg=colour240] %d-%b-%y #[fg=colour240,bg=colour237]#[fg=colour250,bg=colour237] %l:%M:%S %p #[fg=colour237,bg=colour235,nobold]"
+set -g status-left "#[fg=colour234,bg=colour240] %A #[fg=colour240,bg=colour237]#[fg=colour250,bg=colour237] %s #[fg=colour237,bg=colour235,nobold]"
 
 # Right side of status bar
 set -g status-right-bg colour234
 set -g status-right-fg colour243
 set -g status-right-length 150
-set -g status-right "#[fg=colour237,bg=colour235]#[fg=colour250,bg=colour237] %l:%M:%S %p #[fg=colour240,bg=colour237]#[fg=colour234,bg=colour240] %d-%b-%y #[fg=colour223,bg=colour240]#[fg=colour234,bg=colour223,bold] #h "
+#set -g status-right "#[fg=colour237,bg=colour235]#[fg=colour250,bg=colour237] %l:%M:%S %p #[fg=colour240,bg=colour237]#[fg=colour234,bg=colour240] %d-%b-%y #[fg=colour223,bg=colour240]#[fg=colour234,bg=colour223,bold] #h "
+set -g status-right "#[fg=colour237,bg=colour235]#[fg=colour250,bg=colour237] %l:%M:%S %p #[fg=colour240,bg=colour237]#[fg=colour234,bg=colour240] %x #[fg=colour223,bg=colour240]"
 
 # Window status
 set -g window-status-format "  #[fg=colour223,bg=colour235]#W#F  "
 #set -g window-status-current-format "#[fg=colour234,bg=black]#[fg=colour223,nobold] #I:#W#F #[fg=colour234,bg=black,nobold]"
-set -g window-status-current-format "#[fg=colour223,bg=colour235]▟#[fg=colour235,bg=colour223] #W#F #[fg=colour223,bg=colour235]▙#[fg=colour234,bg=black,nobold]"
+#set -g window-status-current-format "#[fg=colour223,bg=colour235]▟#[fg=colour235,bg=colour223] #W#F #[fg=colour223,bg=colour235]▙#[fg=colour234,bg=black,nobold]"
+set -g window-status-current-format "#[fg=colour223,bg=colour235]░▒▓#[fg=colour235,bg=colour223] #W#F #[fg=colour223,bg=colour235]▓▒░#[fg=colour234,bg=black,nobold]"
 
 # Current window status
 set -g window-status-current-bg colour223
