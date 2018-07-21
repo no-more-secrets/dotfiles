@@ -32,6 +32,80 @@ set fillchars+=vert:\   " Must be a space after \
 syntax on
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+"                           Status Bar
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+" Status bar always visible
+set laststatus=2
+
+" Currently disabled because it cause display problems (random
+" keys pressed in normal mode appear in the buffer, then disappear
+" when display is refreshed).
+"function! GitBranch()
+"    let l:cmd = 'git rev-parse --abbrev-ref HEAD'
+"    return system(l:cmd . " 2>/dev/null | tr -d '\n'")
+"endfunction
+
+"function! StatuslineGit()
+"    let l:branchname = GitBranch()
+"    return strlen(l:branchname) > 0?'  '.l:branchname.' ':''
+"endfunction
+
+" This  function  inserts  a small piece of text into the current
+" statusline  variable  giving  the  status  of  YCM's background
+" parsing request. If there is  is  a  file parse request pending
+" for the current buffer then this will show a series  of  dashes.
+" If  the  parse request is complete then it will show the number
+" of errors, which may be zero. Also, different status of colored
+" accordingly.
+function! GetYcmStatus()
+	let g:ycm_status_begin = ' ['
+	set statusline+=%{g:ycm_status_begin}
+    if py3eval( "ycm_state.FileParseRequestReady()" )
+		let l:n_errors = py3eval( 'ycm_state.GetErrorCount()' )
+        if l:n_errors > 0
+			set statusline+=%#ErrorMsg#
+            let l:indicator = '# errors: ' . l:n_errors
+        else
+			set statusline+=%#SpecialKey#
+            let l:indicator = '# errors: 0'
+        endif
+        let g:ycm_status_middle = l:indicator
+		set statusline+=%{g:ycm_status_middle}
+    else
+        set statusline+=%#WarningMsg#
+		set statusline+=-----------
+    endif
+	set statusline+=%#LineNr#
+	let g:ycm_status_end = ']'
+	set statusline+=%{g:ycm_status_end}
+endfunction
+
+" Vim  allows  one to put function calls inline in the status bar
+" text so that they will be called  whenever the status bar is up-
+" dated. However, we don't do that since  some  of  the  function
+" calls have overhead, and the status bar is  updated  each  time
+" the cursor moves. So instead, we  just put the status update in
+" a timer function that updates the status variable.
+let timer = timer_start(1000, 'UpdateStatusBar',{'repeat':-1})
+function! UpdateStatusBar(timer)
+	set statusline=
+	"set statusline+=%#PmenuSel#
+    "let g:git_status = StatuslineGit()
+    "set statusline+=%{g:git_status}
+	set statusline+=%#LineNr#
+	set statusline+=\ %f
+    call GetYcmStatus()
+	set statusline+=%m
+	set statusline+=%=
+	set statusline+=%#Identifier#
+	set statusline+=\ %y
+	set statusline+=\ %p%%
+	set statusline+=\ %l:%c
+    let g:space_char = ' '
+	set statusline+=%{g:space_char}
+endfunction
+
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 "                              Undo
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
