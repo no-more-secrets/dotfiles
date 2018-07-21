@@ -32,6 +32,28 @@ set fillchars+=vert:\   " Must be a space after \
 syntax on
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+"                           Utilities
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+let g:space_char = ' '
+
+function! s:UsingPython3()
+    if has( 'python3' )
+        return 1
+    endif
+    return 0
+endfunction
+
+let s:using_python3 = s:UsingPython3()
+
+function! s:Pyeval( eval_string )
+    if s:using_python3
+        return py3eval( a:eval_string )
+    endif
+    return pyeval( a:eval_string )
+endfunction
+
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 "                           Status Bar
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 " Status bar always visible
@@ -58,26 +80,30 @@ set laststatus=2
 " of errors, which may be zero. Also, different status of colored
 " accordingly.
 function! GetYcmStatus()
-	let g:ycm_status_begin = ' ['
-	set statusline+=%{g:ycm_status_begin}
-    if py3eval( "ycm_state.FileParseRequestReady()" )
-		let l:n_errors = py3eval( 'ycm_state.GetErrorCount()' )
-        if l:n_errors > 0
-			set statusline+=%#ErrorMsg#
-            let l:indicator = '# errors: ' . l:n_errors
+    let g:ycm_status_begin = ' ['
+    set statusline+=%{g:ycm_status_begin}
+    if !s:Pyeval( "ycm_state.CheckIfServerIsReady()" )
+        set statusline+=%#SpecialKey#
+        set statusline+=-----------
+    elseif s:Pyeval( "ycm_state.FileParseRequestReady()" )
+        let g:ycm_n_errors = s:Pyeval( 'ycm_state.GetErrorCount()' )
+        let g:ycm_status_middle = '# errors: '
+        if g:ycm_n_errors > 0
+            set statusline+=%#ErrorMsg#
+            set statusline+=%{g:ycm_status_middle}
+            set statusline+=%{g:ycm_n_errors}
         else
-			set statusline+=%#SpecialKey#
-            let l:indicator = '# errors: 0'
+            set statusline+=%#SpecialKey#
+            set statusline+=%{g:ycm_status_middle}
+            set statusline+=%{g:ycm_n_errors}
         endif
-        let g:ycm_status_middle = l:indicator
-		set statusline+=%{g:ycm_status_middle}
     else
         set statusline+=%#WarningMsg#
-		set statusline+=-----------
+        set statusline+=\ compiling%{g:space_char}
     endif
-	set statusline+=%#LineNr#
-	let g:ycm_status_end = ']'
-	set statusline+=%{g:ycm_status_end}
+    set statusline+=%#LineNr#
+    let g:ycm_status_end = ']'
+    set statusline+=%{g:ycm_status_end}
 endfunction
 
 " Vim  allows  one to put function calls inline in the status bar
@@ -88,21 +114,21 @@ endfunction
 " a timer function that updates the status variable.
 let timer = timer_start(1000, 'UpdateStatusBar',{'repeat':-1})
 function! UpdateStatusBar(timer)
-	set statusline=
-	"set statusline+=%#PmenuSel#
+    set statusline=
+    "set statusline+=%#PmenuSel#
     "let g:git_status = StatuslineGit()
     "set statusline+=%{g:git_status}
-	set statusline+=%#LineNr#
-	set statusline+=\ %f
+    set statusline+=%#LineNr#
+    set statusline+=\ %f
     call GetYcmStatus()
-	set statusline+=%m
-	set statusline+=%=
-	set statusline+=%#Identifier#
-	set statusline+=\ %y
-	set statusline+=\ %p%%
-	set statusline+=\ %l:%c
+    set statusline+=%m
+    set statusline+=%=
+    set statusline+=%#Identifier#
+    set statusline+=\ %y
+    set statusline+=\ %p%%
+    set statusline+=\ %l:%c
     let g:space_char = ' '
-	set statusline+=%{g:space_char}
+    set statusline+=%{g:space_char}
 endfunction
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
