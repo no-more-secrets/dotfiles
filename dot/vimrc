@@ -56,6 +56,10 @@ endfunction
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 "                           Status Bar
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+" In the following code  we  set  the  `statusline` variable as a
+" local variable (setl) so that we  get  a  status  bar  that  is
+" unique to each given buffer.
+"
 " Status bar always visible
 set laststatus=2
 
@@ -80,30 +84,35 @@ set laststatus=2
 " of errors, which may be zero. Also, different status of colored
 " accordingly.
 function! GetYcmStatus()
+    if !s:Pyeval( "ycm_state.ShouldDisplayDiagnostics()" )
+        " If we're here then this is likely not a file or  buffer
+        " type where YCM will be used, so just suppress the  indi-
+        " cator altogether.
+        return
+    endif
     let g:ycm_status_begin = ' ['
-    set statusline+=%{g:ycm_status_begin}
+    setl statusline+=%{g:ycm_status_begin}
     if !s:Pyeval( "ycm_state.CheckIfServerIsReady()" )
-        set statusline+=%#SpecialKey#
-        set statusline+=-----------
+        setl statusline+=%#SpecialKey#
+        setl statusline+=-----------
     elseif s:Pyeval( "ycm_state.FileParseRequestReady()" )
         let g:ycm_n_errors = s:Pyeval( 'ycm_state.GetErrorCount()' )
         let g:ycm_status_middle = '# errors: '
         if g:ycm_n_errors > 0
-            set statusline+=%#ErrorMsg#
-            set statusline+=%{g:ycm_status_middle}
-            set statusline+=%{g:ycm_n_errors}
+            setl statusline+=%#ErrorMsg#
+            setl statusline+=%{g:ycm_status_middle}
+            setl statusline+=%{g:ycm_n_errors}
         else
-            set statusline+=%#SpecialKey#
-            set statusline+=%{g:ycm_status_middle}
-            set statusline+=%{g:ycm_n_errors}
+            setl statusline+=%#SpecialKey#
+            setl statusline+=\ no\ errors%{g:space_char}
         endif
     else
-        set statusline+=%#WarningMsg#
-        set statusline+=\ compiling%{g:space_char}
+        setl statusline+=%#WarningMsg#
+        setl statusline+=\ compiling%{g:space_char}
     endif
-    set statusline+=%#LineNr#
+    setl statusline+=%#LineNr#
     let g:ycm_status_end = ']'
-    set statusline+=%{g:ycm_status_end}
+    setl statusline+=%{g:ycm_status_end}
 endfunction
 
 " Vim  allows  one to put function calls inline in the status bar
@@ -114,21 +123,21 @@ endfunction
 " a timer function that updates the status variable.
 let timer = timer_start(1000, 'UpdateStatusBar',{'repeat':-1})
 function! UpdateStatusBar(timer)
-    set statusline=
+    setl statusline=
     "set statusline+=%#PmenuSel#
     "let g:git_status = StatuslineGit()
     "set statusline+=%{g:git_status}
-    set statusline+=%#LineNr#
-    set statusline+=\ %f
+    setl statusline+=%#LineNr#
+    setl statusline+=\ %f
     call GetYcmStatus()
-    set statusline+=%m
-    set statusline+=%=
-    set statusline+=%#Identifier#
-    set statusline+=\ %y
-    set statusline+=\ %p%%
-    set statusline+=\ %l:%c
+    setl statusline+=%m
+    setl statusline+=%=
+    setl statusline+=%#Identifier#
+    setl statusline+=\ %y
+    setl statusline+=\ %p%%
+    setl statusline+=\ %l:%2c
     let g:space_char = ' '
-    set statusline+=%{g:space_char}
+    setl statusline+=%{g:space_char}
 endfunction
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -203,18 +212,22 @@ vnoremap <Leader>f :!sfmt 65<CR>
 nnoremap <C-I> <C-O>
 nnoremap <C-O> <C-I>
 
-nnoremap <Leader>eg :YcmCompleter GoTo<CR>
-nnoremap <Leader>et :YcmCompleter GetType<CR>
-nnoremap <Leader>ef :YcmCompleter FixIt<CR>
-nnoremap <Leader>er :YcmForceCompileAndDiagnostics<CR>
+nnoremap <C-H> :lprevious<CR>
+nnoremap <C-L> :lnext<CR>
 
-" This option controls the key mapping used to invoke the completion menu
-" for semantic completion. By default, semantic completion is triggered
-" automatically after typing ., -> and :: in insert mode (if semantic
-" completion support has been compiled in). This key mapping can be used to
-" trigger semantic completion anywhere. Useful for searching for top-level
-" functions and classes.  This applies in INSERT mode.
-let g:ycm_key_invoke_completion = '<C-L>'
+" The `Imprecise` variants will perform  the operation without re-
+" compiling the translation unit.  Useful  if compilation is slow,
+" but can yield incorrect results if the file is out of date (not
+" sure when this would happen  though,  since  YCM seems to recom-
+" pile the file as one types).
+nnoremap <Leader>eg :YcmCompleter GoTo<CR>
+nnoremap <Leader>eG :YcmCompleter GoToImprecise<CR>
+nnoremap <Leader>et :YcmCompleter GetType<CR>
+nnoremap <Leader>eT :YcmCompleter GetTypeImprecise<CR>
+nnoremap <Leader>ef :YcmCompleter FixIt<CR>
+nnoremap <Leader>ep :YcmCompleter GetParent<CR>
+nnoremap <Leader>er :YcmForceCompileAndDiagnostics<CR>
+nnoremap <Leader>ee :YcmDiags<CR>
 
 " This allows one to alternate between .cpp and .hpp files so long
 " as they are in the current directory.  It works by [e]diting the
@@ -224,6 +237,37 @@ nnoremap <Leader>s :e %:p:s,.hpp$,.X123X,:s,.cpp$,.hpp,:s,.X123X$,.cpp,<CR>
 " This variant will do the same as above, but will search for the
 " token under the cursor in the new file (from the top) once loaded.
 nnoremap <Leader>S * :e %:p:s,.hpp$,.X123X,:s,.cpp$,.hpp,:s,.X123X$,.cpp,<CR>ggn
+
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+"                        Variable Settings
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+" This  option controls the key mapping used to invoke the comple-
+" tion menu for semantic completion. By default, semantic  comple-
+" tion  is  triggered  automatically after typing ., -> and :: in
+" insert  mode  (if semantic completion support has been compiled
+" in). This key mapping can be used to  trigger  semantic  comple-
+" tion anywhere. Useful for searching for top-level functions and
+" classes. This applies in INSERT mode.
+let g:ycm_key_invoke_completion = '<C-L>'
+" This tells YCM to populate the location list with errors.
+let g:ycm_always_populate_location_list = 1
+" These characters appear in the gutter on error.
+let g:ycm_error_symbol = '→'   " default is '>>'
+
+"let g:ycm_autoclose_preview_window_after_completion = 1
+let g:ycm_autoclose_preview_window_after_insertion = 1
+
+" Whitelist of .ycm_extra_conf.py  files  which  will  be  loaded
+" without asking the user  permission  each  time. Items starting
+" with a '!' character  will  be  blacklisted; items not starting
+" with '!' are whitelists. Stars are globs.
+let g:ycm_extra_conf_globlist = [
+  \ '~/dev/calcterm/*',
+  \ '~/dev/CAStle/*',
+  \ '~/dev/cpp/*',
+  \ '~/dev/p-unzip/*'
+  \ ]
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 "                          Auto-Highlight
