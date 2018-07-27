@@ -94,21 +94,21 @@ function! GetYcmStatus()
     setl statusline+=%{g:ycm_status_begin}
     if !s:Pyeval( "ycm_state.CheckIfServerIsReady()" )
         setl statusline+=%#SpecialKey#
-        setl statusline+=-----------
+        setl statusline+=---------
     elseif s:Pyeval( "ycm_state.FileParseRequestReady()" )
         let g:ycm_n_errors = s:Pyeval( 'ycm_state.GetErrorCount()' )
-        let g:ycm_status_middle = '# errors: '
+        let g:ycm_status_middle = 'errors: '
         if g:ycm_n_errors > 0
             setl statusline+=%#ErrorMsg#
             setl statusline+=%{g:ycm_status_middle}
             setl statusline+=%{g:ycm_n_errors}
         else
             setl statusline+=%#SpecialKey#
-            setl statusline+=\ no\ errors%{g:space_char}
+            setl statusline+=no\ errors
         endif
     else
         setl statusline+=%#WarningMsg#
-        setl statusline+=\ compiling%{g:space_char}
+        setl statusline+=compiling
     endif
     setl statusline+=%#LineNr#
     let g:ycm_status_end = ']'
