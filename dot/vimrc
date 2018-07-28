@@ -7,15 +7,21 @@ set termencoding=utf-8
 set nocompatible
 set t_Co=256
 set mouse=a
-set expandtab
-set tabstop=4
-set shiftwidth=4
-set autoindent
-set sw=4
+
+" Spacing and spaces
 set nowrap
+set sw=4
+set autoindent
+set shiftwidth=4
+set tabstop=4
+set expandtab
+
+" Searching
 set hlsearch
 set incsearch
 set ignorecase          " Ignore case when searching (\c)
+set smartcase           " Ignore case unless there is a cap
+
 set splitbelow
 set splitright
 set sidescroll=1
@@ -212,8 +218,9 @@ vnoremap <Leader>f :!sfmt 65<CR>
 nnoremap <C-I> <C-O>
 nnoremap <C-O> <C-I>
 
-nnoremap <C-H> :lprevious<CR>
-nnoremap <C-L> :lnext<CR>
+" Move windows easily, but only left/right.
+nnoremap <C-H> <C-W>h
+nnoremap <C-L> <C-W>l
 
 " The `Imprecise` variants will perform  the operation without re-
 " compiling the translation unit.  Useful  if compilation is slow,
@@ -237,6 +244,18 @@ nnoremap <Leader>s :e %:p:s,.hpp$,.X123X,:s,.cpp$,.hpp,:s,.X123X$,.cpp,<CR>
 " This variant will do the same as above, but will search for the
 " token under the cursor in the new file (from the top) once loaded.
 nnoremap <Leader>S * :e %:p:s,.hpp$,.X123X,:s,.cpp$,.hpp,:s,.X123X$,.cpp,<CR>ggn
+
+nnoremap <C-E> 4<C-E>4j
+nnoremap <C-Y> 4<C-Y>4k
+
+nnoremap B :prev<CR>
+nnoremap N :next<CR>
+
+" Rebinds the ; key to EasyMotions controls.
+nmap ;w <Leader><Leader>w
+nmap ;b <Leader><Leader>b
+nmap ;W <Leader><Leader>W
+nmap ;B <Leader><Leader>B
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 "                        Variable Settings
