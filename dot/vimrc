@@ -12,6 +12,7 @@ set mouse=a
 set nowrap
 set sw=4
 set autoindent
+set smartindent
 set shiftwidth=4
 set tabstop=4
 set expandtab
@@ -34,8 +35,11 @@ set backspace=indent,eol,start
 " default |
 set fillchars+=vert:\   " Must be a space after \
 
-" set smartindent
 syntax on
+" If syntax file supports it (with Spell/NoSpell directives) then
+" this will cause spelling to be checked in code comments (in  ad-
+" dition to normal text files).
+set spell spelllang=en_us
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 "                           Utilities
