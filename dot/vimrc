@@ -261,6 +261,23 @@ nmap ;b <Leader><Leader>b
 nmap ;W <Leader><Leader>W
 nmap ;B <Leader><Leader>B
 
+" Enable GDB integration.  This is commented out because it seems
+" that if we issue this command anywhere in the vimrc then the
+" debugging interface does not have the right colors (?).  So it
+" must be issued in vim, but there is a shortcut for it below.
+"
+" packadd termdebug
+
+" Key bindings for use during debugging from the source window.
+nnoremap <Leader>go :packadd termdebug<CR>
+nnoremap <Leader>gb :Break<CR>
+nnoremap <Leader>gn :Over<CR>
+nnoremap <Leader>gs :Step<CR>
+nnoremap <Leader>gc :Cont<CR>
+nnoremap <Leader>gx :Delete<CR>
+nnoremap <Leader>ge :Evaluate<CR>
+nnoremap <Leader>gr :Run<CR>
+
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 "                        Variable Settings
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
