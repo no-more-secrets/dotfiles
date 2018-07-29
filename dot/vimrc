@@ -94,6 +94,9 @@ set laststatus=2
 " of errors, which may be zero. Also, different status of colored
 " accordingly.
 function! GetYcmStatus()
+    if !s:Pyeval( "'ycm_state' in globals()" )
+        return
+    endif
     if !s:Pyeval( "ycm_state.ShouldDisplayDiagnostics()" )
         " If we're here then this is likely not a file or  buffer
         " type where YCM will be used, so just suppress the  indi-
@@ -261,22 +264,24 @@ nmap ;b <Leader><Leader>b
 nmap ;W <Leader><Leader>W
 nmap ;B <Leader><Leader>B
 
-" Enable GDB integration.  This is commented out because it seems
-" that if we issue this command anywhere in the vimrc then the
-" debugging interface does not have the right colors (?).  So it
-" must be issued in vim, but there is a shortcut for it below.
-"
-" packadd termdebug
+" Enable GDB integration.  This is an auto command because it
+" seems that if we issue this anywhere in the vimrc file itself
+" then the debugging interface does not have the right colors (?).
+" So we use an auto-load command which likely works because it
+" loads it after the colorscheme is loaded.
+au BufRead *.cpp,*.c :packadd termdebug
 
 " Key bindings for use during debugging from the source window.
-nnoremap <Leader>go :packadd termdebug<CR>
 nnoremap <Leader>gb :Break<CR>
 nnoremap <Leader>gn :Over<CR>
 nnoremap <Leader>gs :Step<CR>
 nnoremap <Leader>gc :Cont<CR>
-nnoremap <Leader>gx :Delete<CR>
+nnoremap <Leader>gx :Clear<CR>
 nnoremap <Leader>ge :Evaluate<CR>
 nnoremap <Leader>gr :Run<CR>
+
+" Use a vertical split in debug mode.
+let g:termdebug_wide = 1
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 "                        Variable Settings
@@ -402,6 +407,7 @@ call vundle#begin()
     Plugin 'scrooloose/nerdcommenter'  " Auto comment manipulation
     Plugin 'raimondi/delimitmate'      " Auto closing of quotes, parens, etc.
     Plugin 'simnalamburt/vim-mundo'    " Undo tree interaction
+    Plugin 'mhinz/vim-startify'        " startscreen / session manager
     if g:work_env == 0
         Plugin 'valloric/youcompleteme'
     endif
@@ -490,6 +496,11 @@ autocmd bufenter * :call ExitIfOnlyNerdTree()
 
 " This disables the intro  message  that  appears when vim starts.
 set shortmess=I " Read :help shortmess for everything else.
+
+" Uncomment this for persistent sessions.
+"let g:startify_session_persistence = 1
+" Comment this out to get the cow/quote header from startify.
+let g:startify_custom_header = []
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 "                             Local

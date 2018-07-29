@@ -3,6 +3,7 @@
 dot/vim/.netrwhist
 dot/vim/bundle
 dot/vim/cache
+dot/vim/session*
 
 dot/ghc/ghci_history
 
