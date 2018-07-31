@@ -54,3 +54,5 @@ unset  SSH_ASKPASS
 # ║                            Local                            ║
 # ╚═════════════════════════════════════════════════════════════╝
 [[ -f ~/.bashrclocal ]] && source ~/.bashrclocal
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
