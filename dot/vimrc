@@ -106,7 +106,9 @@ function! GetYcmStatus()
     let g:ycm_status_begin = ' ['
     setl statusline+=%{g:ycm_status_begin}
     if !s:Pyeval( "ycm_state.CheckIfServerIsReady()" )
-        setl statusline+=%#SpecialKey#
+        if winnr('$') == 1
+            setl statusline+=%#SpecialKey#
+        endif
         setl statusline+=---------
     elseif s:Pyeval( "ycm_state.FileParseRequestReady()" )
         let g:ycm_n_errors = s:Pyeval( 'ycm_state.GetErrorCount()' )
@@ -115,15 +117,21 @@ function! GetYcmStatus()
             setl statusline+=%#ErrorMsg#
             setl statusline+=%{g:ycm_status_middle}
             setl statusline+=%{g:ycm_n_errors}
+            setl statusline+=%#StatusLineNC#
         else
-            setl statusline+=%#SpecialKey#
+            if winnr('$') == 1
+                setl statusline+=%#SpecialKey#
+            endif
             setl statusline+=no\ errors
         endif
     else
         setl statusline+=%#WarningMsg#
         setl statusline+=compiling
+        setl statusline+=%#StatusLineNC#
     endif
-    setl statusline+=%#LineNr#
+    if winnr('$') == 1
+        setl statusline+=%#LineNr#
+    endif
     let g:ycm_status_end = ']'
     setl statusline+=%{g:ycm_status_end}
 endfunction
@@ -134,18 +142,28 @@ endfunction
 " calls have overhead, and the status bar is  updated  each  time
 " the cursor moves. So instead, we  just put the status update in
 " a timer function that updates the status variable.
+"
+" The winnr('$') calls are to test if we only have a single window
+" open, in which case we make the status bar background color to be
+" darker since it looks better.
 let timer = timer_start(1000, 'UpdateStatusBar',{'repeat':-1})
 function! UpdateStatusBar(timer)
     setl statusline=
     "set statusline+=%#PmenuSel#
     "let g:git_status = StatuslineGit()
     "set statusline+=%{g:git_status}
-    setl statusline+=%#LineNr#
+    if winnr('$') == 1
+        setl statusline+=%#LineNr#
+    else
+        setl statusline+=%#StatusLineNC#
+    endif
     setl statusline+=\ %f
     call GetYcmStatus()
     setl statusline+=%m
     setl statusline+=%=
-    setl statusline+=%#Identifier#
+    if winnr('$') == 1
+        setl statusline+=%#Identifier#
+    endif
     setl statusline+=\ %y
     setl statusline+=\ %p%%
     setl statusline+=\ %l:%2c
@@ -503,6 +521,10 @@ set shortmess=I " Read :help shortmess for everything else.
 "let g:startify_session_persistence = 1
 " Comment this out to get the cow/quote header from startify.
 let g:startify_custom_header = []
+
+if !g:work_env == 0
+  let g:startify_disable_at_vimenter = 1
+endif
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 "                             Local
