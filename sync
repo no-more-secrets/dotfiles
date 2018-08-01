@@ -9,8 +9,13 @@ cd $script_dir || { echo 'error changing directory.'; exit 1; }
 source scripts/utils.sh
 
 # Pull in any changes from the repo.
-msg 'Updating dot files...'
+msg 'Updating files...'
 git pull --quiet origin master; check 'update dot files'
+
+# Reload tmux.conf.
+msg 'Reloading tmux.conf...'
+tmux source-file ~/.tmux.conf
+tmux display-message "Config reloaded."
 
 msg 'Applying changes...'
 # Apply any new changes to the environment.

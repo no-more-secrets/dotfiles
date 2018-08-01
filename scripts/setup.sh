@@ -6,7 +6,7 @@ source scripts/utils.sh
 msg 'Setting up environment...'
 
 # Run setup scripts
-bash scripts/make_links.sh; check 'make symlinks'
+bash scripts/make-links.sh; check 'make symlinks'
 
 msg 'Sourcing new .bashrc...'
 # Now  that  we  probably  have a new bashrc file let's source it
@@ -16,6 +16,8 @@ source ~/.bashrc; check 'source new .bashrc'
 
 # Install all the vim plugins.
 bash scripts/vundle.sh; check 'setup vundle'
+
+bash scripts/rebuild.sh; check 'rebuild and/or update components'
 
 # Exit with success
 true
