@@ -9,7 +9,7 @@ source scripts/utils.sh
     # Needs to be installed initially.
     msg "fzf not installed -- installing..."
     git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-    ~/.fzf/install
+    ~/.fzf/install --all
     exit $?
 }
 
