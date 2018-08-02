@@ -5,6 +5,11 @@ function key_bindings
       bind -M insert \ce fzf-cd-widget
     end
 
+    bind \cg binding-C-g
+    if bind -M insert > /dev/null 2>&1
+        bind -M insert \cg binding-C-g
+    end
+
     if functions -q fzf-C-t
         # Bind <C-T> to our wrapper that detects citc clients.
         bind \ct fzf-C-t
