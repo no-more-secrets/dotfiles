@@ -6,7 +6,7 @@ cd $(dirname $(readlink -f $0))
 
 profiles="/org/gnome/terminal/legacy/profiles:/"
 
-profile_id=$(dconf list $profiles)
+profile_id=$(dconf list $profiles | grep '^:')
 echo "List of profiles:"
 echo "$profile_id"
 
@@ -21,9 +21,6 @@ echo "$full_profile"
 settings=$(dconf list $full_profile)
 echo "List of settings:"
 echo "$settings"
-
-[[ "$settings" =~ foreground-color ]]
-[[ "$settings" =~ background-color ]]
 
 foreground="'$(<foreground.txt)'"
 background="'$(<background-matte.txt)'"
