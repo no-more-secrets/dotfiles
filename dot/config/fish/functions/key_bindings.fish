@@ -1,8 +1,7 @@
 function key_bindings
-    # Bind <C-E> to cd widget.
-    bind \ce fzf-cd-widget
+    bind \ce binding-C-e
     if bind -M insert > /dev/null 2>&1
-      bind -M insert \ce fzf-cd-widget
+      bind -M insert \ce binding-C-e
     end
 
     bind \cg binding-C-g

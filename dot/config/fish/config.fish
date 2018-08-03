@@ -29,10 +29,17 @@ set -gx FZF_DEFAULT_OPTS "
 
 # If we have fd then use it as the fzf search command.
 if which fd >/dev/null 2>&1
-    set -l fd_cmd 'fd --type f --type l'
+    set -l fd_cmd 'fd'
+    # May include some symlinks which are not folders.  Oh well.
+    set -l fd_dirs_cmd 'fd --type d --type l'
+
     set -gx FZF_DEFAULT_COMMAND $fd_cmd
-    set -gx FZF_CTRL_T_COMMAND $fd_cmd
-    set -gx FZF_ALT_C_COMMAND $fd_cmd
+    set -gx fzf_ctrl_e_cmd $fd_dirs_cmd
+else
+    # FZF_DEFAULT_COMMAND not set here; already has sensible
+    # default.
+
+    set -gx fzf_ctrl_e_cmd 'find -type d -o -type l'
 end
 
 if test -e $fish_local_config
