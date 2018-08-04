@@ -71,8 +71,9 @@ function fish_prompt --description 'Write out the prompt'
     else
         set local_pwd (prompt_pwd)
     end
-
-    echo -n -s "$USER" @ (set_color f4e49d) $prompt_hostname(set_color normal) (__terlar_git_prompt) ' ' (set_color $color_cwd) $local_pwd (set_color normal) "$suffix "
+    set -l peach f4e49d
+    #echo -n -s (set_color ffdddd)"$USER" (set_color white)@ (set_color ccffcc) $prompt_hostname(set_color normal) (__terlar_git_prompt) ' ' (set_color $color_cwd) $local_pwd (set_color normal) "$suffix "
+    echo -n -s (set_color ccffff) $prompt_hostname(set_color normal) (__terlar_git_prompt) ' ' (set_color $color_cwd) $local_pwd (set_color normal) "$suffix "
     #__terlar_git_prompt
     #__fish_vcs_prompt
 
