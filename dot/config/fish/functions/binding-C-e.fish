@@ -1,5 +1,5 @@
 function binding-C-e
-    set -l result (eval $fzf_ctrl_e_cmd | fzf --no-preview --no-multi)
+    set -l result (eval $fzf_ctrl_e_cmd 2>/dev/null | fzf --no-preview --no-multi)
 
     string length -q $result; and cd $result
 
