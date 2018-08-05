@@ -276,13 +276,9 @@ nnoremap <C-Y> 4<C-Y>4k
 nnoremap B :prev<CR>
 nnoremap N :next<CR>
 
-" Rebinds the ; key to EasyMotions controls.
-nmap ;w <Leader><Leader>w
-nmap ;b <Leader><Leader>b
-nmap ;e <Leader><Leader>e
-nmap ;W <Leader><Leader>W
-nmap ;B <Leader><Leader>B
-nmap ;E <Leader><Leader>E
+" EasyMotions controls.
+nmap <C-M> <Leader><Leader>w
+nmap <C-H> <Leader><Leader>b
 
 " Enable GDB integration.  This is an auto command because it
 " seems that if we issue this anywhere in the vimrc file itself
@@ -428,6 +424,7 @@ call vundle#begin()
     Plugin 'raimondi/delimitmate'      " Auto closing of quotes, parens, etc.
     Plugin 'simnalamburt/vim-mundo'    " Undo tree interaction
     Plugin 'mhinz/vim-startify'        " startscreen / session manager
+    Plugin 'takac/vim-hardtime'        " option to disable hjkl
     if g:work_env == 0
         Plugin 'valloric/youcompleteme'
     endif
@@ -525,6 +522,12 @@ let g:startify_custom_header = []
 if !g:work_env == 0
   let g:startify_disable_at_vimenter = 1
 endif
+
+" This flag to the vim-hardtime plugin enables it for all buffers.
+" When enabled, the hjkl/arrow keys are limited to one per second
+" in order to encourage learning and using vim's more advanced
+" motions.
+let g:hardtime_default_on = 1
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 "                             Local
