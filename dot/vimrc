@@ -433,6 +433,7 @@ call vundle#begin()
     endif
     " Colorschemes
     Plugin 'morhetz/gruvbox'
+    Plugin 'mhinz/vim-signify'         " Show VCS changes in gutter
 call vundle#end()            " required
 
 filetype plugin indent on    " required
@@ -531,6 +532,9 @@ endif
 " in order to encourage learning and using vim's more advanced
 " motions.
 let g:hardtime_default_on = 1
+
+" Limit the number of VCS's that vim-signify searches for.
+let g:signify_vcs_list = ['git', 'perforce']
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 "                             Local
