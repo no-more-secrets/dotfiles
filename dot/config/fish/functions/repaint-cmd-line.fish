@@ -9,8 +9,12 @@ function repaint-cmd-line
       commandline -t ""
     end
     for i in $argv
-      commandline -it -- (string escape $i)
-      commandline -it -- ' '
+      # Just in case all the args will smushed
+      # into one string, which can happen.
+      for j in (string split ' ' $i)
+          commandline -it -- (string escape $j)
+          commandline -it -- ' '
+      end
     end
     commandline -f repaint
 end
