@@ -9,11 +9,9 @@ function key_bindings
         bind -M insert \cg binding-C-g
     end
 
-    if functions -q fzf-C-t
-        bind \ct fzf-C-t
-        if bind -M insert > /dev/null 2>&1
-            bind -M insert \ct fzf-C-t
-        end
+    bind \ct binding-C-t
+    if bind -M insert > /dev/null 2>&1
+        bind -M insert \ct binding-C-t
     end
 
     bind \cp binding-C-p
