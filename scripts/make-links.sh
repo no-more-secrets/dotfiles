@@ -54,6 +54,7 @@ main() {
         tmux.conf
         vim
         vimrc
+        fdignore
     '
 
     for f in $list; do safe_link $f; done

@@ -19,7 +19,7 @@ tmux display-message "Config reloaded."
 
 msg 'Applying changes...'
 # Apply any new changes to the environment.
-bash scripts/setup.sh; check 'run setup script'
+bash scripts/setup.sh "$@"; check 'run setup script'
 
 msg 'Finished.'
 # Exit with success

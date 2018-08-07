@@ -29,9 +29,9 @@ set -gx FZF_DEFAULT_OPTS "
 
 # If we have fd then use it as the fzf search command.
 if which fd >/dev/null 2>&1
-    set -l fd_cmd 'fd'
+    set -l fd_cmd 'fd -HI -E .git'
     # May include some symlinks which are not folders.  Oh well.
-    set -l fd_dirs_cmd 'fd --type d --type l'
+    set -l fd_dirs_cmd 'fd -HI --type d --type l -E .git'
 
     set -gx FZF_DEFAULT_COMMAND $fd_cmd
     set -gx fzf_ctrl_e_cmd $fd_dirs_cmd
