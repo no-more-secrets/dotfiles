@@ -18,7 +18,7 @@ function binding-C-t
     # If the commandline is empty and the file is not executable then
     # then put a `vim` in front of it because# we will likely want to
     # edit the result.
-    if string length -q $result; and not string length -q (commandline); and [ ! -x $result ]
+    if string length -q $result; and not string length -q (commandline); and [ ! -x "$result" ]
         set result vim $result
     end
 
