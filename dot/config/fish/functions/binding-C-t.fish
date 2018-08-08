@@ -12,7 +12,7 @@ function binding-C-t
 
     # Last resort
     if [ ! $handled -eq 0 ]
-        set result (fzf); set handled $status
+        set result (fzf --preview='head -n40 {}'); set handled $status
     end
 
     # If the commandline is empty and the file is not executable then

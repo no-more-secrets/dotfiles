@@ -302,6 +302,14 @@ nnoremap <Leader>gr :Run<CR>
 " Use a vertical split in debug mode.
 let g:termdebug_wide = 1
 
+" Mappings for the fzf.vim plugin.
+nnoremap <C-T> :Files<CR>
+nmap <Leader>tt :Files<CR>
+nmap <Leader>tg :GFiles<CR>
+nmap <Leader>ts :GFiles?<CR>
+nmap <Leader>tl :Lines<CR>
+nmap <Leader>ta :Ag<CR>
+
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 "                        Variable Settings
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -434,6 +442,8 @@ call vundle#begin()
     " Colorschemes
     Plugin 'morhetz/gruvbox'
     Plugin 'mhinz/vim-signify'         " Show VCS changes in gutter
+    Plugin 'junegunn/fzf'
+    Plugin 'junegunn/fzf.vim'
 call vundle#end()            " required
 
 filetype plugin indent on    " required
@@ -531,7 +541,7 @@ endif
 " When enabled, the hjkl/arrow keys are limited to one per second
 " in order to encourage learning and using vim's more advanced
 " motions.
-let g:hardtime_default_on = 1
+"let g:hardtime_default_on = 1
 
 " Limit the number of VCS's that vim-signify searches for.
 let g:signify_vcs_list = ['git', 'perforce']

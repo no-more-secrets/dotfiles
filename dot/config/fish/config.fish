@@ -18,13 +18,10 @@ set -l fish_local_config ~/.config/fish/local-config.fish
 
 set PATH $PATH ~/bin
 
-set -l preview_cmd 'head -n40 {}'
-
 set -gx FZF_DEFAULT_OPTS "
     --height 30%
     --reverse
     --multi
-    --preview='$preview_cmd'
     --preview-window=right:45%"
 
 # If we have fd then use it as the fzf search command.

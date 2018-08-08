@@ -5,7 +5,9 @@
 function fzf-kill
     set -l ps_lines (ps -fu $USER | fzf --no-preview)
 
-    string length -q $ps_lines; or return
+    # Return zero because we have already called fzf and we
+    # don't want the caller to pop up another window.
+    string length -q $ps_lines; or return 0
 
     for l in $ps_lines
         # Extract PID from line.  This regex assumes that it
