@@ -209,12 +209,6 @@ nnoremap { ^
 nnoremap <CR> :noh<CR>
 nnoremap <SPACE> r l
 
-" Disabled for hard mode
-"nnoremap <C-j> 13j
-"nnoremap <C-k> 13k
-"vnoremap <C-j> 13j
-"vnoremap <C-k> 13k
-
 nnoremap Y y$
 
 nnoremap <F4> ^i#<ESC>j
@@ -277,8 +271,8 @@ nnoremap <Leader>s :e %:p:s,.hpp$,.X123X,:s,.cpp$,.hpp,:s,.X123X$,.cpp,<CR>
 " token under the cursor in the new file (from the top) once loaded.
 nnoremap <Leader>S * :e %:p:s,.hpp$,.X123X,:s,.cpp$,.hpp,:s,.X123X$,.cpp,<CR>ggn
 
-nnoremap <C-E> 4<C-E>4j
-nnoremap <C-Y> 4<C-Y>4k
+nnoremap <C-E> 10<C-E>10j
+nnoremap <C-Y> 10<C-Y>10k
 
 nnoremap B :prev<CR>
 nnoremap N :next<CR>
@@ -307,8 +301,9 @@ nnoremap <Leader>gr :Run<CR>
 let g:termdebug_wide = 1
 
 " Mappings for the fzf.vim plugin.
+" Files under CWD.
 nnoremap <C-T> :Files<CR>
-nmap <Leader>tt :Files<CR>
+" <Leader>tt is reserved for global files.
 nmap <Leader>tg :GFiles<CR>
 nmap <Leader>ts :GFiles?<CR>
 nmap <Leader>tl :Lines<CR>
