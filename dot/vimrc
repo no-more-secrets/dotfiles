@@ -233,6 +233,10 @@ nnoremap Q :qa<CR>
 
 " Re-map C-n from autocomplete to the nerd tree.
 nnoremap <C-n> :NERDTreeToggle<CR>
+nnoremap <C-p> :NERDTreeFocus<CR>
+" Find current file in NERDTree and expand tree to reveal it.
+nnoremap <Leader>n :NERDTreeFind<CR>
+let NERDTreeWinSize = 40
 
 vnoremap <Leader>f :!sfmt 65<CR>
 
@@ -247,6 +251,8 @@ nnoremap <C-O> <C-I>
 " Move windows easily, but only left/right.
 nnoremap <C-H> <C-W>h
 nnoremap <C-L> <C-W>l
+nnoremap <C-J> <C-W>j
+nnoremap <C-K> <C-W>k
 
 " The `Imprecise` variants will perform  the operation without re-
 " compiling the translation unit.  Useful  if compilation is slow,
@@ -278,10 +284,8 @@ nnoremap B :prev<CR>
 nnoremap N :next<CR>
 
 " EasyMotions controls.
-nmap <C-J> <Leader><Leader>w
-nmap <C-K> <Leader><Leader>b
-vmap <C-J> <Leader><Leader>w
-vmap <C-K> <Leader><Leader>b
+nmap ; <Plug>(easymotion-bd-w)
+vmap ; <Plug>(easymotion-bd-w)
 
 " Enable GDB integration.  This is an auto command because it
 " seems that if we issue this anywhere in the vimrc file itself
@@ -309,6 +313,9 @@ nmap <Leader>tg :GFiles<CR>
 nmap <Leader>ts :GFiles?<CR>
 nmap <Leader>tl :Lines<CR>
 nmap <Leader>ta :Ag<CR>
+
+" Set current directory to current file with ,cd
+nnoremap <Leader>cd :cd %:p:h<CR>:pwd<CR>
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 "                        Variable Settings
