@@ -451,6 +451,7 @@ call vundle#begin()
     Plugin 'mhinz/vim-signify'         " Show VCS changes in gutter
     Plugin 'junegunn/fzf'
     Plugin 'junegunn/fzf.vim'
+    Plugin 'terryma/vim-expand-region' " expand selected region
 call vundle#end()            " required
 
 filetype plugin indent on    " required
