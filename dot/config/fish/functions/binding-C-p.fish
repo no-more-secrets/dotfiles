@@ -6,7 +6,7 @@ function binding-C-p
         # Simply-parsable list of relative paths (relative to CWD), ignoring
         # with no renames + ignoring deleted files (so therefore if a file is
         # renamed the new name will appear in the list).
-        set result (git status --short --no-renames | grep -v '^D' | awk '{print $2}' | fzf --preview='head -n40 {}'); set handled $status
+        set result (git status --short --no-renames | grep -v '^D' | awk '{print $2}' | fzf -0 --preview='head -n40 {}'); set handled $status
     end
 
     if [ ! $handled -eq 0 ]; and functions -q local-binding-C-p

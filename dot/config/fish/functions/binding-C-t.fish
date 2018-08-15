@@ -6,6 +6,10 @@ function binding-C-t
         set result (fzf-kill); set handled $status
     end
 
+    if [ ! $handled -eq 0 ]; and string match -q -r "^[ ]*pstree " (commandline)
+        set result (fzf-pstree); set handled $status
+    end
+
     if [ ! $handled -eq 0 ]; and functions -q local-binding-C-t
         set result (local-binding-C-t); set handled $status
     end
