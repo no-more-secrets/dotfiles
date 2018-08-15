@@ -10,7 +10,13 @@ function binding-C-e
         set result (eval $fzf_ctrl_e_cmd 2>/dev/null | fzf --no-preview --no-multi)
     end
 
-    string length -q $result; and cd $result
+    if string length -q $result
+        if test -d $result
+            cd $result
+        else
+            cd (dirname $result)
+        end
+    end
 
     commandline -f repaint
 end
