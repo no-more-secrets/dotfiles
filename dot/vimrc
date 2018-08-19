@@ -146,13 +146,14 @@ endfunction
 " The winnr('$') calls are to test if we only have a single window
 " open, in which case we make the status bar background color to be
 " darker since it looks better.
-let timer = timer_start(1000, 'UpdateStatusBar',{'repeat':-1})
+let g:status_update_timer =
+  \ timer_start(1000, 'UpdateStatusBar',{'repeat':-1})
 function! UpdateStatusBar(timer)
     setl statusline=
     "set statusline+=%#PmenuSel#
     "let g:git_status = StatuslineGit()
     "set statusline+=%{g:git_status}
-    if winnr('$') == 1
+    if winnr('$') == 1 && a:timer != 2
         setl statusline+=%#LineNr#
     else
         setl statusline+=%#StatusLineNC#
@@ -170,6 +171,22 @@ function! UpdateStatusBar(timer)
     let g:space_char = ' '
     setl statusline+=%{g:space_char}
 endfunction
+
+" Seems  that  when  we  leave a window the timer function may no
+" longer  be  called, and so we need to update the status bar one
+" last time before leaving so that any changes can go into effect
+" that  depend  on  the number of windows there are. Normally the
+" argument to the function would be the timer, but here we pass a
+" `2` to signal that a) we are manually calling  it,  and  b)  we
+" want it to assume that there are multiple windows.
+au WinLeave * :call UpdateStatusBar(2)
+
+" Initially we want to update the  status bar without waiting for
+" the timer to start running. Normally the argument to  the  func-
+" tion would be the timer, but here  we pass a `1` to signal that
+" a) we are manually calling it, and b) we want it to assume that
+" there is only one window.
+:call UpdateStatusBar(1)
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 "                              Undo
