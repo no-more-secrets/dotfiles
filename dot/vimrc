@@ -231,6 +231,17 @@ nnoremap Y y$
 nnoremap <F4> ^i#<ESC>j
 nnoremap <F3> ^xj
 
+" If these are slow then there might be some vim file somewhere
+" that is creating a two-character binding starting with [ or ],
+" such as e.g. /usr/share/vim/vim80/ftplugin/python.vim.  These
+" bindings should be removed using e.g.:
+"
+"   au FileType bzl unmap <buffer> ]]
+"   ...
+"
+" This slowness would manifest as an ~ 1 sec delay when switching
+" tabs *away* from a tab in which the selected window contains
+" a buffer that has e.g. the [[ keymapping.
 nnoremap [ :tabp<CR>
 nnoremap ] :tabn<CR> 
 
@@ -328,6 +339,9 @@ nmap <Leader>ta :Ag<CR>
 
 " Set current directory to current file with ,cd
 nnoremap <Leader>cd :cd %:p:h<CR>:pwd<CR>
+
+" Open/close code-outline window (TagBar plugin).
+nnoremap <Leader>o :TagbarToggle<CR>
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 "                        Variable Settings
@@ -460,10 +474,14 @@ call vundle#begin()
     endif
     " Colorschemes
     Plugin 'morhetz/gruvbox'
-    Plugin 'mhinz/vim-signify'         " Show VCS changes in gutter
+    if g:work_env == 0
+        " Seems to be slow
+        Plugin 'mhinz/vim-signify'     " Show VCS changes in gutter
+    endif
     Plugin 'junegunn/fzf'
     Plugin 'junegunn/fzf.vim'
     Plugin 'terryma/vim-expand-region' " expand selected region
+    Plugin 'majutsushi/tagbar'         " Code outline window
 call vundle#end()            " required
 
 filetype plugin indent on    " required
