@@ -356,6 +356,7 @@ nnoremap <Leader>O :TagbarOpen<CR>:TagbarOpenAutoClose<CR>
 let g:tagbar_width = 50
 let g:tagbar_show_linenumbers = 2
 let g:tagbar_sort = 0
+let g:tagbar_singleclick = 1
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 "                        Variable Settings
@@ -562,10 +563,11 @@ autocmd BufReadPost *
 " This  was inserted to allow using the mouse to resize vim panes
 " from within a tmux pane.
 set mouse+=a
-if &term =~ '^screen'
-    " tmux knows the extended mouse mode
-    set ttymouse=xterm2
-endif
+set ttymouse=sgr
+"if &term =~ '^screen'
+"    " tmux knows the extended mouse mode
+"    set ttymouse=xterm2
+"endif
 
 " If  NerdTree  is  the only open window then quit from it, effec-
 " tively quitting vim if only NerdTree is open.
