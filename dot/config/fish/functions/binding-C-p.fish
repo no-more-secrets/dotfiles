@@ -13,11 +13,22 @@ function binding-C-p
         set result (local-binding-C-p); set handled $status
     end
 
-    # If the commandline is empty and the file is not executable then
-    # then put a `vim` in front of it because# we will likely want to
-    # edit the result.
-    if string length -q $result; and not string length -q (commandline); and [ ! -x $result ]
-        set result vim $result
+    # If there is a result then we might want to manipulate the commandline
+    # apart from just tacking the result onto the end.
+    if string length -q $result
+        if not string length -q (commandline); and [ ! -x $result ]
+            # If the commandline is empty and the file is not executable then
+            # then put a `vim` in front of it because# we will likely want to
+            # edit the result.
+            set result vim $result
+        end
+        if string match -q -r "^[ ]*cd " (commandline)
+            # If the user has a `cd` then they probably want to change to the
+            # directory of the selected file.
+           commandline -r ""
+           cd (dirname $result)
+            set result ""
+        end
     end
 
     repaint-cmd-line $result
