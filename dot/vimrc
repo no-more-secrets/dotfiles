@@ -354,7 +354,7 @@ nnoremap <Leader>o :TagbarOpenAutoClose<CR>
 " then call TagbarOpenAutoClose just to switch cursor focus to it.
 nnoremap <Leader>O :TagbarOpen<CR>:TagbarOpenAutoClose<CR>
 let g:tagbar_width = 50
-"let g:tagbar_show_linenumbers = 2
+let g:tagbar_show_linenumbers = 2
 let g:tagbar_sort = 0
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
