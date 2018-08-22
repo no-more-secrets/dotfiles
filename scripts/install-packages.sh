@@ -8,6 +8,7 @@ list="
     automake
     bison
     build-essential
+    cloc
     cmake
     curl
     exuberant-ctags
