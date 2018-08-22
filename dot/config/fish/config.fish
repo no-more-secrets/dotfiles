@@ -16,7 +16,7 @@ alias t="tree -A -C"
 
 set -l fish_local_config ~/.config/fish/local-config.fish
 
-set PATH $PATH ~/bin
+set PATH ~/bin ~/.local/bin $PATH
 
 set -gx FZF_DEFAULT_OPTS "
     --height 30%

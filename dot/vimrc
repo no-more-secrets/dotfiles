@@ -168,7 +168,7 @@ function! UpdateStatusBar(timer)
     if winnr('$') == 1
         setl statusline+=%#Identifier#
     endif
-    setl statusline+=%{tagbar#currenttag('%s\ ','','f')}
+    setl statusline+=%{tagbar#currenttag('%s\ ','')}
     setl statusline+=\ %y
     setl statusline+=\ %p%%
     setl statusline+=\ %l:%2c
@@ -298,6 +298,9 @@ nnoremap <Leader>ep :YcmCompleter GetParent<CR>
 nnoremap <Leader>er :YcmForceCompileAndDiagnostics<CR>
 nnoremap <Leader>ee :YcmDiags<CR>
 
+" Off until clangd supports the necessary functions.
+let g:ycm_use_clangd = 0
+
 " This allows one to alternate between .cpp and .hpp files so long
 " as they are in the current directory.  It works by [e]diting the
 " file whose name is the current one except with the extension .cpp
@@ -336,6 +339,13 @@ nnoremap <Leader>gr :Run<CR>
 " Use a vertical split in debug mode.
 let g:termdebug_wide = 1
 
+" Call the :Ag function with the current word-under-cursor as
+" first argument.
+function! AgWord()
+    let l:w = expand( "<cword>" )
+    call feedkeys( ':Ag ' . l:w . "\<CR>" )
+endfunction
+
 " Mappings for the fzf.vim plugin.
 " Files under CWD.
 nnoremap <C-T> :Files<CR>
@@ -344,6 +354,9 @@ nmap <Leader>tg :GFiles<CR>
 nmap <Leader>ts :GFiles?<CR>
 nmap <Leader>tl :Lines<CR>
 nmap <Leader>ta :Ag<CR>
+nmap <Leader>tw :call AgWord()<CR>
+
+let g:fzf_height = '20%'
 
 " Set current directory to current file with ,cd
 nnoremap <Leader>cd :cd %:p:h<CR>:pwd<CR>
