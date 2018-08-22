@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# missing: fzf, fd
+
 list="
     ack
     autoconf
@@ -9,7 +11,6 @@ list="
     cmake
     curl
     exuberant-ctags
-    fd
     fish
     flex
     fonts-liberation
