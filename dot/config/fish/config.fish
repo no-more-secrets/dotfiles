@@ -22,6 +22,7 @@ set -gx FZF_DEFAULT_OPTS "
     --height 30%
     --reverse
     --multi
+    --select-1
     --preview-window=right:45%"
 
 # If we have fd then use it as the fzf search command.
