@@ -1,6 +1,6 @@
 #!/bin/bash
 none() {
-    echo '??'
+    #echo '??'
     exit 0
 }
 
