@@ -1,0 +1,28 @@
+#!/bin/bash
+none() {
+    echo '??'
+    exit 0
+}
+
+which upower &>/dev/null || none
+
+dev=$(upower -e 2>/dev/null | grep BAT)
+[[ -z "$dev" ]] && none
+
+percentage=$(upower -i $dev 2>/dev/null | awk '/percentage/ { print $2 }' | tr -d '%')
+[[ -z "$percentage" ]] && none
+
+# If we are fully charged then don't display anything.
+(( percentage > 95 )) && exit 0
+
+(( percentage <= 10 )) && {
+    fg=colour255 # white
+    bg=',bg=colour196' # red
+    prefix='BATTERY LOW: '
+}
+
+(( percentage > 10 )) && fg=colour196 # red
+(( percentage > 40 )) && fg=colour226 # yellow
+(( percentage > 80 )) && fg=colour112 # green
+
+echo "#[fg=$fg$bg]$prefix$percentage%"

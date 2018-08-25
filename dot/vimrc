@@ -397,6 +397,7 @@ let g:ycm_autoclose_preview_window_after_insertion = 1
 " with '!' are whitelists. Stars are globs.
 let g:ycm_extra_conf_globlist = [
   \ '~/dev/calcterm/*',
+  \ '~/dev/revolution-now-game/*',
   \ '~/dev/CAStle/*',
   \ '~/dev/cpp/*',
   \ '~/dev/p-unzip/*'

@@ -5,8 +5,10 @@ function binding-C-p
     if [ ! $handled -eq 0 ]; and git rev-parse --is-inside-work-tree 1>/dev/null 2>/dev/null
         # Simply-parsable list of relative paths (relative to CWD), ignoring
         # with no renames + ignoring deleted files (so therefore if a file is
-        # renamed the new name will appear in the list).
-        set result (git status --short --no-renames | grep -v '^D' | awk '{print $2}' | fzf -0 --preview='head -n40 {}'); set handled $status
+        # renamed the new name will appear in the list).  Ideally we would put
+        # the --no-renames flag here because it is required for proper handling
+        # of renamed files, but not all git versions support it.
+        set result (git status --short | grep -v '^D' | awk '{print $2}' | fzf -0 --preview='head -n40 {}'); set handled $status
     end
 
     if [ ! $handled -eq 0 ]; and functions -q local-binding-C-p
