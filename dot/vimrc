@@ -235,6 +235,8 @@ nnoremap Y y$
 nnoremap <F4> ^i#<ESC>j
 nnoremap <F3> ^xj
 
+nnoremap <F5> :!make run<CR>
+
 " If these are slow then there might be some vim file somewhere
 " that is creating a two-character binding starting with [ or ],
 " such as e.g. /usr/share/vim/vim80/ftplugin/python.vim.  These

@@ -15,14 +15,16 @@ percentage=$(upower -i $dev 2>/dev/null | awk '/percentage/ { print $2 }' | tr -
 # If we are fully charged then don't display anything.
 (( percentage > 95 )) && exit 0
 
-(( percentage <= 10 )) && {
-    fg=colour255 # white
-    bg=',bg=colour196' # red
+bg=235
+
+(( percentage <= 12 )) && {
+    fg=255 # white
+    bg='196' # red
     prefix='BATTERY LOW: '
 }
 
-(( percentage > 10 )) && fg=colour196 # red
-(( percentage > 40 )) && fg=colour226 # yellow
-(( percentage > 80 )) && fg=colour112 # green
+(( percentage >  12 )) && fg=196 # red
+(( percentage >= 40 )) && fg=226 # yellow
+(( percentage >= 80 )) && fg=112 # green
 
-echo "#[fg=$fg$bg]$prefix$percentage%"
+echo "#[fg=colour$fg,bg=colour$bg]$prefix$percentage%"

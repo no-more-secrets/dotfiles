@@ -1,9 +1,8 @@
 #!/bin/bash
 
-# missing: fzf, fd
+# missing: fzf, fd, ack
 
 list="
-    ack
     autoconf
     automake
     bison
