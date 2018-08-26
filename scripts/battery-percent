@@ -27,4 +27,4 @@ bg=235
 (( percentage >= 40 )) && fg=226 # yellow
 (( percentage >= 80 )) && fg=112 # green
 
-echo "#[fg=colour$fg,bg=colour$bg]$prefix$percentage%"
+echo -ne "#[fg=colour$fg,bg=colour$bg]$prefix$percentage%"

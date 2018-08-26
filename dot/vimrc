@@ -235,7 +235,7 @@ nnoremap Y y$
 nnoremap <F4> ^i#<ESC>j
 nnoremap <F3> ^xj
 
-nnoremap <F5> :!make run<CR>
+nnoremap <F5> :!make run -j8<CR>
 
 " If these are slow then there might be some vim file somewhere
 " that is creating a two-character binding starting with [ or ],
@@ -264,7 +264,10 @@ nnoremap <C-n> :NERDTreeToggle<CR>
 nnoremap <C-p> :NERDTreeFocus<CR>
 " Find current file in NERDTree and expand tree to reveal it.
 nnoremap <Leader>n :NERDTreeFind<CR>
-let NERDTreeWinSize = 40
+let NERDTreeWinSize = 30
+if &columns > 230
+  let NERDTreeWinSize += 10
+endif
 
 vnoremap <Leader>f :!sfmt 65<CR>
 
@@ -368,7 +371,10 @@ nnoremap <Leader>o :TagbarOpenAutoClose<CR>
 " This one will open it so that it stays open (TagbarOpen) but
 " then call TagbarOpenAutoClose just to switch cursor focus to it.
 nnoremap <Leader>O :TagbarOpen<CR>:TagbarOpenAutoClose<CR>
-let g:tagbar_width = 50
+let g:tagbar_width = 35
+if &columns > 230
+  let g:tagbar_width += 10
+endif
 let g:tagbar_show_linenumbers = 2
 let g:tagbar_sort = 0
 let g:tagbar_singleclick = 1
@@ -500,19 +506,15 @@ call vundle#begin()
     Plugin 'simnalamburt/vim-mundo'    " Undo tree interaction
     Plugin 'mhinz/vim-startify'        " startscreen / session manager
     Plugin 'takac/vim-hardtime'        " option to disable hjkl
-    if g:work_env == 0
-        Plugin 'valloric/youcompleteme'
-    endif
-    " Colorschemes
-    Plugin 'morhetz/gruvbox'
-    if g:work_env == 0
-        " Seems to be slow
-        Plugin 'mhinz/vim-signify'     " Show VCS changes in gutter
-    endif
-    Plugin 'junegunn/fzf'
-    Plugin 'junegunn/fzf.vim'
+    Plugin 'morhetz/gruvbox'           " colorscheme
+    Plugin 'junegunn/fzf'              " fuzzy searching
+    Plugin 'junegunn/fzf.vim'          " vim plugin for fzf
     Plugin 'terryma/vim-expand-region' " expand selected region
     Plugin 'majutsushi/tagbar'         " Code outline window
+    Plugin 'tibabit/vim-templates'     " file templates with placeholders
+if g:work_env == 0
+    Plugin 'valloric/youcompleteme'
+endif
 call vundle#end()            " required
 
 filetype plugin indent on    " required
@@ -626,3 +628,11 @@ endif
 " Somehow we need this  after  the  .vimrclocal otherwise it gets
 " disabled, and then only for some fish files... strange.
 au BufNewFile,BufRead *.fish set syntax=fish
+
+" Project-specific vimrc files. This setting causes vim to load
+" the .vimrc file in the current directory in addition to this
+" one.
+set exrc
+" Do not allow unsafe commands (such as shell commands) in
+" project-specific vimrc files.
+set secure
