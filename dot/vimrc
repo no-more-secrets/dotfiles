@@ -39,7 +39,7 @@ syntax on
 " If syntax file supports it (with Spell/NoSpell directives) then
 " this will cause spelling to be checked in code comments (in  ad-
 " dition to normal text files).
-set spell spelllang=en_us
+"set spell spelllang=en_us
 
 " milliseconds.  Don't make it too low...
 set updatetime=250
