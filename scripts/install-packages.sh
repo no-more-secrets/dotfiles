@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# missing: fzf, fd, ack
+# missing: fzf, fd, ack, haskell-stack (caused some conflict once)
 
 list="
     autoconf
@@ -15,7 +15,6 @@ list="
     flex
     fonts-liberation
     git
-    haskell-stack
     htop
     libncurses5
     libncurses5-dev
