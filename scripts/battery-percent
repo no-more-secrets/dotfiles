@@ -17,14 +17,15 @@ percentage=$(upower -i $dev 2>/dev/null | awk '/percentage/ { print $2 }' | tr -
 
 bg=235
 
-(( percentage <= 12 )) && {
+(( percentage <= 10 )) && {
     fg=255 # white
     bg='196' # red
     prefix='BATTERY LOW: '
 }
 
-(( percentage >  12 )) && fg=196 # red
-(( percentage >= 40 )) && fg=226 # yellow
+(( percentage >  10 )) && fg=196 # red
+(( percentage >= 20 )) && fg=226 # yellow
+(( percentage >= 40 )) && fg=202 # orange
 (( percentage >= 80 )) && fg=112 # green
 
 echo -ne "#[fg=colour$fg,bg=colour$bg]$prefix$percentage%"

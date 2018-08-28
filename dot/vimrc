@@ -510,7 +510,7 @@ call vundle#begin()
     Plugin 'scrooloose/nerdtree'       " File manager
     Plugin 'easymotion/vim-easymotion' " Web-browser-like navigation overlays
     Plugin 'scrooloose/nerdcommenter'  " Auto comment manipulation
-    Plugin 'raimondi/delimitmate'      " Auto closing of quotes, parens, etc.
+    "Plugin 'raimondi/delimitmate'      " Auto closing of quotes, parens, etc.
     Plugin 'simnalamburt/vim-mundo'    " Undo tree interaction
     Plugin 'mhinz/vim-startify'        " startscreen / session manager
     Plugin 'takac/vim-hardtime'        " option to disable hjkl
