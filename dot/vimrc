@@ -66,6 +66,13 @@ function! s:Pyeval( eval_string )
     return pyeval( a:eval_string )
 endfunction
 
+" This allows us to run an external command which, when finished,
+" causes control to pass back to vim with the screen redrawn and
+" with vim now waiting for the user to press enter.
+command! -nargs=1 Silent
+      \   execute 'silent !' . <q-args>
+      \ | execute 'redraw!'
+
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 "                           Status Bar
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -235,7 +242,8 @@ nnoremap Y y$
 nnoremap <F4> ^i#<ESC>j
 nnoremap <F3> ^xj
 
-nnoremap <F5> :!make run -j8<CR>
+nnoremap <F5> :Silent make run -j8<CR>
+nnoremap <F6> :!make -j8<CR>
 
 " If these are slow then there might be some vim file somewhere
 " that is creating a two-character binding starting with [ or ],
