@@ -5,6 +5,9 @@
 source scripts/utils.sh
 msg 'Setting up environment...'
 
+mkdir -p ~/bin
+mkdir -p ~/.local/bin
+
 # Run setup scripts
 bash scripts/make-links.sh; check 'make symlinks'
 
