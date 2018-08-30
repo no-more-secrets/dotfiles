@@ -175,7 +175,9 @@ function! UpdateStatusBar(timer)
     if winnr('$') == 1
         setl statusline+=%#Identifier#
     endif
-    setl statusline+=%{tagbar#currenttag('%s\ ','')}
+    if exists('g:tagbar_autoclose')
+        setl statusline+=%{tagbar#currenttag('%s\ ','')}
+    endif
     setl statusline+=\ %y
     setl statusline+=\ %p%%
     setl statusline+=\ %l:%2c
