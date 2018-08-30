@@ -1,0 +1,59 @@
+#!/bin/bash
+# This script must have the property that it can be run multiple
+# times and still succeed.
+set -e
+
+mkdir -p ~/.ssh
+chmod 700 ~/.ssh
+
+hostname='galago-pro'
+ip_address=192.168.0.12
+
+echo "Attempting to contact $ip_address (may be known as $hostname)"
+echo "for SSH keys.  Pinging..."
+ping -c1 -q $ip_address
+
+echo "Host $hostname is responding; you will now be asked for"
+echo "$ip_address's ssh password twice."
+
+[[ ! -f id_rsa     ]] && scp dsicilia@$ip_address:/home/dsicilia/.ssh/id_rsa ~/.ssh
+[[ ! -f id_rsa.pub ]] && scp dsicilia@$ip_address:/home/dsicilia/.ssh/id_rsa.pub ~/.ssh
+
+echo "Installing git; you may be asked for your account password."
+sudo apt install git
+
+echo "Cloning dotfiles repo; should be passwordless."
+if [[ ! -d ~/.dotfiles ]]; then
+    git clone ssh://git@github.com/dpacbach/dotfiles ~/.dotfiles
+else
+    cd ~/.dotfiles
+    git pull origin master
+fi
+
+echo "Installing packages."
+cd ~/.dotfiles/scripts
+./install-packages.sh
+
+echo "Running setup scripts."
+cd ~/.dotfiles
+make #REBUILD_YCM=
+
+echo "Cloning repos in ~/dev; should be passwordless."
+mkdir -p ~/dev
+cd ~/dev
+
+[[ ! -d nr-make  ]] && git clone ssh://git@github.com/dpacbach/nr-make
+[[ ! -d calcterm ]] && git clone ssh://git@github.com/dpacbach/calcterm
+[[ ! -d cpp      ]] && git clone ssh://git@github.com/dpacbach/cpp
+[[ ! -d scripts  ]] && git clone ssh://git@github.com/dpacbach/scripts
+
+echo "Creating recycle symlink."
+[[ ! -L ~/bin/recycle ]] && ln -s ~/dev/scripts/bash/recycle ~/bin/recycle
+
+echo
+echo 'Now do the following:
+
+  * Edit terminal profile preferences to select Liberation Mono for Powerline
+  * Make /usr/bin/fish default shell
+
+'

@@ -21,6 +21,9 @@ msg 'Applying changes...'
 # Apply any new changes to the environment.
 bash scripts/setup.sh "$@"; check 'run setup script'
 
+# Install per-user fonts.
+bash scripts/fonts.sh; check 'install fonts'
+
 msg 'Finished.'
 # Exit with success
 true

@@ -48,13 +48,14 @@ main() {
         bash
         bashrc
         config/fish
+        fdignore
+        fonts
         ghc
         gitconfig
         tmux
         tmux.conf
         vim
         vimrc
-        fdignore
     '
 
     for f in $list; do safe_link $f; done
