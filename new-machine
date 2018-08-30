@@ -16,8 +16,8 @@ ping -c1 -q $ip_address
 echo "Host $hostname is responding; you will now be asked for"
 echo "$ip_address's ssh password twice."
 
-[[ ! -f id_rsa     ]] && scp dsicilia@$ip_address:/home/dsicilia/.ssh/id_rsa ~/.ssh
-[[ ! -f id_rsa.pub ]] && scp dsicilia@$ip_address:/home/dsicilia/.ssh/id_rsa.pub ~/.ssh
+[[ ! -f ~/.ssh/id_rsa     ]] && scp dsicilia@$ip_address:/home/dsicilia/.ssh/id_rsa ~/.ssh
+[[ ! -f ~/.ssh/id_rsa.pub ]] && scp dsicilia@$ip_address:/home/dsicilia/.ssh/id_rsa.pub ~/.ssh
 
 echo "Installing git; you may be asked for your account password."
 sudo apt install git
