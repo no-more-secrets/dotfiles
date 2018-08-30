@@ -1,6 +1,7 @@
 #!/bin/bash
+set -e
 
-# missing: fd, ack, haskell-stack (caused some conflict once)
+# missing: ack, haskell-stack (caused some conflict once)
 
 sdl_version=2.0-0
 
@@ -53,3 +54,5 @@ list="
 "
 
 sudo apt install $list
+
+bash scripts/install-fd.sh
