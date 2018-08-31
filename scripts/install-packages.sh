@@ -45,6 +45,7 @@ list="
     python2.7-dev
     python3
     python3-dev
+    screenfetch
     silversearcher-ag
     tmux
     tree
