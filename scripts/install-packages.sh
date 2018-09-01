@@ -40,6 +40,7 @@ list="
     libxml2-dev
     libzip4
     libzip-dev
+    openssh-server
     perl
     python2.7
     python2.7-dev
