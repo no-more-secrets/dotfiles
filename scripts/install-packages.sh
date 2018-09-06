@@ -48,6 +48,7 @@ list="
     python3-dev
     screenfetch
     silversearcher-ag
+    subversion
     tmux
     tree
     vim
