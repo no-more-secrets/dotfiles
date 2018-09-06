@@ -38,21 +38,21 @@ echo "Cloning repos in ~/dev; should be passwordless."
 mkdir -p ~/dev
 cd ~/dev
 
-[[ ! -d nr-make  ]] && git clone ssh://git@github.com/dpacbach/nr-make
-[[ ! -d calcterm ]] && git clone ssh://git@github.com/dpacbach/calcterm
-[[ ! -d cpp      ]] && git clone ssh://git@github.com/dpacbach/cpp
+[[ ! -d nr-make   ]] && git clone ssh://git@github.com/dpacbach/nr-make
+[[ ! -d calcterm  ]] && git clone ssh://git@github.com/dpacbach/calcterm
+[[ ! -d cpp       ]] && git clone ssh://git@github.com/dpacbach/cpp
 # Needed for next steps
-[[ ! -d scripts  ]] && git clone ssh://git@github.com/dpacbach/scripts
+[[ ! -d utilities ]] && git clone ssh://git@github.com/dpacbach/utilities
 
 echo "building vim..."
-~/dev/scripts/bash/build-vim.sh
+~/dev/utilities/building/build-vim.sh
 
 echo "Running setup scripts."
 cd ~/.dotfiles
 make REBUILD_YCM=
 
 echo "Creating recycle symlink."
-[[ ! -L ~/bin/recycle ]] && ln -s ~/dev/scripts/bash/recycle ~/bin/recycle
+[[ ! -L ~/bin/recycle ]] && ln -s ~/dev/utilities/misc/recycle ~/bin/recycle
 
 echo
 echo 'Now do the following:
