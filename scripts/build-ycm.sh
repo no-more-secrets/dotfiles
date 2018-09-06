@@ -32,6 +32,21 @@ else
     msg "*** WARNING: not checking for $search_for because not on Linux."
 fi
 
+tools="$HOME/dev/tools"
+
+# See if we have any clang builds, and if so then use them instead
+# of system libclang.
+llvm_root=$(ls -d $tools/llvm-* 2>/dev/null | sort -V | tail -n1)
+if [[ ! -z "$llvm_root" ]]; then
+    msg "Found LLVM root for libclang: $llvm_root"
+    # The install script below will eventually invoke CMake, and it
+    # will append these args.  This LLVM root argument will cause
+    # the build system to use the libclang in that location for the
+    # clang completer.  It will do this by directly linking the
+    # third_party/ycmd/ycmd_core.so to the libclang.so that it finds.
+    export EXTRA_CMAKE_ARGS="-DPATH_TO_LLVM_ROOT=$llvm_root"
+fi
+
 ./install.py --clang-completer; check "run install.py script."
 
 msg "Finished building YCM."
