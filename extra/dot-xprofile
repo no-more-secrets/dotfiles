@@ -1,0 +1,15 @@
+#!/bin/sh
+set -e
+set -x
+
+width=5120
+height=2880
+Hz=60
+
+echo "Adding new mode: ${width}x${height} @${Hz}Hz"
+
+modeline=$(cvt $width $height $Hz | grep Modeline | sed 's/Modeline//')
+xrandr --newmode $modeline
+
+device=$(xrandr | grep connected | awk '{print $1}')
+xrandr --addmode $device ${width}x${height}_${Hz}.00
