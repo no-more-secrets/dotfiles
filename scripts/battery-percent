@@ -4,12 +4,20 @@ none() {
     exit 0
 }
 
-which upower &>/dev/null || none
+os=$(uname)
 
-dev=$(upower -e 2>/dev/null | grep BAT)
-[[ -z "$dev" ]] && none
+if [[ "$os" == Linux ]]; then
+    which upower &>/dev/null || none
 
-percentage=$(upower -i $dev 2>/dev/null | awk '/percentage/ { print $2 }' | tr -d '%')
+    dev=$(upower -e 2>/dev/null | grep BAT)
+    [[ -z "$dev" ]] && none
+
+    percentage=$(upower -i $dev 2>/dev/null | awk '/percentage/ { print $2 }' | tr -d '%')
+else
+    # Assume OSX
+    percentage=$(pmset -g batt | grep InternalBattery-0 | awk '{print $3}' | tr -d '%;')
+fi
+
 [[ -z "$percentage" ]] && none
 
 # If we are fully charged then don't display anything.
