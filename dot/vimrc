@@ -244,8 +244,9 @@ nnoremap Y y$
 nnoremap <F4> ^i#<ESC>j
 nnoremap <F3> ^xj
 
+" Saves all changes in all buffers before making.
 nnoremap <F5> :Silent make run -j8<CR>
-nnoremap <F6> :!make -j8<CR>
+nnoremap <F6> :!make all -j8<CR>
 
 " If these are slow then there might be some vim file somewhere
 " that is creating a two-character binding starting with [ or ],
@@ -337,6 +338,12 @@ nnoremap N :next<CR>
 " EasyMotions controls.
 nmap ; <Plug>(easymotion-bd-w)
 vmap ; <Plug>(easymotion-bd-w)
+
+function! ReplaceWord()
+    let l:w = expand( "<cword>" )
+    call feedkeys( ":%s/" . l:w . "//g\<Left>\<Left>" )
+endfunction
+nnoremap <Leader>r :call ReplaceWord()<CR>
 
 " Enable GDB integration.  This is an auto command because it
 " seems that if we issue this anywhere in the vimrc file itself
@@ -520,7 +527,6 @@ call vundle#begin()
     Plugin 'scrooloose/nerdcommenter'  " Auto comment manipulation
     "Plugin 'raimondi/delimitmate'      " Auto closing of quotes, parens, etc.
     Plugin 'simnalamburt/vim-mundo'    " Undo tree interaction
-    Plugin 'mhinz/vim-startify'        " startscreen / session manager
     Plugin 'takac/vim-hardtime'        " option to disable hjkl
     Plugin 'morhetz/gruvbox'           " colorscheme
     Plugin 'junegunn/fzf'              " fuzzy searching
@@ -615,15 +621,6 @@ autocmd bufenter * :call ExitIfOnlyNerdTree()
 
 " This disables the intro  message  that  appears when vim starts.
 set shortmess=I " Read :help shortmess for everything else.
-
-" Uncomment this for persistent sessions.
-"let g:startify_session_persistence = 1
-" Comment this out to get the cow/quote header from startify.
-let g:startify_custom_header = []
-
-if !g:work_env == 0
-  let g:startify_disable_at_vimenter = 1
-endif
 
 " This flag to the vim-hardtime plugin enables it for all buffers.
 " When enabled, the hjkl/arrow keys are limited to one per second
