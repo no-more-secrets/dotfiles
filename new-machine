@@ -41,6 +41,7 @@ cd ~/dev
 [[ ! -d nr-make   ]] && git clone ssh://git@github.com/dpacbach/nr-make
 [[ ! -d calcterm  ]] && git clone ssh://git@github.com/dpacbach/calcterm
 [[ ! -d cpp       ]] && git clone ssh://git@github.com/dpacbach/cpp
+[[ ! -d revolution-now-game ]] && git clone ssh://git@github.com/dpacbach/revolution-now-game
 # Needed for next steps
 [[ ! -d utilities ]] && git clone ssh://git@github.com/dpacbach/utilities
 
