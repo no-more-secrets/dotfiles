@@ -47,6 +47,8 @@ cd ~/dev
 echo "building vim..."
 ~/dev/utilities/building/build-vim.sh
 
+rm ~/.bashrc
+
 echo "Running setup scripts."
 cd ~/.dotfiles
 make REBUILD_YCM=
