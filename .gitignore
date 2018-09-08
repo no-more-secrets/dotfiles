@@ -14,3 +14,5 @@ dot/config/fish/local-config.fish
 
 dot/config/fish/functions/local
 dot/config/fish/functions/fzf_key_bindings.fish
+
+dot/fonts/.uuid

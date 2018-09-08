@@ -52,6 +52,7 @@ main() {
         fonts
         ghc
         gitconfig
+        nr-make-rc.mk
         tmux
         tmux.conf
         vim

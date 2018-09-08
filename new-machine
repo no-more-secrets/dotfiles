@@ -42,8 +42,12 @@ cd ~/dev
 [[ ! -d calcterm  ]] && git clone ssh://git@github.com/dpacbach/calcterm
 [[ ! -d cpp       ]] && git clone ssh://git@github.com/dpacbach/cpp
 [[ ! -d revolution-now-game ]] && git clone ssh://git@github.com/dpacbach/revolution-now-game
+[[ ! -d haskell   ]] && git clone ssh://git@github.com/dpacbach/Haskell-Utils haskell
 # Needed for next steps
 [[ ! -d utilities ]] && git clone ssh://git@github.com/dpacbach/utilities
+
+echo "building haskell utils..."
+scripts/build-hs-utils.sh
 
 echo "building vim..."
 ~/dev/utilities/building/build-vim.sh

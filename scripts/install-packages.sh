@@ -59,3 +59,5 @@ list="
 sudo apt install $list
 
 bash scripts/install-fd.sh
+
+bash scripts/install-stack.sh
