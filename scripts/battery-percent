@@ -23,7 +23,7 @@ fi
 # If we are fully charged then don't display anything.
 (( percentage > 95 )) && exit 0
 
-bg=235
+bg=234
 
 (( percentage <= 10 )) && {
     fg=255 # white
