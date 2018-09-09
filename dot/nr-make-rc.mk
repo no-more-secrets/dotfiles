@@ -14,6 +14,10 @@ ifeq ($(origin SYSTEM_DEFAULTS),undefined)
   LLVM_TAG := v700.rc2
   GCC_TAG  := 8-2-0
 
+  # Don't need to change these.
+  CLANG_ROOT := $(HOME)/dev/tools/llvm-$(LLVM_TAG)
+  GCC_ROOT   := $(HOME)/dev/tools/gcc-$(GCC_TAG)
+
   # Note that the static linking of libstdc++ will only apply to
   # the binaries themselves, and not to the dependencies. So if we
   # link against something that in turn links against libstdc++
@@ -21,7 +25,6 @@ ifeq ($(origin SYSTEM_DEFAULTS),undefined)
   # loaded (one static, one dynamic) which is probably not good.
 
   ifneq ($(origin USE_CLANG),undefined)
-      CLANG_ROOT := $(HOME)/dev/tools/llvm-$(LLVM_TAG)
       CC  := $(CLANG_ROOT)/bin/clang
       CXX := $(CLANG_ROOT)/bin/clang++
       LD  := $(CLANG_ROOT)/bin/clang++
@@ -30,7 +33,6 @@ ifeq ($(origin SYSTEM_DEFAULTS),undefined)
   else
       # This is kind of sketchy because this gcc build does not
       # even run unless we set an LD_LIBRARY_PATH.
-      GCC_ROOT := $(HOME)/dev/tools/gcc-$(GCC_TAG)
       export LD_LIBRARY_PATH = $(GCC_ROOT)/lib
       CC  := $(GCC_ROOT)/bin/gcc-$(GCC_TAG)
       CXX := $(GCC_ROOT)/bin/g++-$(GCC_TAG)
