@@ -333,9 +333,6 @@ nnoremap <Leader>S * :e %:p:s,.hpp$,.X123X,:s,.cpp$,.hpp,:s,.X123X$,.cpp,<CR>ggn
 nnoremap <C-E> 10<C-E>10j
 nnoremap <C-Y> 10<C-Y>10k
 
-nnoremap B :prev<CR>
-nnoremap N :next<CR>
-
 " EasyMotions controls.
 nmap ; <Plug>(easymotion-bd-w)
 vmap ; <Plug>(easymotion-bd-w)
@@ -376,7 +373,6 @@ endfunction
 " Files under CWD.
 nnoremap <C-T> :Files<CR>
 " <Leader>tt is reserved for global files.
-nmap <Leader>tg :GFiles<CR>
 nmap <Leader>ts :GFiles?<CR>
 nmap <Leader>tl :Lines<CR>
 nmap <Leader>ta :Ag<CR>
