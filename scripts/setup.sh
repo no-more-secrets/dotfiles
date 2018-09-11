@@ -24,7 +24,7 @@ bash scripts/rebuild.sh "$@"; check 'rebuild and/or update components'
 
 # Set terminal colors (probably assumes GNOME terminal).
 [[ $(uname) == Linux ]] &&
- { bash term-colors/set-colors.sh; check 'set terminal colors'; }
+ { bash term-colors/set-gnome-terminal-colors.sh; check 'set terminal colors'; }
 
 # Exit with success
 true

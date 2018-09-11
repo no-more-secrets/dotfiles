@@ -4,6 +4,8 @@ none() {
     exit 0
 }
 
+cd $(dirname $(readlink -f $0))
+
 os=$(uname)
 
 if [[ "$os" == Linux ]]; then
@@ -23,7 +25,7 @@ fi
 # If we are fully charged then don't display anything.
 (( percentage > 95 )) && exit 0
 
-bg=234
+bg=$(< "../term-colors/background.txt")
 
 (( percentage <= 10 )) && {
     fg=255 # white

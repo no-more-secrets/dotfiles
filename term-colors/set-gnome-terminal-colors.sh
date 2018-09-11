@@ -21,8 +21,8 @@ settings=$(dconf list $full_profile)
 echo "List of settings:"
 echo "$settings"
 
-foreground="'$(<foreground.txt)'"
-background="'$(<background-matte.txt)'"
+foreground="'$(./to-hex.sh $(<foreground.txt))'"
+background="'$(./to-hex.sh $(<background.txt))'"
 
 dconf write ${full_profile}background-color "$background"
 dconf write ${full_profile}foreground-color "$foreground"

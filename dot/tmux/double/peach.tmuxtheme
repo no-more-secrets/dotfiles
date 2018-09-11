@@ -1,47 +1,35 @@
-#
-# Powerline Double Yellow - Tmux Theme
-# Created by Jim Myhrberg <contact@jimeh.me>.
-#
-# Inspired by vim-powerline: https://github.com/Lokaltog/powerline
-#
-# Requires terminal to be using a powerline compatible font, find one here:
-# https://github.com/Lokaltog/powerline-fonts
-#
-
 # Status update interval
 set -g status-interval 1
 
+source-file "$HOME/.dotfiles/term-colors/tmux-theme-colors.tmux"
+
 # Basic status bar colors
-set -g status-fg colour240
-set -g status-bg colour234
+set -g status-fg $lg_color2
+set -g status-bg $bgcolor
 
 # Left side of status bar
-set -g status-left-bg colour234
-set -g status-left-fg colour243
+set -g status-left-bg $bgcolor
+set -g status-left-fg $themecolor
 set -g status-left-length 40
-#set -g status-left "#[fg=colour234,bg=colour223,bold] #(whoami) #[fg=colour223,bg=colour240,nobold]#[fg=colour234,bg=colour240] %d-%b-%y #[fg=colour240,bg=colour237]#[fg=colour250,bg=colour237] %l:%M:%S %p #[fg=colour237,bg=colour234,nobold]"
-set -g status-left "#[fg=colour234,bg=colour240] %A #[fg=colour240,bg=colour237]#[fg=colour250,bg=colour237] %s #[fg=colour237,bg=colour234,nobold]"
+set -g status-left "#[fg=$bgcolor,bg=$lg_color2] %A #[fg=$lg_color2,bg=$lg_color]#[fg=$lg_color3,bg=$lg_color] %s #[fg=$lg_color,bg=$bgcolor,nobold]"
 
 # Right side of status bar
-set -g status-right-bg colour234
-set -g status-right-fg colour243
+set -g status-right-bg $bgcolor
+set -g status-right-fg $themecolor
 set -g status-right-length 150
-#set -g status-right "#[fg=colour237,bg=colour234]#[fg=colour250,bg=colour237] %l:%M:%S %p #[fg=colour240,bg=colour237]#[fg=colour234,bg=colour240] %d-%b-%y #[fg=colour223,bg=colour240]#[fg=colour234,bg=colour223,bold] #h "
-set -g status-right "#($HOME/.dotfiles/scripts/battery-percent)#[fg=colour240,bg=colour234] #[fg=colour237,bg=colour234]#[fg=colour250,bg=colour237] %l:%M:%S %p #[fg=colour240,bg=colour237]#[fg=colour234,bg=colour240] %x #[fg=colour223,bg=colour240]"
+set -g status-right "#($HOME/.dotfiles/scripts/battery-percent)#[fg=$lg_color2,bg=$bgcolor] #[fg=$lg_color,bg=$bgcolor]#[fg=$lg_color4,bg=$lg_color] %l:%M:%S %p #[fg=$lg_color2,bg=$lg_color]#[fg=$bgcolor,bg=$lg_color2] %x "
 
 # Window status
-set -g window-status-format "  #[fg=colour223,bg=colour234]#W#F  "
-#set -g window-status-current-format "#[fg=colour234,bg=black]#[fg=colour223,nobold] #I:#W#F #[fg=colour234,bg=black,nobold]"
-#set -g window-status-current-format "#[fg=colour223,bg=colour234]▟#[fg=colour234,bg=colour223] #W#F #[fg=colour223,bg=colour234]▙#[fg=colour234,bg=black,nobold]"
-set -g window-status-current-format "#[fg=colour223,bg=colour234]#[fg=colour234,bg=colour223] #W#F #[fg=colour223,bg=colour234]#[fg=colour234,bg=black,nobold]"
+set -g window-status-format "  #[fg=$themecolor,bg=$bgcolor]#W#F  "
+set -g window-status-current-format "#[fg=$bgcolor,bg=$themecolor] #W#F #[bg=$bgcolor,nobold]"
 
 # Current window status
-set -g window-status-current-bg colour223
-set -g window-status-current-fg colour234
+set -g window-status-current-bg $bgcolor
+set -g window-status-current-fg $themecolor
 
 # Window with activity status
-set -g window-status-activity-bg colour245 # fg and bg are flipped here due to
-set -g window-status-activity-fg colour234 # a bug in tmux
+set -g window-status-activity-bg $bgcolor
+set -g window-status-activity-fg $themecolor
 
 # Window separator
 set -g window-status-separator ""
@@ -51,28 +39,28 @@ set -g status-justify centre
 
 # Pane border
 set -g pane-border-bg default
-set -g pane-border-fg colour238
+set -g pane-border-fg $paneborder
 
 # Active pane border
 set -g pane-active-border-bg default
-set -g pane-active-border-fg colour238 # colour223
+set -g pane-active-border-fg $paneborder
 
 # Pane number indicator
-set -g display-panes-colour colour234
-set -g display-panes-active-colour colour245
+#set -g display-panes-colour ...
+#set -g display-panes-active-colour ...
 
 # Clock mode
-set -g clock-mode-colour colour223
+set -g clock-mode-colour $themecolor
 set -g clock-mode-style 24
 
 # Message
-set -g message-bg colour223
-set -g message-fg black
+set -g message-bg $themecolor
+set -g message-fg $msg_fg
 
 # Command message
-set -g message-command-bg colour234
-set -g message-command-fg black
+set -g message-command-bg $themecolor
+set -g message-command-fg $msg_fg
 
 # Mode
-set -g mode-bg colour223
-set -g mode-fg colour234
+set -g mode-bg $themecolor
+set -g mode-fg $bgcolor
