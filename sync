@@ -12,11 +12,6 @@ source scripts/utils.sh
 msg 'Updating files...'
 git pull --quiet origin master; check 'update dot files'
 
-# Reload tmux.conf.
-msg 'Reloading tmux.conf...'
-tmux source-file ~/.tmux.conf
-tmux display-message "Config reloaded."
-
 msg 'Applying changes...'
 # Apply any new changes to the environment.
 bash scripts/setup.sh "$@"; check 'run setup script'
@@ -25,6 +20,11 @@ bash scripts/setup.sh "$@"; check 'run setup script'
     # Install per-user fonts.
     bash scripts/fonts.sh; check 'install fonts'
 }
+
+# Reload tmux.conf.
+msg 'Reloading tmux.conf...'
+tmux source-file ~/.tmux.conf
+tmux display-message "Config reloaded."
 
 msg 'Finished.'
 # Exit with success
