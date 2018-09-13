@@ -1,6 +1,6 @@
 # This file is sourced by tmux.
 themecolor=colour223
-bgcolor=colour234
+bgcolor=colour235
 
 lg_color4=colour250
 lg_color3=colour247
