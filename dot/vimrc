@@ -514,6 +514,11 @@ endif
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 
+let g:cpp_no_function_highlight = 1
+let g:c_no_curly_error=1
+let g:cpp_member_variable_highlight = 1
+"let g:cpp_class_decl_highlight = 1
+
 call vundle#begin()
     " Note: Vundle needs to manage Vundle
     Plugin 'VundleVim/Vundle.vim'
@@ -531,6 +536,7 @@ call vundle#begin()
     Plugin 'terryma/vim-expand-region' " expand selected region
     Plugin 'majutsushi/tagbar'         " Code outline window
     Plugin 'tibabit/vim-templates'     " file templates with placeholders
+    Plugin 'octol/vim-cpp-enhanced-highlight'
 if g:work_env == 0
     Plugin 'valloric/youcompleteme'
 endif
