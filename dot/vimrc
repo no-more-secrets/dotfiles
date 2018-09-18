@@ -249,6 +249,33 @@ nnoremap <F5> :Silent make run -j8<CR>
 nnoremap <F6> :!make all -j8<CR>
 nnoremap <F7> :!bash -c "make all -j1 2>&1 \| head -n 50"<CR>
 
+" This function changes the standard `z.` so that if it is pressed twice
+" within one second then the first time it is pressed it will move the
+" current line to the center of the screen as usual, but the second time it
+" will move the current line up to that line which is 20% of the way down
+" from the top of the screen. However, a second press of z. more than one
+" seconds after the first one still perform the standard behavior of moving
+" to the center line.
+let g:zee_dot_timer = reltime()
+function! ZeeDot()
+  let l:zee_delta = reltime(g:zee_dot_timer)[0]
+  if l:zee_delta < 1
+    let l:target = &lines/5
+    let l:curr = line('.') - line('w0')
+    if l:curr != l:target
+      if l:curr > l:target
+        call feedkeys( (l:curr-l:target) . "\<C-e>" )
+      else
+        call feedkeys( (l:target-l:curr) . "\<C-y>" )
+      endif
+    endif
+  else
+    call feedkeys('zz')
+  endif
+  let g:zee_dot_timer = reltime()
+endfunction
+nnoremap z. :call ZeeDot()<CR>
+
 " If these are slow then there might be some vim file somewhere
 " that is creating a two-character binding starting with [ or ],
 " such as e.g. /usr/share/vim/vim80/ftplugin/python.vim.  These
@@ -329,9 +356,6 @@ nnoremap <Leader>s :e %:p:s,.hpp$,.X123X,:s,.cpp$,.hpp,:s,.X123X$,.cpp,<CR>
 " This variant will do the same as above, but will search for the
 " token under the cursor in the new file (from the top) once loaded.
 nnoremap <Leader>S * :e %:p:s,.hpp$,.X123X,:s,.cpp$,.hpp,:s,.X123X$,.cpp,<CR>ggn
-
-nnoremap <C-E> 10<C-E>10j
-nnoremap <C-Y> 10<C-Y>10k
 
 " EasyMotions controls.
 nmap ; <Plug>(easymotion-bd-w)
