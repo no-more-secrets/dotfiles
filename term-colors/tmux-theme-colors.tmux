@@ -1,5 +1,5 @@
 # This file is sourced by tmux.
-themecolor=colour223
+themecolor=colour160
 bgcolor=colour235
 
 lg_color4=colour250

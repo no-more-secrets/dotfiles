@@ -319,7 +319,7 @@ nnoremap <Leader>er :YcmForceCompileAndDiagnostics<CR>
 nnoremap <Leader>ee :YcmDiags<CR>
 
 " Off until clangd supports the necessary functions.
-let g:ycm_use_clangd = 0
+"let g:ycm_use_clangd = 0
 
 " This allows one to alternate between .cpp and .hpp files so long
 " as they are in the current directory.  It works by [e]diting the
