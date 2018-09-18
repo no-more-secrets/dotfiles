@@ -33,6 +33,12 @@ function key_bindings
         bind -M insert -k f4 'binding-F4'
     end
 
+    # Shift-F4
+    bind \e\[1\;2S 'binding-F4 shift'
+    if bind -M insert > /dev/null 2>&1
+        bind -M insert \e\[1\;2S 'binding-F4 shift'
+    end
+
     # F5
     bind -k f5 'binding-F5'
     if bind -M insert > /dev/null 2>&1
