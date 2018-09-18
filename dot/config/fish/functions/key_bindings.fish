@@ -27,6 +27,12 @@ function key_bindings
         bind -M insert \ck binding-C-k
     end
 
+    # F4
+    bind -k f4 'binding-F4'
+    if bind -M insert > /dev/null 2>&1
+        bind -M insert -k f4 'binding-F4'
+    end
+
     # F5
     bind -k f5 'binding-F5'
     if bind -M insert > /dev/null 2>&1

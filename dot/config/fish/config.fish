@@ -19,9 +19,10 @@ set -l fish_local_config ~/.config/fish/local-config.fish
 set PATH ~/bin ~/.local/bin $PATH
 
 set -gx FZF_DEFAULT_OPTS "
-    --height 30%
+    --height 40%
     --reverse
     --multi
+    --ansi
     --select-1
     --preview-window=right:45%"
 
