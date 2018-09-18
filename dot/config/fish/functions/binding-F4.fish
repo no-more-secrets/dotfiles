@@ -11,8 +11,13 @@ function binding-F4
 
     # Last resort
     if [ ! $handled -eq 0 ]
-        read -P 'search> ' line
-        set result (ag-for-fzf $line | fzf)
+        set -l ag_color (set_color aa3333)
+        set -l ag "ag"
+        set -l normal_color (set_color normal)
+        read -P "$ag_color$ag$normal_color: " line
+        if string length -q $line
+            set result (ag-for-fzf $line | fzf)
+        end
     end
 
     repaint-cmd-line ""
