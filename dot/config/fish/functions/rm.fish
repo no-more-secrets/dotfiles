@@ -1,7 +1,8 @@
 # Re-routes to the recycle command, if it exists.
 function rm
-    if test -e ~/bin/recycle
-        ~/bin/recycle $argv
+    set -l recycle ~/dev/utilities/misc/recycle
+    if test -x $recycle
+        eval $recycle $argv
     else
         command rm $argv
     end
