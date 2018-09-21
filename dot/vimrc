@@ -241,9 +241,6 @@ nnoremap <SPACE> r l
 
 nnoremap Y y$
 
-nnoremap <F4> ^i#<ESC>j
-nnoremap <F3> ^xj
-
 " Saves all changes in all buffers before making.
 nnoremap <F5> :Silent make run -j8<CR>
 nnoremap <F6> :!make all -j8<CR>
@@ -401,6 +398,7 @@ nmap <Leader>ts :GFiles?<CR>
 nmap <Leader>tl :Lines<CR>
 nmap <Leader>ta :Ag<CR>
 nmap <Leader>tw :call AgWord()<CR>
+nmap <F4> :Ag<CR>
 
 let g:fzf_height = '20%'
 
@@ -594,7 +592,7 @@ au FileType make    let g:commentstring="# %s"
 " If there is no colorscheme already  set  then this will set one.
 " It  will  be  called as an auto command after the auto commands
 " used to set the colorscheme for particular file types.
-function SetDefaultColorScheme()
+function! SetDefaultColorScheme()
     " colorschemes:
     "    wombat256   sourcerer
     "    hipster     scheakur
@@ -638,7 +636,7 @@ set ttymouse=sgr
 
 " If  NerdTree  is  the only open window then quit from it, effec-
 " tively quitting vim if only NerdTree is open.
-function ExitIfOnlyNerdTree()
+function! ExitIfOnlyNerdTree()
     if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree())
         q
     endif
