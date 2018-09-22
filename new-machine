@@ -46,6 +46,7 @@ cd ~/dev
 # Needed for next steps
 [[ ! -d utilities ]] && git clone ssh://git@github.com/dpacbach/utilities
 
+cd ~/.dotfiles
 echo "building haskell utils..."
 scripts/build-hs-utils.sh
 

@@ -42,6 +42,7 @@ list="
     libzip-dev
     openssh-server
     perl
+    powertop
     python2.7
     python2.7-dev
     python3
@@ -49,6 +50,7 @@ list="
     screenfetch
     silversearcher-ag
     subversion
+    tlp
     tmux
     tree
     vim
