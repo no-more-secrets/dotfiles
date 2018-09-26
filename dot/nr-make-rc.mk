@@ -1,6 +1,6 @@
 # 0. Enable this to use all system compiler defaults.  If
 #    it is disabled then proceed.
-SYSTEM_DEFAULTS :=
+#SYSTEM_DEFAULTS :=
 
 ifeq ($(origin SYSTEM_DEFAULTS),undefined)
   # 1. Enable this to use clang.
@@ -11,7 +11,7 @@ ifeq ($(origin SYSTEM_DEFAULTS),undefined)
   #CLANG_USE_LIBSTDCXX = $(GCC_ROOT)
 
   # 3. Select versions of clang/gcc.
-  LLVM_TAG := v700.rc2
+  LLVM_TAG := v700.final
   GCC_TAG  := 8-2-0
 
   # Don't need to change these.
