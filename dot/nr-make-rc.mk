@@ -8,7 +8,7 @@ ifeq ($(origin SYSTEM_DEFAULTS),undefined)
 
   # 2. If using clang, enable this to tell clang which libstdc++
   #    to use (by default it uses the one on the system).
-  #CLANG_USE_LIBSTDCXX = $(GCC_ROOT)
+  CLANG_USE_LIBSTDCXX = $(GCC_ROOT)
 
   # 3. Select versions of clang/gcc.
   LLVM_TAG := v700.final
