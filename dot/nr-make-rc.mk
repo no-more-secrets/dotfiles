@@ -3,7 +3,7 @@
 #SYSTEM_DEFAULTS :=
 
 ifeq ($(origin SYSTEM_DEFAULTS),undefined)
-  # 1. Enable this to use clang.
+  # 1. Comment this to use gcc.
   USE_CLANG :=
 
   # 2. If using clang, enable this to tell clang which libstdc++
