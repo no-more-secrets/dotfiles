@@ -50,4 +50,18 @@ fi
 
 ./install.py --clang-completer; check "run install.py script."
 
+if [[ ! -z "$llvm_root" && $(uname) =~ Linux ]]; then
+    # For some reason the YCM build does not always create the
+    # libclang.so.* symlink properly when we specify a custom
+    # llvm root, so we will do it here manually.
+    [[ "$llvm_root" =~ llvm-v([0-9]).* ]]; major=${BASH_REMATCH[1]}
+    [[ ! -z "$major" ]]; check "extract llvm major version."
+    ycmd="$HOME/.vim/bundle/youcompleteme/third_party/ycmd"
+    [[ -d "$ycmd" ]]; check "find ycmd folder."
+    symlink="$ycmd/libclang.so.$major"
+    rm -f $symlink; check "remove libclang.so.$major symlink"
+    ln -s "$llvm_root/lib/libclang.so.$major" "$symlink"
+    check "create $symlink symlink"
+fi
+
 msg "Finished building YCM."
