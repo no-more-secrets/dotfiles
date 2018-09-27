@@ -18,6 +18,8 @@ set -l fish_local_config ~/.config/fish/local-config.fish
 
 set PATH ~/bin ~/.local/bin $PATH
 
+set -g fish_prompt_pwd_dir_length 2
+
 set -gx FZF_DEFAULT_OPTS "
     --height 40%
     --reverse
