@@ -29,15 +29,12 @@ ifeq ($(origin SYSTEM_DEFAULTS),undefined)
       CXX := $(CLANG_ROOT)/bin/clang++
       LD  := $(CLANG_ROOT)/bin/clang++
       AR  := $(CLANG_ROOT)/bin/llvm-ar
-      STATIC_LIBSTDCXX=
+      #STATIC_LIBSTDCXX=
   else
-      # This is kind of sketchy because this gcc build does not
-      # even run unless we set an LD_LIBRARY_PATH.
-      export LD_LIBRARY_PATH = $(GCC_ROOT)/lib
       CC  := $(GCC_ROOT)/bin/gcc-$(GCC_TAG)
       CXX := $(GCC_ROOT)/bin/g++-$(GCC_TAG)
       LD  := $(GCC_ROOT)/bin/g++-$(GCC_TAG)
       AR  := $(GCC_ROOT)/bin/gcc-ar-$(GCC_TAG)
-      STATIC_LIBSTDCXX=
+      #STATIC_LIBSTDCXX=
   endif
 endif # SYSTEM_DEFAULTS origin undefined
