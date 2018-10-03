@@ -436,7 +436,8 @@ let g:ycm_key_invoke_completion = '<C-L>'
 " This tells YCM to populate the location list with errors.
 let g:ycm_always_populate_location_list = 1
 " These characters appear in the gutter on error.
-let g:ycm_error_symbol = '→'   " default is '>>'
+"let g:ycm_error_symbol = '→'   " default is '>>'
+let g:ycm_error_symbol = '✖'   " default is '>>'
 
 "let g:ycm_autoclose_preview_window_after_completion = 1
 let g:ycm_autoclose_preview_window_after_insertion = 1
