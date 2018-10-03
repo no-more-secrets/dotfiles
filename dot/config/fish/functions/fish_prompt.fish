@@ -95,7 +95,11 @@ function fish_prompt --description 'Write out the prompt'
     end
 
     set_color BBF #$color_cwd
-    echo -n (prompt_pwd)
+    if functions -q local_pwd_fmt
+        echo -n (local_pwd_fmt)
+    else
+        echo -n (prompt_pwd)
+    end
 
     set_color normal
     echo -n "$suffix "
