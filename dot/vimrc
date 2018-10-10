@@ -345,6 +345,22 @@ nnoremap <Leader>ee :YcmDiags<CR>
 " Off until clangd supports the necessary functions.
 "let g:ycm_use_clangd = 0
 
+function! ClangFormatAll()
+  if g:work_env == 1
+    return
+  endif
+  "let l:formatdiff = 1
+  let l:lines = '1:' . line( '$' )
+  py3f ~/dev/tools/llvm-v700.final/share/clang/clang-format.py
+endfunction
+
+" Since vim does not use Control-C to exit/kill we can map it to
+" something else, so we map it to invoke clang-format on the
+" current file.
+nnoremap <C-C> :call ClangFormatAll()<CR>
+" Automatically format the C++ source files just before saving.
+autocmd BufWritePre *.hpp,*.cpp call ClangFormatAll()
+
 " This allows one to alternate between .cpp and .hpp files so long
 " as they are in the current directory.  It works by [e]diting the
 " file whose name is the current one except with the extension .cpp
