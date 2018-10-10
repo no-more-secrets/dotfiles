@@ -445,13 +445,10 @@ let g:ycm_autoclose_preview_window_after_insertion = 1
 " Whitelist of .ycm_extra_conf.py  files  which  will  be  loaded
 " without asking the user  permission  each  time. Items starting
 " with a '!' character  will  be  blacklisted; items not starting
-" with '!' are whitelists. Stars are globs.
+" with '!' are whitelists. Stars are globs.  Most projects just
+" have a symlink to this single file in the /nr-make/ folder.
 let g:ycm_extra_conf_globlist = [
-  \ '~/dev/calcterm/*',
-  \ '~/dev/revolution-now-game/*',
-  \ '~/dev/CAStle/*',
-  \ '~/dev/cpp/*',
-  \ '~/dev/p-unzip/*'
+  \ '~/dev/nr-make/ycm_extra_conf.py'
   \ ]
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
