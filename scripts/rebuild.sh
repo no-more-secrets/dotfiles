@@ -8,11 +8,8 @@
 source scripts/utils.sh
 
 [[ "$*" =~ .*--rebuild-ycm.* ]] && {
-    [[ "$HOME" =~ oo ]] || {
-      # Don't do this in work environment.
-      msg "Rebuilding YCM"
-      bash scripts/build-ycm.sh; check "build ycm"
-    }
+    msg "Rebuilding YCM"
+    bash scripts/build-ycm.sh; check "build ycm"
 }
 
 msg "Updating FZF"

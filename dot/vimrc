@@ -73,6 +73,10 @@ command! -nargs=1 Silent
       \   execute 'silent !' . <q-args>
       \ | execute 'redraw!'
 
+function! InGoogleCloud()
+  return getcwd() =~ 'cloud.*google3'
+endfunction
+
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 "                           Status Bar
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -576,7 +580,7 @@ call vundle#begin()
     Plugin 'majutsushi/tagbar'         " Code outline window
     Plugin 'tibabit/vim-templates'     " file templates with placeholders
     Plugin 'octol/vim-cpp-enhanced-highlight'
-if g:work_env == 0
+if ! InGoogleCloud()
     Plugin 'valloric/youcompleteme'
 endif
 call vundle#end()            " required
