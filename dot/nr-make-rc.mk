@@ -11,8 +11,8 @@ GCC_ROOT   := $(HOME)/dev/tools/gcc-$(GCC_TAG)
 # ==============================================================
 # Where are the Tools
 
-#CLANG_FORMAT := $(CLANG_ROOT)/bin/clang-format
-#CLANG_TIDY   := $(CLANG_ROOT)/bin/clang-tidy
+CLANG_FORMAT := $(CLANG_ROOT)/bin/clang-format
+CLANG_TIDY   := $(CLANG_ROOT)/bin/clang-tidy
 
 # ==============================================================
 # Which Compiler to Use
