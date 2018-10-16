@@ -365,8 +365,6 @@ endfunction
 " something else, so we map it to invoke clang-format on the
 " current file.
 nnoremap <C-C> :call ClangFormatAll()<CR>
-" Automatically format the C++ source files just before saving.
-autocmd BufWritePre *.hpp,*.cpp call ClangFormatAll()
 
 " This allows one to alternate between .cpp and .hpp files so long
 " as they are in the current directory.  It works by [e]diting the
