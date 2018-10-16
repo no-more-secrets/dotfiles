@@ -34,10 +34,13 @@ fi
 
 tools="$HOME/dev/tools"
 
-# Disabled for now since YCM doesn't seem to work with libclang 7.
 # See if we have any clang builds, and if so then use them instead
-# of system libclang.
-llvm_root=$(ls -d $tools/llvm-* 2>/dev/null | sort -V | tail -n1)
+# of system libclang.  First try trunk:
+llvm_root=$(ls -d $tools/llvm-trunk-r* 2>/dev/null | sort -V | tail -n1)
+# If not trunk builds are found, then use whatever else there is.
+[[ -z "$llvm_root" ]] &&
+    llvm_root=$(ls -d $tools/llvm-* 2>/dev/null | sort -V | tail -n1)
+
 if [[ ! -z "$llvm_root" ]]; then
     msg "Found LLVM root for libclang: $llvm_root"
     # The install script below will eventually invoke CMake, and it
@@ -54,7 +57,7 @@ if [[ ! -z "$llvm_root" && $(uname) =~ Linux ]]; then
     # For some reason the YCM build does not always create the
     # libclang.so.* symlink properly when we specify a custom
     # llvm root, so we will do it here manually.
-    [[ "$llvm_root" =~ llvm-v([0-9]).* ]]; major=${BASH_REMATCH[1]}
+    major=$($llvm_root/bin/clang --version | sed -n 's/clang version \([0-9]\+\)\..*/\1/p')
     [[ ! -z "$major" ]]; check "extract llvm major version."
     ycmd="$HOME/.vim/bundle/youcompleteme/third_party/ycmd"
     [[ -d "$ycmd" ]]; check "find ycmd folder."
