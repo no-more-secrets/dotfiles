@@ -10,6 +10,7 @@ list="
     automake
     bison
     build-essential
+    ccache
     cloc
     cmake
     curl
