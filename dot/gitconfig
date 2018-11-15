@@ -6,3 +6,8 @@
 [alias]
     st = status
     lg = "log --oneline --decorate --color=auto --graph"
+    d  = difftool
+[diff]
+    tool = vimdiff
+[difftool]
+    prompt = false
