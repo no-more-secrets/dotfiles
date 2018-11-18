@@ -34,14 +34,8 @@ fi
 
 tools="$HOME/dev/tools"
 
-# See if we have any clang builds, and if so then use them instead
-# of system libclang.  First try trunk:
-llvm_root=$(ls -d $tools/llvm-trunk-r* 2>/dev/null | sort -V | tail -n1)
-# If not trunk builds are found, then use whatever else there is.
-[[ -z "$llvm_root" ]] &&
-    llvm_root=$(ls -d $tools/llvm-* 2>/dev/null | sort -V | tail -n1)
-
-if [[ ! -z "$llvm_root" ]]; then
+llvm_root=$tools/llvm-current
+if [[ -e "$llvm_root" ]]; then
     msg "Found LLVM root for libclang: $llvm_root"
     # The install script below will eventually invoke CMake, and it
     # will append these args.  This LLVM root argument will cause

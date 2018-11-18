@@ -346,10 +346,7 @@ nnoremap <Leader>ep :YcmCompleter GetParent<CR>
 nnoremap <Leader>er :YcmForceCompileAndDiagnostics<CR>
 nnoremap <Leader>ee :YcmDiags<CR>
 
-" Off until clangd supports the necessary functions.
-"let g:ycm_use_clangd = 0
-
-let g:llvm_home = $HOME . '/dev/tools/llvm-v700.final'
+let g:llvm_home = $HOME . '/dev/tools/llvm-current'
 
 function! ClangFormatAll()
   if g:work_env == 1

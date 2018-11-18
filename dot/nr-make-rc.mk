@@ -1,11 +1,10 @@
 # ==============================================================
 # Where are the Compilers
 
-LLVM_TAG := v700.final
-GCC_TAG  := 8-2-0
+GCC_TAG := 8-2-0
 
 # Don't need to change these.
-CLANG_ROOT := $(HOME)/dev/tools/llvm-$(LLVM_TAG)
+CLANG_ROOT := $(HOME)/dev/tools/llvm-current
 GCC_ROOT   := $(HOME)/dev/tools/gcc-$(GCC_TAG)
 
 # ==============================================================
