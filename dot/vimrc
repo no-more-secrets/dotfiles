@@ -210,8 +210,9 @@ au WinLeave * :call UpdateStatusBar(2)
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 " For each edited file vim will persist all the undo info for
-" all history in a .*~ file in the same folder as the file.
+" all history in a .*~ file in central location.
 set undofile
+set undodir=~/.vim/undo
 
 " The Undo diff view will be in a new window below the file being
 " edited instead of (the default, which is) to place it below the
@@ -229,6 +230,9 @@ let g:mundo_close_on_revert = 1
 " this seems to be be a workaround that fixes that.
 nnoremap U :MundoToggle<CR><CR>
 
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+"                          The Leader
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 " An  arbitrary key that we use as a namespace for additional key-
 " bindings to avoid conflicts with the standard n/v modes.
 let mapleader = ','

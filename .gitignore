@@ -5,6 +5,7 @@ dot/vim/.netrwhist
 dot/vim/bundle
 dot/vim/cache
 dot/vim/session*
+dot/vim/undo
 
 dot/ghc/ghci_history
 
