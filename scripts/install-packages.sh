@@ -41,6 +41,7 @@ list="
     libxml2-dev
     libzip4
     libzip-dev
+    ninja-build
     openssh-server
     perl
     powertop
