@@ -15,6 +15,7 @@ list="
     cmake
     curl
     dconf-cli
+    entr
     exuberant-ctags
     fish
     flex
