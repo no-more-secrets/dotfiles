@@ -20,6 +20,8 @@ set PATH ~/bin ~/.local/bin $PATH
 
 set -g fish_prompt_pwd_dir_length 2
 
+set -gx EDITOR vim
+
 set -gx FZF_DEFAULT_OPTS "
     --height 40%
     --reverse
