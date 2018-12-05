@@ -20,6 +20,7 @@ list="
     flex
     git
     htop
+    libdw-dev
     libncurses5
     libncurses5-dev
     libncursesw5
