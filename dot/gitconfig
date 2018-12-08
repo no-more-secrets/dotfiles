@@ -24,7 +24,7 @@
     branch       = "#fe8019"      ; bright_orange
     remoteBranch = "#fe8019"      ; bright_orange
     changed      = "#fb4934"      ; bright_red
-    updated      = "#fabd2f"      ; bright_yellow
+    updated      = "#b8bb26"      ; bright_yellow
     untracked    = "#83a598"      ; bright_blue
     localBranch  = "#689d6a"      ; neutral_aqua
     unmerged     = "#689d6a"      ; neutral_aqua
