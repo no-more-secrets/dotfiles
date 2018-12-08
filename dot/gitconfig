@@ -1,8 +1,35 @@
 [user]
-	name = David P. Sicilia
-	email = dpsicilia@gmail.com
+    name         = David P. Sicilia
+    email        = dpsicilia@gmail.com
 [color]
-	ui = true
+    ui           = true
+    diff         = auto
+    status       = auto
+    branch       = auto
+    interactive  = auto
+    pager        = true
+[color "branch"]
+    current      = "#b8bb26" bold
+    local        = "#fb4934"
+    remote       = "#98971a"
+[color "diff"]
+    meta         = "#fabd2f" bold ; bright_yellow
+    frag         = "#d3869b" bold ; bright_purple
+    old          = "#af3a03" bold ; faded_orange
+    new          = "#b8bb26" bold ; bright_green
+    func         = "#f9f5d7"      ; light0_hard
+    context      = "#928374"      ; grey
+[color "status"]
+    header       = "#928374"      ; gray
+    branch       = "#fe8019"      ; bright_orange
+    remoteBranch = "#fe8019"      ; bright_orange
+    changed      = "#fb4934"      ; bright_red
+    updated      = "#fabd2f"      ; bright_yellow
+    untracked    = "#83a598"      ; bright_blue
+    localBranch  = "#689d6a"      ; neutral_aqua
+    unmerged     = "#689d6a"      ; neutral_aqua
+    upstream     = "#689d6a"      ; neutral_aqua
+    noBranch     = white
 [alias]
     st = status
     lg = "log --oneline --decorate --color=auto --graph"
