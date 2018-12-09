@@ -47,6 +47,8 @@ fi
 
 ./install.py --clang-completer; check "run install.py script."
 
+ycmd="$HOME/.vim/bundle/youcompleteme/third_party/ycmd"
+
 if [[ ! -z "$llvm_root" && $(uname) =~ Linux ]]; then
     # For some reason the YCM build does not always create the
     # libclang.so.* symlink properly when we specify a custom
@@ -56,13 +58,14 @@ if [[ ! -z "$llvm_root" && $(uname) =~ Linux ]]; then
     msg "Found Clang version: $full_version"
     major=$($llvm_root/bin/clang --version | sed -n 's/clang version \([0-9]\+\)\..*/\1/p')
     [[ ! -z "$major" ]]; check "extract llvm major version."
-    ycmd="$HOME/.vim/bundle/youcompleteme/third_party/ycmd"
     [[ -d "$ycmd" ]]; check "find ycmd folder."
     symlink="$ycmd/libclang.so.$major"
     rm -f $symlink; check "remove libclang.so.$major symlink"
     ln -s "$llvm_root/lib/libclang.so.$major" "$symlink"
     check "create $symlink symlink"
+fi
 
+if [[ ! -z "$llvm_root" ]]; then
     # Now we must link ycm's clang_includes directory to the
     # correct folder within the llvm version being used.  This
     # folder holds system include files.
