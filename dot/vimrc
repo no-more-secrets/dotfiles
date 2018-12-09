@@ -587,12 +587,14 @@ filetype plugin indent on    " required
 " Put these after the plugin stuff above since it looks like some
 " syntax settings can be overwridden there.
 au BufNewFile,BufRead *.cc,*.cpp,*.hpp,*.h set syntax=cpp11
+au BufNewFile,BufRead *.inl                set syntax=cpp11
 au BufNewFile,BufRead *.cc,*.cpp,*.hpp,*.h set ft=cpp
 au BufNewFile,BufRead *.lhs                set syntax=haskell_lit
 au BufNewFile,BufRead *.hs                 set syntax=haskell
 au BufNewFile,BufRead *.hs                 set ft=haskell
 au BufNewFile,BufRead *.mkh                set ft=make
 au BufNewFile,BufRead *.fish               set syntax=fish
+au BufNewFile,BufRead *.ucl                set syntax=yaml
 
 au FileType vim     let g:commentstring="\" %s"
 au FileType sh      let g:commentstring="# %s"

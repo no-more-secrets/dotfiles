@@ -13,7 +13,7 @@
     local        = "#fb4934"
     remote       = "#98971a"
 [color "diff"]
-    meta         = "#fabd2f" bold ; bright_yellow
+    meta         = "#bdae93"      ; light3
     frag         = "#d3869b" bold ; bright_purple
     old          = "#af3a03" bold ; faded_orange
     new          = "#b8bb26" bold ; bright_green
