@@ -6,8 +6,8 @@ set -e
 mkdir -p ~/.ssh
 chmod 700 ~/.ssh
 
-hostname='galago-pro'
-ip_address=192.168.0.12
+hostname='leopard'
+ip_address=192.168.0.14
 
 echo "Attempting to contact $ip_address (may be known as $hostname)"
 echo "for SSH keys.  Pinging..."
