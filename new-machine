@@ -52,7 +52,7 @@ echo "building haskell utils..."
 scripts/build-hs-utils.sh
 
 echo "building vim..."
-~/dev/utilities/building/vim.sh
+[[ ! -e ~/dev/tools/vim-current ]] && ~/dev/utilities/building/vim.sh
 
 rm ~/.bashrc
 
