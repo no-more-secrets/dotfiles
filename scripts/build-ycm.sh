@@ -49,7 +49,7 @@ fi
 
 ycmd="$HOME/.vim/bundle/youcompleteme/third_party/ycmd"
 
-if [[ ! -z "$llvm_root" && $(uname) =~ Linux ]]; then
+if [[ -e "$llvm_root" && $(uname) =~ Linux ]]; then
     # For some reason the YCM build does not always create the
     # libclang.so.* symlink properly when we specify a custom
     # llvm root, so we will do it here manually.
@@ -65,7 +65,7 @@ if [[ ! -z "$llvm_root" && $(uname) =~ Linux ]]; then
     check "create $symlink symlink"
 fi
 
-if [[ ! -z "$llvm_root" ]]; then
+if [[ -e "$llvm_root" ]]; then
     # Now we must link ycm's clang_includes directory to the
     # correct folder within the llvm version being used.  This
     # folder holds system include files.
