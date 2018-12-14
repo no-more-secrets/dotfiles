@@ -45,6 +45,7 @@ list="
     libzip-dev
     ninja-build
     openssh-server
+    pax-utils
     perl
     powertop
     python2.7
