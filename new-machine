@@ -3,6 +3,8 @@
 # times and still succeed.
 set -e
 
+mkdir -p ~/bin
+
 mkdir -p ~/.ssh
 chmod 700 ~/.ssh
 
@@ -38,14 +40,15 @@ echo "Cloning repos in ~/dev; should be passwordless."
 mkdir -p ~/dev
 cd ~/dev
 
-[[ ! -d nr-make   ]] && git clone ssh://git@github.com/dpacbach/nr-make
-[[ ! -d calcterm  ]] && git clone ssh://git@github.com/dpacbach/calcterm
-[[ ! -d cpp       ]] && git clone ssh://git@github.com/dpacbach/cpp
-[[ ! -d base/util ]] && git clone ssh://git@github.com/dpacbach/base-util base/util
-[[ ! -d revolution-now-game ]] && git clone ssh://git@github.com/dpacbach/revolution-now-game
-[[ ! -d haskell   ]] && git clone ssh://git@github.com/dpacbach/Haskell-Utils haskell
-# Needed for next steps
-[[ ! -d utilities ]] && git clone ssh://git@github.com/dpacbach/utilities
+[[ ! -d nr-make        ]] && git clone ssh://git@github.com/dpacbach/nr-make
+[[ ! -d calcterm       ]] && git clone ssh://git@github.com/dpacbach/calcterm
+[[ ! -d cpp            ]] && git clone ssh://git@github.com/dpacbach/cpp
+[[ ! -d base/util      ]] && git clone ssh://git@github.com/dpacbach/base-util base/util
+[[ ! -d revolution-now ]] && git clone ssh://git@github.com/dpacbach/revolution-now-game
+[[ ! -d haskell        ]] && git clone ssh://git@github.com/dpacbach/Haskell-Utils haskell
+[[ ! -d utilities      ]] && git clone ssh://git@github.com/dpacbach/utilities
+
+[[ ! -e ~/bin/cmc      ]] && ln -s ~/dev/utilities/cmake/configure ~/bin/cmc
 
 cd ~/.dotfiles
 echo "building haskell utils..."
