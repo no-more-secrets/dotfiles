@@ -255,7 +255,7 @@ nnoremap <SPACE> r l
 nnoremap Y y$
 
 " Saves all changes in all buffers before making.
-nnoremap <F5> :Silent make run -j8<CR>
+nnoremap <F5> :!make run -j8<CR>
 nnoremap <F6> :!make all -j8<CR>
 nnoremap <F7> :!bash -c "make all -j1 2>&1 \| head -n 50"<CR>
 
