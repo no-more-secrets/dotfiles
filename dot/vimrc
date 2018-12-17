@@ -8,6 +8,11 @@ set nocompatible
 set t_Co=256
 set mouse=a
 
+" Set 24-bit 'True Color' if supported.
+if exists( '+termguicolors' )
+  set termguicolors
+endif
+
 " Spacing and spaces
 set nowrap
 set sw=4
