@@ -22,6 +22,8 @@ list="
     git
     htop
     libdw-dev
+    libfreetype6
+    libfreetype6-dev
     libncurses5
     libncurses5-dev
     libncursesw5
@@ -39,6 +41,7 @@ list="
     libsdl2-ttf-$sdl_version
     libsqlite3-0
     libsqlite3-dev
+    libwebp-dev
     libxml2
     libxml2-dev
     libzip4
