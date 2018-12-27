@@ -21,7 +21,7 @@ let colors_name = "sourcerer"
 
 
 "  █▓▒░ GUI colors
-hi Normal       guifg=#c2c2b0 guibg=#222222 gui=NONE
+hi Normal       guifg=#c2c2b0 guibg=#1c1c1c gui=NONE
 hi ColorColumn  guifg=NONE    guibg=#1c1c1c
 hi Cursor       guifg=NONE    guibg=#626262 gui=NONE
 hi CursorColumn guibg=#2d2d2d
@@ -35,9 +35,9 @@ hi ErrorMsg     guifg=#ff6a6a guibg=NONE    gui=bold
 hi FoldColumn   guifg=#68838b guibg=#4B4B4B gui=bold
 hi Folded       guifg=#406060 guibg=#232c2c gui=NONE
 hi IncSearch    guifg=#ffffff guibg=#ff4500 gui=bold
-hi LineNr       guifg=#878787 guibg=#222222 gui=NONE
+hi LineNr       guifg=#878787 guibg=#1c1c1c gui=NONE
 hi MatchParen   guifg=#fff000 guibg=NONE    gui=bold
-hi ModeMsg      guifg=#afafaf guibg=#222222 gui=bold
+hi ModeMsg      guifg=#afafaf guibg=#1c1c1c gui=bold
 hi MoreMsg      guifg=#2e8b57 guibg=NONE    gui=bold
 hi NonText      guifg=#404050 guibg=NONE    gui=NONE
 
@@ -58,9 +58,9 @@ hi SpellRare    guisp=#ff00ff gui=undercurl
 hi StatusLine   guifg=#000000 guibg=#808070 gui=bold
 hi StatusLineNC guifg=#000000 guibg=#333333 gui=italic
 hi VertSplit    guifg=#333333 guibg=#333333 gui=NONE
-hi TabLine      guifg=#a6c8ca guibg=#333333 gui=underline
+hi TabLine      guifg=#bbbbbb guibg=#333333 gui=underline
 hi TabLineFill  guifg=fg      guibg=#333333 gui=reverse
-hi TabLineSel   guifg=#222222 guibg=#6688aa gui=bold
+hi TabLineSel   guifg=#1c1c1c guibg=#6688aa gui=bold
 hi Title        guifg=#528b8b guibg=NONE    gui=bold
 hi Visual       guifg=#000000 guibg=#6688aa gui=NONE
 hi WarningMsg   guifg=#ee9a00 guibg=NONE    gui=NONE
