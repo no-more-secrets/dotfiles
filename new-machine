@@ -44,7 +44,7 @@ cd ~/dev
 [[ ! -d calcterm       ]] && git clone ssh://git@github.com/dpacbach/calcterm
 [[ ! -d cpp            ]] && git clone ssh://git@github.com/dpacbach/cpp
 [[ ! -d base/util      ]] && git clone ssh://git@github.com/dpacbach/base-util base/util
-[[ ! -d revolution-now ]] && git clone ssh://git@github.com/dpacbach/revolution-now-game
+[[ ! -d revolution-now ]] && git clone ssh://git@github.com/dpacbach/revolution-now-game revolution-now
 [[ ! -d haskell        ]] && git clone ssh://git@github.com/dpacbach/Haskell-Utils haskell
 [[ ! -d utilities      ]] && git clone ssh://git@github.com/dpacbach/utilities
 
