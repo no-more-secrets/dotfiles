@@ -35,7 +35,7 @@ hi ErrorMsg     guifg=#ff6a6a guibg=NONE    gui=bold
 hi FoldColumn   guifg=#68838b guibg=#4B4B4B gui=bold
 hi Folded       guifg=#406060 guibg=#232c2c gui=NONE
 hi IncSearch    guifg=#ffffff guibg=#ff4500 gui=bold
-hi LineNr       guifg=#878787 guibg=#3A3A3A gui=NONE
+hi LineNr       guifg=#878787 guibg=#222222 gui=NONE
 hi MatchParen   guifg=#fff000 guibg=NONE    gui=bold
 hi ModeMsg      guifg=#afafaf guibg=#222222 gui=bold
 hi MoreMsg      guifg=#2e8b57 guibg=NONE    gui=bold
@@ -56,11 +56,11 @@ hi SpellCap     guisp=#0000ff gui=undercurl
 hi SpellLocal   guisp=#008b8b gui=undercurl
 hi SpellRare    guisp=#ff00ff gui=undercurl
 hi StatusLine   guifg=#000000 guibg=#808070 gui=bold
-hi StatusLineNC guifg=#000000 guibg=#404c4c gui=italic
-hi VertSplit    guifg=#404c4c guibg=#404c4c gui=NONE
-hi TabLine      guifg=fg      guibg=#d3d3d3 gui=underline
-hi TabLineFill  guifg=fg      guibg=NONE    gui=reverse
-hi TabLineSel   guifg=fg      guibg=NONE    gui=bold
+hi StatusLineNC guifg=#000000 guibg=#333333 gui=italic
+hi VertSplit    guifg=#333333 guibg=#333333 gui=NONE
+hi TabLine      guifg=#a6c8ca guibg=#333333 gui=underline
+hi TabLineFill  guifg=fg      guibg=#333333 gui=reverse
+hi TabLineSel   guifg=#222222 guibg=#6688aa gui=bold
 hi Title        guifg=#528b8b guibg=NONE    gui=bold
 hi Visual       guifg=#000000 guibg=#6688aa gui=NONE
 hi WarningMsg   guifg=#ee9a00 guibg=NONE    gui=NONE
