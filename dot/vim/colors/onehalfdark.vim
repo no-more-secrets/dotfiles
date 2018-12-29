@@ -218,3 +218,7 @@ hi link gitcommitUnmergedArrow gitcommitUnmergedFile
     let g:terminal_color_foreground = s:fg.gui
   endif
 " }
+
+" Hide the tildes at the end of the file. This is done by setting
+" the color of non text characters to the background.
+:hi NonText guifg=bg
