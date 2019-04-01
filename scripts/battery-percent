@@ -34,8 +34,8 @@ bg=$(< "../term-colors/background.txt")
 }
 
 (( percentage >  10 )) && fg=196 # red
-(( percentage >= 20 )) && fg=226 # yellow
-(( percentage >= 40 )) && fg=202 # orange
+(( percentage >= 20 )) && fg=202 # orange
+(( percentage >= 40 )) && fg=226 # yellow
 (( percentage >= 80 )) && fg=112 # green
 
 echo -ne "#[fg=colour$fg,bg=colour$bg]$prefix$percentage%"

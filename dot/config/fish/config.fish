@@ -22,6 +22,11 @@ set -g fish_prompt_pwd_dir_length 2
 
 set -gx EDITOR vim
 
+# This scales Qt applications to look good on 4k screens.
+set -x QT_SCALE_FACTOR 1
+set -x QT_AUTO_SCREEN_SCALE_FACTOR 0
+set -x QT_SCREEN_SCALE_FACTORS 2
+
 set -gx FZF_DEFAULT_OPTS "
     --height 40%
     --reverse
