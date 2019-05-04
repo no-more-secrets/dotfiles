@@ -89,6 +89,14 @@ function fish_prompt --description 'Write out the prompt'
 
     set_color normal
 
+    if string length -q $SSH_CLIENT
+        printf "["
+        set_color yellow
+        printf "%s" (hostname)
+        set_color normal
+        printf "] "
+    end
+
     set -l vcs (string trim (__fish_vcs_prompt))
     if string length -q $vcs
         printf '%s ' $vcs
