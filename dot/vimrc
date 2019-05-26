@@ -571,7 +571,6 @@ call vundle#begin()
     Plugin 'scrooloose/nerdcommenter'  " Auto comment manipulation
     "Plugin 'raimondi/delimitmate'      " Auto closing of quotes, parens, etc.
     Plugin 'simnalamburt/vim-mundo'    " Undo tree interaction
-    Plugin 'takac/vim-hardtime'        " option to disable hjkl
     Plugin 'morhetz/gruvbox'           " colorscheme
     Plugin 'junegunn/fzf'              " fuzzy searching
     Plugin 'junegunn/fzf.vim'          " vim plugin for fzf
