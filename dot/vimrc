@@ -249,14 +249,16 @@ nnoremap \ i <ESC>l
 nnoremap ( O<ESC>j
 nnoremap } $
 nnoremap { ^
+nnoremap <Leader>[ :tabm -1<CR>
+nnoremap <Leader>] :tabm +1<CR>
 nnoremap <CR> :noh<CR>
 nnoremap <SPACE> r l
 
 nnoremap Y y$
 
 " Saves all changes in all buffers before making.
-nnoremap <F5> :!make run -j8<CR>
-nnoremap <F6> :!make all -j8<CR>
+nnoremap <F5> :!make run -k -j8<CR>
+nnoremap <F6> :!make all -k -j8<CR>
 nnoremap <F7> :!bash -c "make all -j1 2>&1 \| head -n 50"<CR>
 
 " This function changes the standard `z.` so that if it is pressed twice
@@ -347,11 +349,11 @@ inoremap <C-K> <ESC><C-W>k
 " sure when this would happen  though,  since  YCM seems to recom-
 " pile the file as one types).
 nnoremap <Leader>eg :YcmCompleter GoTo<CR>
-nnoremap <Leader>eG :YcmCompleter GoToImprecise<CR>
+nnoremap <Leader>eG :YcmCompleter GoToReferences<CR>
 nnoremap <Leader>et :YcmCompleter GetType<CR>
-nnoremap <Leader>eT :YcmCompleter GetTypeImprecise<CR>
 nnoremap <Leader>ef :YcmCompleter FixIt<CR>
 nnoremap <Leader>ep :YcmCompleter GetParent<CR>
+nnoremap <Leader>es :YcmShowDetailedDiagnostic<CR>
 nnoremap <Leader>er :YcmForceCompileAndDiagnostics<CR>
 nnoremap <Leader>ee :YcmDiags<CR>
 
@@ -629,7 +631,7 @@ endfunction
 set background=dark
 
 " These set file-type-specific rules for colorschemes
-au FileType haskell colorscheme hipster
+au FileType haskell colorscheme sourcerer
 au BufEnter sh      colorscheme sourcerer
 
 au BufEnter * :call SetDefaultColorScheme()
