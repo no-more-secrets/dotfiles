@@ -74,8 +74,16 @@ if [[ -e "$llvm_root" ]]; then
         rm -rf "$clang_includes"
     [[ -e "$clang_includes" ]] && \
         mv "$clang_includes" "$clang_includes.bak"
-    ln -s "$llvm_root/lib/clang/$full_version" "$clang_includes"
+    includes_location="$llvm_root/lib/clang/$full_version"
+    ln -s "$includes_location" "$clang_includes"
     check "create clang_includes symlink"
+    # We need to create another link to the same place but from
+    # yet another folder as this is the one that is used as the
+    # "resource-dir".
+    version_link="$ycmd/third_party/clang/lib/clang/$full_version"
+    [[ -e "$version_link" ]] && rm -rf "$version_link"
+    ln -s "$includes_location" "$version_link"
+    check "create includes version symlink"
 fi
 
 msg "Finished building YCM."
