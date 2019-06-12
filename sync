@@ -12,6 +12,9 @@ source scripts/utils.sh
 msg 'Updating files...'
 git pull --quiet origin master; check 'update dot files'
 
+msg 'Updating submodules...'
+git submodule update --init --quiet; check 'update submodules'
+
 msg 'Applying changes...'
 # Apply any new changes to the environment.
 bash scripts/setup.sh "$@"; check 'run setup script'
@@ -21,10 +24,22 @@ bash scripts/setup.sh "$@"; check 'run setup script'
     bash scripts/fonts.sh; check 'install fonts'
 }
 
-# Reload tmux.conf.
-msg 'Reloading tmux.conf...'
-tmux source-file ~/.tmux.conf
-tmux display-message "Config reloaded."
+reload_tmux() {
+    # Reload tmux.conf.
+    msg 'Reloading tmux.conf...'
+    tmux source-file ~/.tmux.conf
+    tmux display-message "Config reloaded."
+}
+
+# Reload tmux before and after installing plugins.
+reload_tmux
+
+# Install/Refresh tmux plugins
+tpm="dot/tmux/plugins/tpm"
+$tpm/bin/install_plugins; check 'install tmux plugins'
+$tpm/bin/update_plugins all; check 'update tmux plugins'
+
+reload_tmux
 
 msg 'Finished.'
 # Exit with success

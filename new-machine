@@ -32,6 +32,8 @@ else
     git pull origin master
 fi
 
+git submodule update --init
+
 echo "Installing packages."
 cd ~/.dotfiles
 scripts/install-packages.sh
