@@ -32,9 +32,11 @@ reload_tmux() {
 }
 
 # Reload tmux before and after installing plugins.
+tmux start-server
 reload_tmux
 
 # Install/Refresh tmux plugins
+tmux set-environment -g TMUX_PLUGIN_MANAGER_PATH "$HOME/.tmux/plugins/"
 tpm="dot/tmux/plugins/tpm"
 $tpm/bin/install_plugins; check 'install tmux plugins'
 $tpm/bin/update_plugins all; check 'update tmux plugins'
