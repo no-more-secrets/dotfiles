@@ -609,6 +609,7 @@ au BufNewFile,BufRead *.hs                 set ft=haskell
 au BufNewFile,BufRead *.mkh                set ft=make
 au BufNewFile,BufRead *.fish               set syntax=fish
 au BufNewFile,BufRead *.ucl                set syntax=yaml
+au BufNewFile,BufRead *.dart               set syntax=dart
 
 au FileType vim     let g:commentstring="\" %s"
 au FileType sh      let g:commentstring="# %s"

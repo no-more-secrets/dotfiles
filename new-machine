@@ -34,10 +34,6 @@ fi
 
 git submodule update --init
 
-echo "Installing packages."
-cd ~/.dotfiles
-scripts/install-packages.sh
-
 echo "Cloning repos in ~/dev; should be passwordless."
 mkdir -p ~/dev
 cd ~/dev
@@ -51,6 +47,10 @@ cd ~/dev
 [[ ! -d utilities      ]] && git clone ssh://git@github.com/dpacbach/utilities
 
 [[ ! -e ~/bin/cmc      ]] && ln -s ~/dev/utilities/cmake/configure ~/bin/cmc
+
+echo "Installing packages."
+cd ~/.dotfiles
+scripts/install-packages.sh
 
 cd ~/.dotfiles
 echo "building haskell utils..."
