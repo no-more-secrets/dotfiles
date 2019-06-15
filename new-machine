@@ -71,8 +71,10 @@ echo "Creating recycle symlink."
 echo
 echo 'Now do the following:
 
-  * Edit terminal profile preferences to select Liberation Mono for Powerline
-  * Make /usr/bin/fish default shell
-  * Run tmux
+  * Edit terminal profile preferences to select Liberation Mono for Powerline.
+  * Make /usr/bin/fish default shell.
+  * Run tmux.
+  * Run `make` in dotfiles folder.
+  * Build utilities.
 
 '
