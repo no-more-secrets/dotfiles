@@ -15,6 +15,7 @@ source scripts/utils.sh
 
 cd ~/dev/haskell/sfmt
 
+export PATH=~/bin:$PATH
 stack setup
 
 msg 'Building sfmt...'

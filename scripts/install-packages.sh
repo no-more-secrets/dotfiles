@@ -42,7 +42,7 @@ list="
     libwebp-dev
     libxml2
     libxml2-dev
-    libzip4
+    libzip5
     libzip-dev
     ninja-build
     openssh-server

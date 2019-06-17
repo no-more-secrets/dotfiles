@@ -9,7 +9,7 @@ mkdir -p ~/.ssh
 chmod 700 ~/.ssh
 
 hostname='leopard'
-ip_address=192.168.0.14
+ip_address=192.168.1.11
 
 echo "Attempting to contact $ip_address (may be known as $hostname)"
 echo "for SSH keys.  Pinging..."
@@ -63,7 +63,7 @@ rm ~/.bashrc
 
 echo "Running setup scripts."
 cd ~/.dotfiles
-make REBUILD_YCM=
+make #REBUILD_YCM=
 
 echo "Creating recycle symlink."
 [[ ! -L ~/bin/recycle ]] && ln -s ~/dev/utilities/misc/recycle ~/bin/recycle
