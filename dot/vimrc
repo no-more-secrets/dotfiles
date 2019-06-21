@@ -40,6 +40,9 @@ set backspace=indent,eol,start
 " default |
 set fillchars+=vert:\   " Must be a space after \
 
+" Don't show a preview window when autocompleting.
+set completeopt-=preview
+
 syntax on
 " If syntax file supports it (with Spell/NoSpell directives) then
 " this will cause spelling to be checked in code comments (in  ad-
@@ -447,6 +450,11 @@ nnoremap <Leader>o :TagbarOpenAutoClose<CR>
 " This one will open it so that it stays open (TagbarOpen) but
 " then call TagbarOpenAutoClose just to switch cursor focus to it.
 nnoremap <Leader>O :TagbarOpen<CR>:TagbarOpenAutoClose<CR>
+"
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+"                        Variable Settings
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 let g:tagbar_width = 19
 if &columns > 190
   let g:tagbar_width += 11
@@ -458,10 +466,6 @@ let g:tagbar_show_linenumbers = 2
 let g:tagbar_sort = 0
 let g:tagbar_singleclick = 1
 
-" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-"                        Variable Settings
-" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
 " This  option controls the key mapping used to invoke the comple-
 " tion menu for semantic completion. By default, semantic  comple-
 " tion  is  triggered  automatically after typing ., -> and :: in
@@ -469,7 +473,7 @@ let g:tagbar_singleclick = 1
 " in). This key mapping can be used to  trigger  semantic  comple-
 " tion anywhere. Useful for searching for top-level functions and
 " classes. This applies in INSERT mode.
-let g:ycm_key_invoke_completion = '<C-L>'
+let g:ycm_key_invoke_completion = '<C-M>'
 " This tells YCM to populate the location list with errors.
 let g:ycm_always_populate_location_list = 1
 " These characters appear in the gutter on error.
@@ -477,7 +481,8 @@ let g:ycm_always_populate_location_list = 1
 let g:ycm_error_symbol = '✖'   " default is '>>'
 
 "let g:ycm_autoclose_preview_window_after_completion = 1
-let g:ycm_autoclose_preview_window_after_insertion = 1
+"let g:ycm_autoclose_preview_window_after_insertion = 1
+let g:ycm_add_preview_to_completeopt = 0
 
 " Whitelist of .ycm_extra_conf.py  files  which  will  be  loaded
 " without asking the user  permission  each  time. Items starting
