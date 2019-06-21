@@ -473,7 +473,7 @@ let g:tagbar_singleclick = 1
 " in). This key mapping can be used to  trigger  semantic  comple-
 " tion anywhere. Useful for searching for top-level functions and
 " classes. This applies in INSERT mode.
-let g:ycm_key_invoke_completion = '<C-M>'
+let g:ycm_key_invoke_completion = '<C-S>'
 " This tells YCM to populate the location list with errors.
 let g:ycm_always_populate_location_list = 1
 " These characters appear in the gutter on error.
