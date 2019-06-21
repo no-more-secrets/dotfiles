@@ -596,6 +596,9 @@ call vundle#begin()
 if ! InGoogleCloud()
     Plugin 'valloric/youcompleteme'
 endif
+if InGoogleCloud()
+    Plugin 'natebosch/vim-lsc'
+endif
 call vundle#end()            " required
 
 filetype plugin indent on    " required
