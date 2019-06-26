@@ -141,11 +141,18 @@ function! GetYcmStatus()
         setl statusline+=---------
     elseif s:Pyeval( "ycm_state.FileParseRequestReady()" )
         let g:ycm_n_errors = s:Pyeval( 'ycm_state.GetErrorCount()' )
-        let g:ycm_status_middle = 'errors: '
+        let g:ycm_n_warnings = s:Pyeval( 'ycm_state.GetWarningCount()' )
         if g:ycm_n_errors > 0
+            let g:ycm_status_middle = 'errors: '
             setl statusline+=%#ErrorMsg#
             setl statusline+=%{g:ycm_status_middle}
             setl statusline+=%{g:ycm_n_errors}
+            setl statusline+=%#StatusLineNC#
+        elseif g:ycm_n_warnings > 0
+            let g:ycm_status_middle = 'warnings: '
+            setl statusline+=%#SyntasticWarningSign#
+            setl statusline+=%{g:ycm_status_middle}
+            setl statusline+=%{g:ycm_n_warnings}
             setl statusline+=%#StatusLineNC#
         else
             if winnr('$') == 1
@@ -484,6 +491,12 @@ let g:ycm_error_symbol = '✖'   " default is '>>'
 "let g:ycm_autoclose_preview_window_after_insertion = 1
 let g:ycm_add_preview_to_completeopt = 0
 
+" Don't show the gutter. If this is auto then ycm will show the
+" gutter when there is an error or warning and mark the offending
+" lines. However, this shifts all the text in the buffer one line
+" to the right visually, and is a bit unpleasing.
+set signcolumn=no
+
 " Whitelist of .ycm_extra_conf.py  files  which  will  be  loaded
 " without asking the user  permission  each  time. Items starting
 " with a '!' character  will  be  blacklisted; items not starting
@@ -642,6 +655,8 @@ function! SetDefaultColorScheme()
     catch /E121/
         colorscheme gruvbox
     endtry
+    highlight YcmWarningLine guibg=#ffff00 guifg=#000000
+    highlight YcmErrorLine   guibg=#ff0000 guifg=#000000
 endfunction
 
 set background=dark
