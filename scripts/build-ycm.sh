@@ -49,23 +49,24 @@ fi
 
 ycmd="$HOME/.vim/bundle/youcompleteme/third_party/ycmd"
 
-if [[ -e "$llvm_root" && $(uname) =~ Linux ]]; then
-    # For some reason the YCM build does not always create the
-    # libclang.so.* symlink properly when we specify a custom
-    # llvm root, so we will do it here manually.
-    full_version=$($llvm_root/bin/clang --version | sed -n 's/clang version \([0-9\.]\+\).*/\1/p')
+if [[ -e "$llvm_root" ]]; then
+    full_version=$($llvm_root/bin/clang --version | sed -n 's/clang version \([0-9\.]*\).*/\1/p')
     [[ ! -z "$full_version" ]]; check "extract clang full version"
     msg "Found Clang version: $full_version"
-    major=$($llvm_root/bin/clang --version | sed -n 's/clang version \([0-9]\+\)\..*/\1/p')
-    [[ ! -z "$major" ]]; check "extract llvm major version."
-    [[ -d "$ycmd" ]]; check "find ycmd folder."
-    symlink="$ycmd/libclang.so.$major"
-    rm -f $symlink; check "remove libclang.so.$major symlink"
-    ln -s "$llvm_root/lib/libclang.so.$major" "$symlink"
-    check "create $symlink symlink"
-fi
 
-if [[ -e "$llvm_root" ]]; then
+    if [[ $(uname) =~ Linux ]]; then
+        # For some reason the YCM build does not always create
+        # the libclang.so.* symlink properly when we specify a
+        # custom llvm root, so we will do it here manually.
+        major=$($llvm_root/bin/clang --version | sed -n 's/clang version \([0-9]\+\)\..*/\1/p')
+        [[ ! -z "$major" ]]; check "extract llvm major version."
+        [[ -d "$ycmd" ]]; check "find ycmd folder."
+        symlink="$ycmd/libclang.so.$major"
+        rm -f $symlink; check "remove libclang.so.$major symlink"
+        ln -s "$llvm_root/lib/libclang.so.$major" "$symlink"
+        check "create $symlink symlink"
+    fi
+
     # Now we must link ycm's clang_includes directory to the
     # correct folder within the llvm version being used.  This
     # folder holds system include files.
@@ -81,6 +82,7 @@ if [[ -e "$llvm_root" ]]; then
     # yet another folder as this is the one that is used as the
     # "resource-dir".
     version_link="$ycmd/third_party/clang/lib/clang/$full_version"
+    mkdir -p "$(dirname "$version_link")"
     [[ -e "$version_link" ]] && rm -rf "$version_link"
     ln -s "$includes_location" "$version_link"
     check "create includes version symlink"
