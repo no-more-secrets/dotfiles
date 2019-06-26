@@ -491,11 +491,10 @@ let g:ycm_error_symbol = '✖'   " default is '>>'
 "let g:ycm_autoclose_preview_window_after_insertion = 1
 let g:ycm_add_preview_to_completeopt = 0
 
-" Don't show the gutter. If this is auto then ycm will show the
-" gutter when there is an error or warning and mark the offending
-" lines. However, this shifts all the text in the buffer one line
-" to the right visually, and is a bit unpleasing.
-set signcolumn=no
+" This will cause the error signs to appear over the line numbers
+" instead of putting them in the 'gutter' and taking up an extra
+" line of horizontal space.
+set signcolumn=number
 
 " Whitelist of .ycm_extra_conf.py  files  which  will  be  loaded
 " without asking the user  permission  each  time. Items starting
@@ -655,8 +654,8 @@ function! SetDefaultColorScheme()
     catch /E121/
         colorscheme gruvbox
     endtry
-    highlight YcmWarningLine guibg=#ffff00 guifg=#000000
-    highlight YcmErrorLine   guibg=#ff0000 guifg=#000000
+    "highlight YcmWarningLine guibg=#ffff00 guifg=#000000
+    "highlight YcmErrorLine   guibg=#ff0000 guifg=#000000
 endfunction
 
 set background=dark
