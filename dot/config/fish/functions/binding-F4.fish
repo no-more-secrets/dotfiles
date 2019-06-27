@@ -21,11 +21,18 @@ function binding-F4
     end
 
     repaint-cmd-line ""
+    set -l file
+    set -l line
 
-    set -l file (string replace -r '^([^:]+):.*' '${1}' $result)
-    or return 1
-    set -l line (string replace -r '^[^:]+:([0-9]+):.*' '${1}' $result)
-    or return 1
+    if string match -qr ':' $result
+        set file (string replace -r '^([^:]+):.*' '${1}' $result)
+        or return 1
+        set line (string replace -r '^[^:]+:([0-9]+):.*' '${1}' $result)
+        or return 1
+    else
+        set file $result
+        set line
+    end
 
     if string match -q $argv[1] "shift"
         # Change to the directory containing the file and adjust the
@@ -34,5 +41,9 @@ function binding-F4
         set file (basename $file)
     end
 
-    repaint-cmd-line "vim +$line $file"
+    if string length -q $line
+        repaint-cmd-line "vim +$line $file"
+    else
+        repaint-cmd-line "vim $file"
+    end
 end
