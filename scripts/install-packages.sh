@@ -45,6 +45,7 @@ list="
     libzip5
     libzip-dev
     ninja-build
+    nmap
     openssh-server
     pax-utils
     perl
