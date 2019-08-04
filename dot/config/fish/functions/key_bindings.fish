@@ -69,9 +69,15 @@ function key_bindings
         bind -M insert \e\[17\;2~ 'binding-F6 shift'
     end
 
-    # F6
+    # F8
     bind -k f8 'binding-F8'
     if bind -M insert > /dev/null 2>&1
         bind -M insert -k f8 'binding-F8'
+    end
+
+    # F9
+    bind -k f9 'binding-F9'
+    if bind -M insert > /dev/null 2>&1
+        bind -M insert -k f9 'binding-F9'
     end
 end
