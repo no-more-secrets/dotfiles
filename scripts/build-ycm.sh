@@ -81,9 +81,18 @@ if [[ -e "$llvm_root" ]]; then
     # We need to create another link to the same place but from
     # yet another folder as this is the one that is used as the
     # "resource-dir".
-    version_link="$ycmd/third_party/clang/lib/clang/$full_version"
-    mkdir -p "$(dirname "$version_link")"
-    [[ -e "$version_link" ]] && rm -rf "$version_link"
+    clang_link_dir="$ycmd/third_party/clang/lib/clang"
+    # Should already be present from the YCM rebuilding process
+    # (with at least one link inside of it), but just in case.
+    mkdir -p "$clang_link_dir"; check "make clang link dir 1"
+    # First remove the parent folder to get rid of any previous
+    # links/folders in there because those will cause trouble for
+    # YCM (it seems to pick up the first one that it finds, even
+    # if it's the wrong version).
+    rm -rf "$clang_link_dir"; check "remove clang link dir"
+    mkdir "$clang_link_dir"; check "make clang link dir 2"
+    # Now create the link.
+    version_link="$clang_link_dir/$full_version"
     ln -s "$includes_location" "$version_link"
     check "create includes version symlink"
 fi
