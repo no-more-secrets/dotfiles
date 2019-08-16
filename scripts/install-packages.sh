@@ -18,6 +18,7 @@ list="
     fish
     flex
     fluid-soundfont-gm
+    fluidsynth
     git
     htop
     libdw-dev
