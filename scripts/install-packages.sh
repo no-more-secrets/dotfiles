@@ -17,6 +17,7 @@ list="
     exuberant-ctags
     fish
     flex
+    fluid-soundfont-gm
     git
     htop
     libdw-dev
@@ -54,6 +55,7 @@ list="
     python2.7-dev
     python3
     python3-dev
+    qt5-default
     screenfetch
     silversearcher-ag
     subversion
