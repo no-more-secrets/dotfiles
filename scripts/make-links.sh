@@ -45,6 +45,7 @@ main() {
     msg "Making symlinks..."
 
     list='
+        alsoftrc
         bash
         bashrc
         config/fish
