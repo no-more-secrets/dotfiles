@@ -670,7 +670,6 @@ endfunction
 set background=dark
 
 " These set file-type-specific rules for colorschemes
-au FileType haskell colorscheme sourcerer
 au BufEnter sh      colorscheme sourcerer
 
 au BufEnter * :call SetDefaultColorScheme()

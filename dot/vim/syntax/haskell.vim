@@ -11,236 +11,236 @@ elseif exists("b:current_syntax")
   finish
 endif
 
-syn match haskellRecordField "[_a-z][a-zA-Z0-9_']*\s*::" contained
+syn match hsRecordField "[_a-z][a-zA-Z0-9_']*\s*::" contained
   \ contains=
-  \ haskellIdentifier,
-  \ haskellOperators
-syn match haskellTopLevelDecl "^\s*\(where\s\+\|let\s\+\|default\s\+\)\?[_a-z][a-zA-Z0-9_']*\(,\s*[_a-z][a-zA-Z0-9_']*\)*\(\s*::\|\n\s\+::\)"
+  \ hsIdentifier,
+  \ hsOperators
+syn match hsTopLevelDecl "^\s*\(where\s\+\|let\s\+\|default\s\+\)\?[_a-z][a-zA-Z0-9_']*\(,\s*[_a-z][a-zA-Z0-9_']*\)*\(\s*::\|\n\s\+::\)"
   \ contains=
-  \ haskellIdentifier,
-  \ haskellOperators,
-  \ haskellDelimiter,
-  \ haskellWhere,
-  \ haskellLet,
-  \ haskellDefault
-syn keyword haskellBlockKeywords data type family module where class instance contained
-if exists('g:haskell_enable_pattern_synonyms') && g:haskell_enable_pattern_synonyms == 1
-  syn region haskellModuleBlock start="\<module\>" end="\<where\>" keepend
+  \ hsIdentifier,
+  \ hsOperators,
+  \ hsDelimiter,
+  \ hsWhere,
+  \ hsLet,
+  \ hsDefault
+syn keyword hsBlockKeywords data type family module where class instance contained
+if exists('g:hs_enable_pattern_synonyms') && g:hs_enable_pattern_synonyms == 1
+  syn region hsModuleBlock start="\<module\>" end="\<where\>" keepend
     \ contains=
-    \ haskellType,
-    \ haskellDelimiter,
-    \ haskellDot,
-    \ haskellOperators,
-    \ haskellModule,
-    \ haskellBlockKeywords,
-    \ haskellLineComment,
-    \ haskellBlockComment,
-    \ haskellPragma,
-    \ haskellPreProc,
-    \ haskellPatternKeyword
+    \ hsType,
+    \ hsDelimiter,
+    \ hsDot,
+    \ hsOperators,
+    \ hsModule,
+    \ hsBlockKeywords,
+    \ hsLineComment,
+    \ hsBlockComment,
+    \ hsPragma,
+    \ hsPreProc,
+    \ hsPatternKeyword
 else
-  syn region haskellModuleBlock start="\<module\>" end="\<where\>" keepend
+  syn region hsModuleBlock start="\<module\>" end="\<where\>" keepend
     \ contains=
-    \ haskellType,
-    \ haskellDelimiter,
-    \ haskellDot,
-    \ haskellOperators,
-    \ haskellModule,
-    \ haskellBlockKeywords,
-    \ haskellLineComment,
-    \ haskellBlockComment,
-    \ haskellPragma,
-    \ haskellPreProc
+    \ hsType,
+    \ hsDelimiter,
+    \ hsDot,
+    \ hsOperators,
+    \ hsModule,
+    \ hsBlockKeywords,
+    \ hsLineComment,
+    \ hsBlockComment,
+    \ hsPragma,
+    \ hsPreProc
 endif
-syn region haskellBlock start="^\<\(class\|instance\)\>" end="\(\<where\>\|^\s*$\|^\<\)" keepend
+syn region hsBlock start="^\<\(class\|instance\)\>" end="\(\<where\>\|^\s*$\|^\<\)" keepend
   \ contains=
-  \ haskellType,
-  \ haskellDelimiter,
-  \ haskellDot,
-  \ haskellOperators,
-  \ haskellModule,
-  \ haskellBlockKeywords,
-  \ haskellLineComment,
-  \ haskellBlockComment,
-  \ haskellPragma,
-  \ haskellQuoted
-syn region haskellDataBlock start="^\<\(data\|type\)\>\(\s\+\<family\>\)\?" end="\([=]\|\<where\>\|^\s*$\|^\<\)" keepend
+  \ hsType,
+  \ hsDelimiter,
+  \ hsDot,
+  \ hsOperators,
+  \ hsModule,
+  \ hsBlockKeywords,
+  \ hsLineComment,
+  \ hsBlockComment,
+  \ hsPragma,
+  \ hsQuoted
+syn region hsDataBlock start="^\<\(data\|type\)\>\(\s\+\<family\>\)\?" end="\([=]\|\<where\>\|^\s*$\|^\<\)" keepend
   \ contains=
-  \ haskellType,
-  \ haskellDelimiter,
-  \ haskellDot,
-  \ haskellOperators,
-  \ haskellModule,
-  \ haskellBlockKeywords,
-  \ haskellLineComment,
-  \ haskellBlockComment,
-  \ haskellPragma
-syn match haskellAssocType "\s\+\<\(data\|type\)\>"
-syn keyword haskellNewtype newtype
-syn match haskellDeriving "\(deriving\s\+instance\|deriving\)"
-syn keyword haskellDefault default
-syn keyword haskellImportKeywords import qualified safe as hiding contained
-syn keyword haskellForeignKeywords foreign export import ccall safe unsafe interruptible capi prim contained
-syn region haskellForeignImport start="\<foreign\>" end="::" keepend
+  \ hsType,
+  \ hsDelimiter,
+  \ hsDot,
+  \ hsOperators,
+  \ hsModule,
+  \ hsBlockKeywords,
+  \ hsLineComment,
+  \ hsBlockComment,
+  \ hsPragma
+syn match hsAssocType "\s\+\<\(data\|type\)\>"
+syn keyword hsNewtype newtype
+syn match hsDeriving "\(deriving\s\+instance\|deriving\)"
+syn keyword hsDefault default
+syn keyword hsImportKeywords import qualified safe as hiding contained
+syn keyword hsForeignKeywords foreign export import ccall safe unsafe interruptible capi prim contained
+syn region hsForeignImport start="\<foreign\>" end="::" keepend
   \ contains=
-  \ haskellString,
-  \ haskellOperators,
-  \ haskellForeignKeywords,
-  \ haskellIdentifier
-syn region haskellImport start="\<import\>" end="\((\|$\)" keepend
+  \ hsString,
+  \ hsOperators,
+  \ hsForeignKeywords,
+  \ hsIdentifier
+syn region hsImport start="\<import\>" end="\((\|$\)" keepend
   \ contains=
-  \ haskellDelimiter,
-  \ haskellType,
-  \ haskellDot,
-  \ haskellImportKeywords,
-  \ haskellString
-syn keyword haskellStatement do case of in
-syn keyword haskellWhere where
-syn keyword haskellLet let
-if exists('g:haskell_enable_static_pointers') && g:haskell_enable_static_pointers == 1
-  syn keyword haskellStatic static
+  \ hsDelimiter,
+  \ hsType,
+  \ hsDot,
+  \ hsImportKeywords,
+  \ hsString
+syn keyword hsStatement do case of in
+syn keyword hsWhere where
+syn keyword hsLet let
+if exists('g:hs_enable_static_pointers') && g:hs_enable_static_pointers == 1
+  syn keyword hsStatic static
 endif
-syn keyword haskellConditional if then else
-syn match haskellNumber "\<[0-9]\+\>\|\<0[xX][0-9a-fA-F]\+\>\|\<0[oO][0-7]\+\>\|\<0[bB][10]\+\>"
-syn match haskellFloat "\<[0-9]\+\.[0-9]\+\([eE][-+]\=[0-9]\+\)\=\>"
-syn match haskellDelimiter  "(\|)\|\[\|\]\|,\|;\|{\|}"
-syn keyword haskellInfix infix infixl infixr
-syn keyword haskellBottom undefined error
-syn match haskellOperators "[-!#$%&\*\+/<=>\?@\\^|~:]\+\|\<_\>"
-syn match haskellQuote "\<'\+" contained
-syn match haskellQuotedType "[A-Z][a-zA-Z0-9_']*\>" contained
-syn region haskellQuoted start="\<'\+" end="\>"
+syn keyword hsConditional if then else
+syn match hsNumber "\<[0-9]\+\>\|\<0[xX][0-9a-fA-F]\+\>\|\<0[oO][0-7]\+\>\|\<0[bB][10]\+\>"
+syn match hsFloat "\<[0-9]\+\.[0-9]\+\([eE][-+]\=[0-9]\+\)\=\>"
+syn match hsDelimiter  "(\|)\|\[\|\]\|,\|;\|{\|}"
+syn keyword hsInfix infix infixl infixr
+syn keyword hsBottom undefined error
+syn match hsOperators "[-!#$%&\*\+/<=>\?@\\^|~:]\+\|\<_\>"
+syn match hsQuote "\<'\+" contained
+syn match hsQuotedType "[A-Z][a-zA-Z0-9_']*\>" contained
+syn region hsQuoted start="\<'\+" end="\>"
   \ contains=
-  \ haskellType,
-  \ haskellQuote,
-  \ haskellQuotedType,
-  \ haskellDelimiter,
-  \ haskellOperators,
-  \ haskellIdentifier
-syn match haskellDot "\."
-syn match haskellLineComment "---*\([^-!#$%&\*\+./<=>\?@\\^|~].*\)\?$"
+  \ hsType,
+  \ hsQuote,
+  \ hsQuotedType,
+  \ hsDelimiter,
+  \ hsOperators,
+  \ hsIdentifier
+syn match hsDot "\."
+syn match hsLineComment "---*\([^-!#$%&\*\+./<=>\?@\\^|~].*\)\?$"
   \ contains=
-  \ haskellTodo,
+  \ hsTodo,
   \ @Spell
-syn match haskellBacktick "`[A-Za-z_][A-Za-z0-9_\.']*`"
-syn region haskellString start=+"+ skip=+\\\\\|\\"+ end=+"+
+syn match hsBacktick "`[A-Za-z_][A-Za-z0-9_\.']*`"
+syn region hsString start=+"+ skip=+\\\\\|\\"+ end=+"+
   \ contains=@Spell
-syn region haskellBlockComment start="{-" end="-}"
+syn region hsBlockComment start="{-" end="-}"
   \ contains=
-  \ haskellBlockComment,
-  \ haskellTodo,
+  \ hsBlockComment,
+  \ hsTodo,
   \ @Spell
-syn region haskellPragma start="{-#" end="#-}"
-syn match haskellIdentifier "[_a-z][a-zA-z0-9_']*" contained
-syn match haskellChar "\<'[^'\\]'\|'\\.'\|'\\u[0-9a-fA-F]\{4}'\>"
-syn match haskellType "\<[A-Z][a-zA-Z0-9_']*\>"
-syn region haskellRecordBlock start="[A-Z][a-zA-Z0-9']*\n\?\s\+{[^-]" end="[^-]}" keepend
+syn region hsPragma start="{-#" end="#-}"
+syn match hsIdentifier "[_a-z][a-zA-z0-9_']*" contained
+syn match hsChar "\<'[^'\\]'\|'\\.'\|'\\u[0-9a-fA-F]\{4}'\>"
+syn match hsType "\<[A-Z][a-zA-Z0-9_']*\>"
+syn region hsRecordBlock start="[A-Z][a-zA-Z0-9']*\n\?\s\+{[^-]" end="[^-]}" keepend
   \ contains=
-  \ haskellType,
-  \ haskellDelimiter,
-  \ haskellOperators,
-  \ haskellDot,
-  \ haskellRecordField,
-  \ haskellString,
-  \ haskellChar,
-  \ haskellFloat,
-  \ haskellNumber,
-  \ haskellBacktick,
-  \ haskellLineComment,
-  \ haskellBlockComment,
-  \ haskellPragma,
-  \ haskellBottom,
-  \ haskellConditional,
-  \ haskellStatement,
-  \ haskellWhere,
-  \ haskellLet
-syn match haskellQuasiQuoteDelimiters "\[[_a-z][a-zA-z0-9_']*|\||\]" contained
-syn region haskellQuasiQuote start="\[[_a-z][a-zA-z0-9_']*|" end="|\]" keepend
-  \ contains=haskellQuasiQuoteDelimiters
-syn match haskellTHQuasiQuotes "\[||\|||\]\|\[|\||\]\|\[\(d\|t\|p\)|"
-syn match haskellPreProc "^#.*$"
-syn keyword haskellTodo TODO FIXME contained
-if exists('g:haskell_enable_typeroles') && g:haskell_enable_typeroles == 1
-  syn keyword haskellTypeRoles type role phantom representational nominal contained
-  syn region haskellTypeRoleBlock start="type\s\+role" end="$" keepend
+  \ hsType,
+  \ hsDelimiter,
+  \ hsOperators,
+  \ hsDot,
+  \ hsRecordField,
+  \ hsString,
+  \ hsChar,
+  \ hsFloat,
+  \ hsNumber,
+  \ hsBacktick,
+  \ hsLineComment,
+  \ hsBlockComment,
+  \ hsPragma,
+  \ hsBottom,
+  \ hsConditional,
+  \ hsStatement,
+  \ hsWhere,
+  \ hsLet
+syn match hsQuasiQuoteDelimiters "\[[_a-z][a-zA-z0-9_']*|\||\]" contained
+syn region hsQuasiQuote start="\[[_a-z][a-zA-z0-9_']*|" end="|\]" keepend
+  \ contains=hsQuasiQuoteDelimiters
+syn match hsTHQuasiQuotes "\[||\|||\]\|\[|\||\]\|\[\(d\|t\|p\)|"
+syn match hsPreProc "^#.*$"
+syn keyword hsTodo TODO FIXME contained
+if exists('g:hs_enable_typeroles') && g:hs_enable_typeroles == 1
+  syn keyword hsTypeRoles type role phantom representational nominal contained
+  syn region hsTypeRoleBlock start="type\s\+role" end="$" keepend
     \ contains=
-    \ haskellType,
-    \ haskellTypeRoles
+    \ hsType,
+    \ hsTypeRoles
 endif
-if exists('g:haskell_enable_quantification') && g:haskell_enable_quantification == 1
-  syn keyword haskellForall forall
+if exists('g:hs_enable_quantification') && g:hs_enable_quantification == 1
+  syn keyword hsForall forall
 endif
-if exists('g:haskell_enable_recursivedo') && g:haskell_enable_recursivedo == 1
-  syn keyword haskellRecursiveDo mdo rec
+if exists('g:hs_enable_recursivedo') && g:hs_enable_recursivedo == 1
+  syn keyword hsRecursiveDo mdo rec
 endif
-if exists('g:haskell_enable_arrowsyntax') && g:haskell_enable_arrowsyntax == 1
-  syn keyword haskellArrowSyntax proc
+if exists('g:hs_enable_arrowsyntax') && g:hs_enable_arrowsyntax == 1
+  syn keyword hsArrowSyntax proc
 endif
-if exists('g:haskell_enable_pattern_synonyms') && g:haskell_enable_pattern_synonyms == 1
-  syn region haskellPatternSynonyms start="^\s*pattern\s\+[A-Z][A-za-z0-9_]*\s*" end="=\|<-\|$" keepend
+if exists('g:hs_enable_pattern_synonyms') && g:hs_enable_pattern_synonyms == 1
+  syn region hsPatternSynonyms start="^\s*pattern\s\+[A-Z][A-za-z0-9_]*\s*" end="=\|<-\|$" keepend
     \ contains=
-    \ haskellPatternKeyword,
-    \ haskellType,
-    \ haskellOperators
-  syn keyword haskellPatternKeyword pattern contained
+    \ hsPatternKeyword,
+    \ hsType,
+    \ hsOperators
+  syn keyword hsPatternKeyword pattern contained
 endif
 
-highlight def link haskellBottom Macro
-highlight def link haskellQuasiQuoteDelimiters Boolean
-highlight def link haskellTHQuasiQuotes Boolean
-highlight def link haskellQuasiQuote String
-highlight def link haskellBlockKeywords Structure
+highlight def link hsBottom Macro
+highlight def link hsQuasiQuoteDelimiters Boolean
+highlight def link hsTHQuasiQuotes Boolean
+highlight def link hsQuasiQuote String
+highlight def link hsBlockKeywords Structure
 " 2017-05-12 David Sicilia -- changed to add better highlighting of function names in type signature; use to be:
-"highlight def link haskellIdentifier Identifier
-highlight def link haskellIdentifier Function
-highlight def link haskellImportKeywords Structure
-highlight def link haskellForeignKeywords Structure
-highlight def link haskellNewtype Structure
-highlight def link haskellDeriving Structure
-highlight def link haskellStatement Statement
-highlight def link haskellWhere Statement
-highlight def link haskellLet Statement
-highlight def link haskellDefault Statement
-highlight def link haskellConditional Conditional
-highlight def link haskellNumber Number
-highlight def link haskellFloat Float
-highlight def link haskellDelimiter Delimiter
-highlight def link haskellInfix PreProc
-highlight def link haskellOperators Operator
-highlight def link haskellQuote Operator
-highlight def link haskellQuotedType Include
-highlight def link haskellDot Operator
-highlight def link haskellType Include
-highlight def link haskellLineComment Comment
-highlight def link haskellBlockComment Comment
-" *** DS - highlight def link haskellPragma SpecialComment
-highlight def link haskellPragma Operator
-highlight def link haskellString String
-highlight def link haskellChar String
-highlight def link haskellBacktick Operator
-highlight def link haskellPreProc Macro
-highlight def link haskellTodo Todo
-highlight def link haskellAssocType Structure
+"highlight def link hsIdentifier Identifier
+highlight def link hsIdentifier Function
+highlight def link hsImportKeywords Structure
+highlight def link hsForeignKeywords Structure
+highlight def link hsNewtype Structure
+highlight def link hsDeriving Structure
+highlight def link hsStatement Statement
+highlight def link hsWhere Statement
+highlight def link hsLet Statement
+highlight def link hsDefault Statement
+highlight def link hsConditional Conditional
+highlight def link hsNumber Number
+highlight def link hsFloat Float
+highlight def link hsDelimiter Delimiter
+highlight def link hsInfix PreProc
+highlight def link hsOperators Operator
+highlight def link hsQuote Operator
+highlight def link hsQuotedType Include
+highlight def link hsDot Operator
+highlight def link hsType Include
+highlight def link hsLineComment Comment
+highlight def link hsBlockComment Comment
+" *** DS - highlight def link hsPragma SpecialComment
+highlight def link hsPragma Operator
+highlight def link hsString String
+highlight def link hsChar String
+highlight def link hsBacktick Operator
+highlight def link hsPreProc Macro
+highlight def link hsTodo Todo
+highlight def link hsAssocType Structure
 " 2017-05-12 David Sicilia -- added this line for better highlighting of function names in type signature
-highlight def link haskellFunction Function
+highlight def link hsFunction Function
 
-if exists('g:haskell_enable_quantification') && g:haskell_enable_quantification == 1
-  highlight def link haskellForall Operator
+if exists('g:hs_enable_quantification') && g:hs_enable_quantification == 1
+  highlight def link hsForall Operator
 endif
-if exists('g:haskell_enable_recursivedo') && g:haskell_enable_recursivedo == 1
-  highlight def link haskellRecursiveDo Operator
+if exists('g:hs_enable_recursivedo') && g:hs_enable_recursivedo == 1
+  highlight def link hsRecursiveDo Operator
 endif
-if exists('g:haskell_enable_arrowsyntax') && g:haskell_enable_arrowsyntax == 1
-  highlight def link haskellArrowSyntax Operator
+if exists('g:hs_enable_arrowsyntax') && g:hs_enable_arrowsyntax == 1
+  highlight def link hsArrowSyntax Operator
 endif
-if exists('g:haskell_enable_pattern_synonyms') && g:haskell_enable_pattern_synonyms == 1
-  highlight def link haskellPatternKeyword Structure
+if exists('g:hs_enable_pattern_synonyms') && g:hs_enable_pattern_synonyms == 1
+  highlight def link hsPatternKeyword Structure
 endif
-if exists('g:haskell_enable_typeroles') && g:haskell_enable_typeroles == 1
-  highlight def link haskellTypeRoles Structure
+if exists('g:hs_enable_typeroles') && g:hs_enable_typeroles == 1
+  highlight def link hsTypeRoles Structure
 endif
-if exists('g:haskell_enable_static_pointers') && g:haskell_enable_static_pointers == 1
-  highlight def link haskellStatic Statement
+if exists('g:hs_enable_static_pointers') && g:hs_enable_static_pointers == 1
+  highlight def link hsStatic Statement
 endif
 
-let b:current_syntax = "haskell"
+let b:current_syntax = "hs"
