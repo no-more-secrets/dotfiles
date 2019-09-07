@@ -76,9 +76,9 @@ function key_bindings
     end
 
     # Shift-F7
-    bind \e\[17\;2~ 'binding-F7 shift'
+    bind \e\[18\;2~ 'binding-F7 shift'
     if bind -M insert > /dev/null 2>&1
-        bind -M insert \e\[17\;2~ 'binding-F7 shift'
+        bind -M insert \e\[18\;2~ 'binding-F7 shift'
     end
 
     # F8

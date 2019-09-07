@@ -12,7 +12,7 @@ function binding-F7
   if test (count argv) -gt 0
     set -l modifier $argv[1]
     if string match -q $modifier "shift"
-      set cmd "$cmd OPT="
+      set cmd "make -j1 2>&1 | clip | head -n$num_lines"
     end
   end
   echo $cmd
