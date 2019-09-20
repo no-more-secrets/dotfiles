@@ -22,6 +22,11 @@ function key_bindings
         bind -M insert \cp binding-C-p
     end
 
+    bind \cs binding-C-s
+    if bind -M insert > /dev/null 2>&1
+        bind -M insert \cs binding-C-s
+    end
+
     bind \ck binding-C-k
     if bind -M insert > /dev/null 2>&1
         bind -M insert \ck binding-C-k
