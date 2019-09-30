@@ -55,6 +55,7 @@ list="
     pax-utils
     perl
     powertop
+    protobuf-compiler
     python2.7
     python2.7-dev
     python3
