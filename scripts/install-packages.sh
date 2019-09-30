@@ -41,6 +41,7 @@ list="
     libsdl2-ttf-$sdl_version
     libsqlite3-0
     libsqlite3-dev
+    libtool
     libwebp-dev
     libxml2
     libxml2-dev
@@ -54,6 +55,7 @@ list="
     pax-utils
     perl
     powertop
+    protobuf-compiler
     python2.7
     python2.7-dev
     python3
