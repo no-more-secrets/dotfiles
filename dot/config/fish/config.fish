@@ -20,7 +20,7 @@ set PATH ~/bin ~/.local/bin $PATH
 
 set -g fish_prompt_pwd_dir_length 2
 
-set -gx EDITOR vim
+set -gx EDITOR $HOME/dev/tools/vim-current/bin/vim
 
 # This scales Qt applications to look good on 4k screens. It
 # should however only do the scaling when there is a high pixel
@@ -54,3 +54,7 @@ end
 if test -e $fish_local_config
     source $fish_local_config
 end
+
+# Someone is setting this above, don't know who, so we need to
+# set it down here.
+set -x EDITOR $HOME/dev/tools/vim-current/bin/vim
