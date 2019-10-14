@@ -501,9 +501,9 @@ let g:ycm_always_populate_location_list = 1
 "let g:ycm_error_symbol = '→'   " default is '>>'
 "let g:ycm_error_symbol = '✖'   " default is '>>'
 "let g:ycm_error_symbol = '😡'  " default is '>>'
-let g:ycm_error_symbol = 'X>'
+let g:ycm_error_symbol = 'ER'
 
-let g:ycm_warning_symbol = '=>'  " default is '>>'
+let g:ycm_warning_symbol = 'WN'  " default is '>>'
 "let g:ycm_warning_symbol = '☹ '
 "let g:ycm_autoclose_preview_window_after_completion = 1
 "let g:ycm_autoclose_preview_window_after_insertion = 1
