@@ -41,6 +41,7 @@ list="
     libsdl2-ttf-$sdl_version
     libsqlite3-0
     libsqlite3-dev
+    libssl-dev
     libtool
     libwebp-dev
     libxml2
