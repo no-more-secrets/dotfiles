@@ -365,13 +365,13 @@ nnoremap <C-H> <C-W>h
 nnoremap <C-L> <C-W>l
 inoremap <C-H> <ESC><C-W>h
 inoremap <C-L> <ESC><C-W>l
-"nnoremap <C-J> <C-W>j
-"nnoremap <C-K> <C-W>k
-"inoremap <C-J> <ESC><C-W>j
-"inoremap <C-K> <ESC><C-W>k
+nnoremap <C-J> <C-W>j
+nnoremap <C-K> <C-W>k
+inoremap <C-J> <ESC><C-W>j
+inoremap <C-K> <ESC><C-W>k
 
-nnoremap <C-J> 10j
-nnoremap <C-K> 10k
+"nnoremap <C-J> 10j
+"nnoremap <C-K> 10k
 
 " The `Imprecise` variants will perform  the operation without re-
 " compiling the translation unit.  Useful  if compilation is slow,
