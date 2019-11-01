@@ -348,7 +348,7 @@ endif
 if &columns > 230
   let NERDTreeWinSize += 10
 endif
-let g:NERDTreeWinPos = "right"
+let g:NERDTreeWinPos = "left"
 
 vnoremap <Leader>f :!sfmt 65<CR>
 
@@ -488,7 +488,7 @@ endif
 let g:tagbar_show_linenumbers = 2
 let g:tagbar_sort = 0
 let g:tagbar_singleclick = 1
-let g:tagbar_left = 1
+"let g:tagbar_left = 1
 
 " This  option controls the key mapping used to invoke the comple-
 " tion menu for semantic completion. By default, semantic  comple-
