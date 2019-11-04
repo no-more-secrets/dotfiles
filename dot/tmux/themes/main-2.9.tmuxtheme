@@ -1,0 +1,56 @@
+# Status update interval
+set -g status-interval 1
+
+source-file "$HOME/.dotfiles/term-colors/tmux-theme-colors.tmux"
+
+# Basic status bar colors
+set -g status-style fg=$lg_color2,bg=$bgcolor
+
+# Left side of status bar
+set -g status-left-style bg=$bgcolor,fg=$themecolor
+set -g status-left-length 40
+set -g status-left "#[fg=white,bg=$lg_color2] %A #[fg=$lg_color2,bg=$lg_color]#[fg=$lg_color3,bg=$lg_color] %s #[fg=$lg_color,bg=$bgcolor,nobold] #{cpu_fg_color}CPU:#{cpu_percentage}"
+
+# Right side of status bar
+set -g status-right-style bg=$bgcolor,fg=$themecolor
+set -g status-right-length 150
+set -g status-right "#($HOME/.dotfiles/scripts/battery-percent)#[fg=$lg_color2,bg=$bgcolor] #[fg=$lg_color,bg=$bgcolor]#[fg=$lg_color4,bg=$lg_color] %l:%M:%S %p #[fg=$lg_color2,bg=$lg_color]#[fg=white,bg=$lg_color2] %x "
+
+# Window status
+set -g window-status-format "  #[fg=$themecolor,bg=$bgcolor]#W#F  "
+set -g window-status-current-format "#[fg=$bgcolor,bg=$themecolor] #W#F #[bg=$bgcolor,nobold]"
+
+# Current window status
+set -g window-status-current-style bg=$bgcolor,fg=$themecolor
+
+# Window with activity status
+set -g window-status-activity-style bg=$bgcolor,fg=$themecolor
+
+# Window separator
+set -g window-status-separator ""
+
+# Window status alignment
+set -g status-justify centre
+
+# Pane border
+set -g pane-border-style bg=default,fg=$paneborder
+
+# Active pane border
+set -g pane-active-border-style bg=default,fg=$paneborder
+
+# Pane number indicator
+#set -g display-panes-colour ...
+#set -g display-panes-active-colour ...
+
+# Clock mode
+set -g clock-mode-colour $themecolor
+set -g clock-mode-style 24
+
+# Message
+set -g message-style bg=$themecolor,fg=$msg_fg
+
+# Command message
+set -g message-command-style bg=$themecolor,fg=$msg_fg
+
+# Mode
+set -g mode-style bg=$themecolor,fg=$bgcolor
