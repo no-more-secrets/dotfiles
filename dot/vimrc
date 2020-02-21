@@ -626,6 +626,7 @@ call vundle#begin()
     Plugin 'majutsushi/tagbar'         " Code outline window
     Plugin 'tibabit/vim-templates'     " file templates with placeholders
     Plugin 'octol/vim-cpp-enhanced-highlight'
+    Plugin 'tikhomirov/vim-glsl'       " Syntax file for OpenGL shaders.
 if ! InGoogleCloud()
     Plugin 'valloric/youcompleteme'
 endif
