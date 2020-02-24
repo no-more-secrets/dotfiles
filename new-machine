@@ -59,7 +59,7 @@ scripts/build-hs-utils.sh
 echo "building vim..."
 [[ ! -e ~/dev/tools/vim-current ]] && ~/dev/utilities/building/vim.sh
 
-rm ~/.bashrc
+rm -f ~/.bashrc
 
 echo "Running setup scripts."
 cd ~/.dotfiles

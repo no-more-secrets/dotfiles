@@ -46,7 +46,7 @@ list="
     libwebp-dev
     libxml2
     libxml2-dev
-    libzip5
+    libzip4
     libzip-dev
     lua5.3
     lua5.3-dev

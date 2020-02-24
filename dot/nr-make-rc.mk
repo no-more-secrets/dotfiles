@@ -18,7 +18,7 @@ CLANG_TIDY   := $(CLANG_ROOT)/bin/clang-tidy
 
 # Enable this to use all system compiler defaults.  If it is
 # disabled then proceed.
-#SYSTEM_DEFAULTS :=
+SYSTEM_DEFAULTS :=
 
 ifeq ($(origin SYSTEM_DEFAULTS),undefined)
   # Comment this to use gcc.
