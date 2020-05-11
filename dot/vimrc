@@ -423,6 +423,7 @@ nnoremap <Leader>S * :e %:p:s,.hpp$,.X123X,:s,.cpp$,.hpp,:s,.X123X$,.cpp,<CR>ggn
 " Case sensitivity of Sneak plugin is determined by 'ignorecase'
 " and 'smartcase'.
 let g:sneak#use_ic_scs = 1
+let g:sneak#label = 1
 
 function! ReplaceWord()
     let l:w = expand( "<cword>" )
