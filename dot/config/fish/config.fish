@@ -33,7 +33,10 @@ set -gx FZF_DEFAULT_OPTS "
     --multi
     --ansi
     --select-1
-    --preview-window=right:45%"
+    --preview-window=right:45%
+    --color fg:-1,hl:230,fg+:3,hl+:229
+    --color info:150,prompt:110,spinner:150,pointer:167,marker:174
+"
 
 # If we have fd then use it as the fzf search command.
 if which fd >/dev/null 2>&1
