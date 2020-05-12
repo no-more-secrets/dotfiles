@@ -417,12 +417,13 @@ nnoremap <Leader>s :e %:p:s,.hpp$,.X123X,:s,.cpp$,.hpp,:s,.X123X$,.cpp,<CR>
 nnoremap <Leader>S * :e %:p:s,.hpp$,.X123X,:s,.cpp$,.hpp,:s,.X123X$,.cpp,<CR>ggn
 
 " EasyMotions controls.
-"nmap ; <Plug>(easymotion-bd-w)
-"vmap ; <Plug>(easymotion-bd-w)
+nmap ; <Plug>(easymotion-bd-w)
+vmap ; <Plug>(easymotion-bd-w)
 
 " Case sensitivity of Sneak plugin is determined by 'ignorecase'
 " and 'smartcase'.
 let g:sneak#use_ic_scs = 1
+let g:sneak#s_next = 1
 
 function! ReplaceWord()
     let l:w = expand( "<cword>" )
@@ -630,7 +631,7 @@ call vundle#begin()
     Plugin 'godlygeek/tabular'         " Auto alignment
     Plugin 'tpope/vim-fugitive'        " Git integration
     Plugin 'scrooloose/nerdtree'       " File manager
-    "Plugin 'easymotion/vim-easymotion' " Web-browser-like navigation overlays
+    Plugin 'easymotion/vim-easymotion' " Web-browser-like navigation overlays
     Plugin 'scrooloose/nerdcommenter'  " Auto comment manipulation
     "Plugin 'raimondi/delimitmate'      " Auto closing of quotes, parens, etc.
     Plugin 'simnalamburt/vim-mundo'    " Undo tree interaction
