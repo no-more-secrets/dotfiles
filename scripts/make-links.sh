@@ -48,7 +48,9 @@ main() {
         alsoftrc
         bash
         bashrc
+        config/bat
         config/fish
+        config/nvim
         fdignore
         fonts
         ghc

@@ -325,8 +325,8 @@ nnoremap z. :call ZeeDot()<CR>
 " This slowness would manifest as an ~ 1 sec delay when switching
 " tabs *away* from a tab in which the selected window contains
 " a buffer that has e.g. the [[ keymapping.
-nnoremap [ :tabp<CR>
-nnoremap ] :tabn<CR> 
+nnoremap M :tabp<CR>
+nnoremap K :tabn<CR>
 
 " Shift-q will close all windows; this is useful when there are
 " multiple windows open and you want to exit vim without having
@@ -532,7 +532,9 @@ let g:ycm_add_preview_to_completeopt = 0
 " This will cause the error signs to appear over the line numbers
 " instead of putting them in the 'gutter' and taking up an extra
 " line of horizontal space.
-set signcolumn=number
+if !has('nvim')
+  set signcolumn=number
+endif
 
 " Whitelist of .ycm_extra_conf.py  files  which  will  be  loaded
 " without asking the user  permission  each  time. Items starting
@@ -722,7 +724,9 @@ autocmd BufReadPost *
 " This  was inserted to allow using the mouse to resize vim panes
 " from within a tmux pane.
 set mouse+=a
-set ttymouse=sgr
+if !has('nvim')
+  set ttymouse=sgr
+endif
 "if &term =~ '^screen'
 "    " tmux knows the extended mouse mode
 "    set ttymouse=xterm2
