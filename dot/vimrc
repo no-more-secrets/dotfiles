@@ -270,7 +270,8 @@ nnoremap } $
 nnoremap { ^
 nnoremap <Leader>[ :tabm -1<CR>
 nnoremap <Leader>] :tabm +1<CR>
-nnoremap <CR> :noh<CR>
+" Two <CR>s to keep <CR> working with the quickfix list.
+nnoremap <CR> :noh<CR><CR>
 nnoremap <SPACE> r l
 
 nnoremap Y y$
@@ -451,10 +452,40 @@ nnoremap <Leader>gr :Run<CR>
 " Use a vertical split in debug mode.
 let g:termdebug_wide = 1
 
+" Apparently this is the best way to programmatically get the
+" currently selected text in visual mode.
+function! GetVisualSelection()
+  if mode()=="v"
+      let [line_start, column_start] = getpos("v")[1:2]
+      let [line_end, column_end] = getpos(".")[1:2]
+  else
+      let [line_start, column_start] = getpos("'<")[1:2]
+      let [line_end, column_end] = getpos("'>")[1:2]
+  end
+  if (line2byte(line_start)+column_start) > (line2byte(line_end)+column_end)
+      let [line_start, column_start, line_end, column_end] =
+      \   [line_end, column_end, line_start, column_start]
+  end
+  let lines = getline(line_start, line_end)
+  if len(lines) == 0
+          return ''
+  endif
+  let lines[-1] = lines[-1][: column_end - 1]
+  let lines[0] = lines[0][column_start - 1:]
+  return join(lines, "\n")
+endfunction
+
 " Call the :Ag function with the current word-under-cursor as
 " first argument.
 function! AgWord()
     let l:w = expand( "<cword>" )
+    call feedkeys( ':Ag ' . l:w . "\<CR>" )
+endfunction
+
+" Call the :Ag function with the currently selected text. Appears
+" to work as-is even when selected text contains spaces.
+function! AgWordVisual()
+    let l:w = GetVisualSelection()
     call feedkeys( ':Ag ' . l:w . "\<CR>" )
 endfunction
 
@@ -467,6 +498,7 @@ nmap <Leader>tl :Lines<CR>
 nmap <Leader>tb :BLines<CR>
 nmap <Leader>ta :Ag<CR>
 nmap <Leader>tw :call AgWord()<CR>
+vmap <Leader>tw :call AgWordVisual()<CR>
 nmap <F4> :Ag<CR>
 
 "let g:fzf_height = '20%'
@@ -579,6 +611,88 @@ function! AutoHighlightToggle()
 endfunction
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+"                         Context Menu
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+function! LspPopupSel(id, result)
+  if a:result == -2
+    " window closed
+  elseif a:result == 1
+    :LspDefinition
+  elseif a:result == 2
+    :LspPeekDefinition
+  elseif a:result == 3
+    :LspReferences
+  elseif a:result == 4
+    :LspHover
+  else
+    echo 'Invalid selection.'
+  endif
+endfunction
+
+function! LspPopupFilter(winid, key)
+  if a:key == "\<LeftMouse>"
+    let l:mouse_info = getmousepos()
+    " If the click is in the popup window then handle it.
+    if l:mouse_info.winid == a:winid
+      call LspPopupSel(a:winid, l:mouse_info.line)
+      call popup_close(a:winid)
+    else
+      call popup_close(a:winid)
+    endif
+  elseif a:key == "\<RightMouse>"
+    call popup_close(a:winid)
+  elseif a:key == '\<ESC>'
+    call popup_close(a:winid)
+  elseif a:key == 'x'
+    call popup_close(a:winid)
+  else
+    " It is sometimes suggested to fall back to this builtin
+    " function when the key is not handled, but we don't do that
+    " here because then that allows e.g. the cursor to be moved.
+    return popup_filter_menu(a:winid, a:key)
+  endif
+  return 1
+endfunc
+
+function! CreateLspPopupFromClick()
+  let l:mouse_info = getmousepos()
+  " We need this because normally in vim just right-clicking on a
+  " character does not move the mouse cursor there, so if we
+  " didn't do this than the popup would appear at the location of
+  " the cursor and not the right-click.
+  call setpos('.', [0, l:mouse_info.line, l:mouse_info.column, 0])
+  call CreateLspPopupAtCursor()
+endfunction
+
+function! CreateLspPopupAtCursor()
+  call popup_create(
+    \ [
+    \   'Goto Definition',
+    \   'Peak Definition',
+    \   'Find References',
+    \   'Hover',
+    \ ],
+    \ #{
+    \   line:      'cursor',
+    \   col:       'cursor+1',
+    \   zindex:     200,
+    \   drag:       1,
+    \   wrap:       0,
+    \   border:     [],
+    \   cursorline: 1,
+    \   padding:    [0,1,0,1],
+    \   mapping:    0,
+    \   filter:    'LspPopupFilter',
+    \   callback:  'LspPopupSel',
+    \   close:     'button',
+    \   moved:     'any',
+    \ })
+endfunction
+
+map <RightMouse> :call CreateLspPopupFromClick()<CR>
+map <C-b>        :call CreateLspPopupAtCursor()<CR>
+
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 "                           Clipboard
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 " If  vim has clipboard support then just use that by default for
@@ -651,7 +765,10 @@ if ! InGoogleCloud()
     Plugin 'valloric/youcompleteme'
 endif
 if InGoogleCloud()
-    Plugin 'natebosch/vim-lsc'
+    Plugin 'prabirshrestha/async.vim'
+    Plugin 'prabirshrestha/vim-lsp'
+    Plugin 'prabirshrestha/asyncomplete.vim'
+    Plugin 'prabirshrestha/asyncomplete-lsp.vim'
 endif
 call vundle#end()            " required
 
@@ -718,6 +835,10 @@ autocmd BufReadPost *
      \   exe "normal! g`\"z." |
      \ endif
 
+" Prevents ~ (tildes) from appearing on post-buffer lines by
+" making them the same color as the background.
+au BufEnter * highlight EndOfBuffer guifg=bg
+
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 "                              Misc
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -767,7 +888,9 @@ endif
 "                             Local
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 if filereadable(glob("~/.vimrclocal"))
+  if InGoogleCloud()
     source ~/.vimrclocal
+  endif
 endif
 
 " Somehow we need this  after  the  .vimrclocal otherwise it gets
