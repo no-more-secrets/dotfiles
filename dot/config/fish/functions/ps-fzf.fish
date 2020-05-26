@@ -1,7 +1,7 @@
 # Allows user to select from ps lines and will output (muliple)
 # PIDs that are selected.
-function fzf-ps
-    set -l ps_lines (ps -fu $USER | fzf --no-preview)
+function ps-fzf
+    set -l ps_lines (ps -ef | fzf --no-preview)
 
     # Return zero because we have already called fzf and we
     # don't want the caller to pop up another window.
