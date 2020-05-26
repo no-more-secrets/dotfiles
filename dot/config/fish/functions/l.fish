@@ -1,3 +1,3 @@
 function l
-  ll
+  ll $argv
 end
