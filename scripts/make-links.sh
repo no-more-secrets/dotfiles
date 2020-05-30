@@ -48,6 +48,7 @@ main() {
         alsoftrc
         bash
         bashrc
+        config/alacritty
         config/bat
         config/fish
         config/nvim
