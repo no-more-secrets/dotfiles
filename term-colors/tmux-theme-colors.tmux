@@ -3,7 +3,7 @@
 # -----------------------------
 # Grey
 # -----------------------------
-themecolor=colour245
+themecolor=colour172
 bgcolor=colour235
 
 lg_color4=colour250
