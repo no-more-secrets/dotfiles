@@ -22,6 +22,7 @@ list="
     fluidsynth
     git
     htop
+    libcurl4-openssl-dev
     libdw-dev
     libfreetype6
     libfreetype6-dev
@@ -29,21 +30,23 @@ list="
     libncurses5-dev
     libncursesw5
     libncursesw5-dev
-    libsdl2-$sdl_version
     libsdl2-dev
     libsdl2-doc
-    libsdl2-image-$sdl_version
     libsdl2-image-dev
-    libsdl2-mixer-$sdl_version
+    libsdl2-image-$sdl_version
     libsdl2-mixer-dev
-    libsdl2-net-$sdl_version
+    libsdl2-mixer-$sdl_version
     libsdl2-net-dev
-    libsdl2-ttf-$sdl_version
+    libsdl2-net-$sdl_version
+    libsdl2-$sdl_version
     libsdl2-ttf-dev
+    libsdl2-ttf-$sdl_version
     libsqlite3-0
     libsqlite3-dev
     libssl-dev
     libtool
+    libtool
+    libtool-bin
     libwebp-dev
     libxml2
     libxml2-dev
