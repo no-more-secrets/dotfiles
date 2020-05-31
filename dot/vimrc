@@ -528,6 +528,9 @@ let g:tagbar_sort = 0
 let g:tagbar_singleclick = 1
 "let g:tagbar_left = 1
 
+" Disable auto hover which is annoying and slow.
+let g:ycm_auto_hover = ''
+
 " This  option controls the key mapping used to invoke the comple-
 " tion menu for semantic completion. By default, semantic  comple-
 " tion  is  triggered  automatically after typing ., -> and :: in
