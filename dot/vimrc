@@ -315,19 +315,8 @@ function! ZeeDot()
 endfunction
 nnoremap z. :call ZeeDot()<CR>
 
-" If these are slow then there might be some vim file somewhere
-" that is creating a two-character binding starting with [ or ],
-" such as e.g. /usr/share/vim/vim80/ftplugin/python.vim.  These
-" bindings should be removed using e.g.:
-"
-"   au FileType bzl unmap <buffer> ]]
-"   ...
-"
-" This slowness would manifest as an ~ 1 sec delay when switching
-" tabs *away* from a tab in which the selected window contains
-" a buffer that has e.g. the [[ keymapping.
-nnoremap M :tabp<CR>
-nnoremap K :tabn<CR>
+nnoremap H :tabp<CR>
+nnoremap L :tabn<CR>
 
 " Shift-q will close all windows; this is useful when there are
 " multiple windows open and you want to exit vim without having
