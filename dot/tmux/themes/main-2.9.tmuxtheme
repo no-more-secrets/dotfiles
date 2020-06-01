@@ -9,7 +9,7 @@ set -g status-style fg=$lg_color2,bg=$bgcolor
 # Left side of status bar
 set -g status-left-style bg=$bgcolor,fg=$themecolor
 set -g status-left-length 40
-set -g status-left "#[fg=white,bg=$lg_color2] %A #[fg=$lg_color2,bg=$lg_color]#[fg=$lg_color3,bg=$lg_color] %s #[fg=$lg_color,bg=$bgcolor,nobold] #{cpu_fg_color}CPU:#{cpu_percentage}"
+set -g status-left "#[fg=white,bg=$lg_color2] %A #[fg=$lg_color2,bg=$lg_color]#[fg=$lg_color3,bg=$lg_color] #($HOME/dev/utilities/power/system76-power.sh get) #[fg=$lg_color,bg=$bgcolor,nobold] #{cpu_fg_color}CPU:#{cpu_percentage}"
 
 # Right side of status bar
 set -g status-right-style bg=$bgcolor,fg=$themecolor
