@@ -12,8 +12,6 @@ set fish_function_path $fish_function_path ~/.config/fish/functions/local
 set -g fish_key_bindings my_vi_bindings
 #set -g fish_key_bindings fish_vi_key_bindings
 
-alias t="tree -A -C"
-
 set -l fish_local_config ~/.config/fish/local-config.fish
 
 set PATH ~/bin ~/.local/bin $PATH
