@@ -363,6 +363,8 @@ inoremap <C-K> <ESC><C-W>k
 "nnoremap <C-J> 10j
 "nnoremap <C-K> 10k
 
+nnoremap <Leader>Y :set syntax=yaml<CR>
+
 " The `Imprecise` variants will perform  the operation without re-
 " compiling the translation unit.  Useful  if compilation is slow,
 " but can yield incorrect results if the file is out of date (not
