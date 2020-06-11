@@ -89,7 +89,7 @@ function fish_prompt --description 'Write out the prompt'
 
     set_color normal
 
-    if string length -q $SSH_CLIENT
+    if string length -q $SSH_CLIENT; and not string match -qr google (hostname)
         printf "["
         set_color yellow
         printf "%s" (hostname)
