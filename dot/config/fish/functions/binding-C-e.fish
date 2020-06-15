@@ -1,22 +1,46 @@
+# Same as binding-C-t.  Difference is only in local version.
 function binding-C-e
     set -l result ""
     set -l handled 1 # initially not handled
+
+    if [ ! $handled -eq 0 ]; and string match -q -r "^[ ]*kill " (commandline)
+        set result (fzf-kill); set handled $status
+    end
+
+    if [ ! $handled -eq 0 ]; and string match -q -r "^[ ]*pstree " (commandline)
+        set result (fzf-pstree); set handled $status
+    end
+
+    if [ ! $handled -eq 0 ]; and string match -q -r "^chrt| chrt " (commandline)
+        set result (fzf-kill); set handled $status
+    end
 
     if [ ! $handled -eq 0 ]; and functions -q local-binding-C-e
         set result (local-binding-C-e); set handled $status
     end
 
+    # Last resort
     if [ ! $handled -eq 0 ]
-        set result (eval $fzf_ctrl_e_cmd 2>/dev/null | fzf --no-preview --no-multi)
+        set result (fzf --preview='head -n40 {}'); set handled $status
     end
 
+    # If there is a result then we might want to manipulate the commandline
+    # apart from just tacking the result onto the end.
     if string length -q $result
-        if test -d $result
-            cd $result
-        else
-            cd (dirname $result)
+        if not string length -q (commandline); and [ ! -x $result ]
+            # If the commandline is empty and the file is not executable then
+            # then put a `vim` in front of it because# we will likely want to
+            # edit the result.
+            set result vim $result
+        end
+        if string match -q -r "^[ ]*cd " (commandline)
+            # If the user has a `cd` then they probably want to change to the
+            # directory of the selected file.
+           commandline -r ""
+           cd (dirname $result)
+            set result ""
         end
     end
 
-    commandline -f repaint
+    repaint-cmd-line $result
 end
