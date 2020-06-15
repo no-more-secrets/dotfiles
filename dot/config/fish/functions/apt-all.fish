@@ -1,5 +1,8 @@
 function apt-all
-  set result (apt list 2>/dev/null | sed -r 's/\/.*//g' | grep -v 'Listing\.\.' | fzf --preview='apt show {} 2>/dev/null')
+  if not test -e /tmp/apt-all.cache
+    apt list 2>/dev/null >/tmp/apt-all.cache
+  end
+  set result (cat /tmp/apt-all.cache | sed -r 's/\/.*//g' | grep -v 'Listing\.\.' | fzf --preview='apt show {} 2>/dev/null')
 
   if string length -q $result
     if not string length -q (commandline)
