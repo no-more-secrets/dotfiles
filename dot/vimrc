@@ -315,8 +315,8 @@ function! ZeeDot()
 endfunction
 nnoremap z. :call ZeeDot()<CR>
 
-nnoremap H :tabp<CR>
-nnoremap L :tabn<CR>
+nnoremap <C-f> :tabp<CR>
+nnoremap <C-g> :tabn<CR>
 
 " Shift-q will close all windows; this is useful when there are
 " multiple windows open and you want to exit vim without having
@@ -810,6 +810,9 @@ function! SetDefaultColorScheme()
     endtry
     "highlight YcmWarningLine guibg=#ffff00 guifg=#000000
     "highlight YcmErrorLine   guibg=#ff0000 guifg=#000000
+
+    " Make comments italic.
+    highlight Comment cterm=italic gui=italic
 endfunction
 
 set background=dark
