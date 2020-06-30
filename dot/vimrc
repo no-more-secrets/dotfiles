@@ -317,6 +317,8 @@ nnoremap z. :call ZeeDot()<CR>
 
 nnoremap <C-f> :tabp<CR>
 nnoremap <C-g> :tabn<CR>
+inoremap <C-f> <ESC>:tabp<CR>i
+inoremap <C-g> <ESC>:tabn<CR>i
 
 " Shift-q will close all windows; this is useful when there are
 " multiple windows open and you want to exit vim without having
