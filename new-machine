@@ -27,6 +27,7 @@ sudo apt install git
 echo "Cloning dotfiles repo; should be passwordless."
 if [[ ! -d ~/.dotfiles ]]; then
     git clone ssh://git@github.com/dpacbach/dotfiles ~/.dotfiles
+    cd ~/.dotfiles
 else
     cd ~/.dotfiles
     git pull origin master
@@ -45,6 +46,12 @@ cd ~/dev
 [[ ! -d revolution-now ]] && git clone ssh://git@github.com/dpacbach/revolution-now-game revolution-now
 [[ ! -d haskell        ]] && git clone ssh://git@github.com/dpacbach/Haskell-Utils haskell
 [[ ! -d utilities      ]] && git clone ssh://git@github.com/dpacbach/utilities
+
+cd ~/dev/revolution-now
+git submodule update --init
+
+cd ~/dev/base/util
+git submodule update --init
 
 [[ ! -e ~/bin/cmc      ]] && ln -s ~/dev/utilities/cmake/configure ~/bin/cmc
 
