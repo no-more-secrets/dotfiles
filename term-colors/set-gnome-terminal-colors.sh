@@ -5,6 +5,11 @@ cd $(dirname $(readlink -f $0))
 
 profiles="/org/gnome/terminal/legacy/profiles:/"
 
+echo
+echo "Go into the gnome-terminal preferences and create a"
+echo "new profile called dsicilia.  Then press enter to continue..."
+read
+
 profile_id=$(dconf list $profiles | grep '^:')
 echo "List of profiles:"
 echo "$profile_id"

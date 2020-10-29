@@ -14,6 +14,7 @@ list="
     cmake
     curl
     dconf-cli
+    dconf-editor
     entr
     exuberant-ctags
     fish
@@ -96,6 +97,7 @@ sudo apt install $list
 
 bash scripts/install-fd.sh
 
+export PATH=~/.local/bin:$PATH
 bash scripts/install-stack.sh
 
 sudo apt install system76-power
