@@ -6,6 +6,7 @@ sdl_version=2.0-0
 list="
     autoconf
     automake
+    bat
     bison
     build-essential
     cargo
@@ -101,3 +102,6 @@ export PATH=~/.local/bin:$PATH
 bash scripts/install-stack.sh
 
 sudo apt install system76-power
+
+rm -f ~/bin/bat
+ln -s "$(which batcat)" ~/bin/bat
