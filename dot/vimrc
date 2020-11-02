@@ -36,6 +36,7 @@ set sidescroll=1
 set number              " turn line numbers on
 set relativenumber      " line number deltas
 set cursorline
+set cursorlineopt=number
 set showmatch           " highlight matching braces
 set backspace=indent,eol,start
 
