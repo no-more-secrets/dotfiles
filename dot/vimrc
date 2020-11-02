@@ -15,11 +15,11 @@ endif
 
 " Spacing and spaces
 set nowrap
-set sw=4
+set sw=2
 set autoindent
 set smartindent
-set shiftwidth=4
-set tabstop=4
+set shiftwidth=2
+set tabstop=2
 set expandtab
 set nofixeol
 set noeol
