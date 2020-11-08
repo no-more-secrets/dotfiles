@@ -711,10 +711,8 @@ end
 nnoremap <Leader>p  :r     ~/.vimbuf<CR>
 " Standard paste above cursor
 nnoremap <Leader>P  :.-1r  ~/.vimbuf<CR>
-" Yank into system clipboard and tmp file (will yank entire line
-" always). Result can then be used either with the above special
-" paste commands or with Ctrl-V in other applications.
-vnoremap <Leader>y  "+y:w!    ~/.vimbuf<CR>
+" Yank into tmp file (will yank entire line always).
+vnoremap <Leader>y  :w!    ~/.vimbuf<CR>
 nmap     <Leader>yy  V<Leader>y
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
