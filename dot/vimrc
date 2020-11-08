@@ -15,11 +15,11 @@ endif
 
 " Spacing and spaces
 set nowrap
-set sw=4
+set sw=2
 set autoindent
 set smartindent
-set shiftwidth=4
-set tabstop=4
+set shiftwidth=2
+set tabstop=2
 set expandtab
 set nofixeol
 set noeol
@@ -35,6 +35,8 @@ set splitright
 set sidescroll=1
 set number              " turn line numbers on
 set relativenumber      " line number deltas
+set cursorline
+set cursorlineopt=number
 set showmatch           " highlight matching braces
 set backspace=indent,eol,start
 
@@ -531,6 +533,8 @@ let g:tagbar_show_linenumbers = 2
 let g:tagbar_sort = 0
 let g:tagbar_singleclick = 1
 "let g:tagbar_left = 1
+" When jumping to a tag, put it 25% from top of screen.
+let g:tagbar_jump_offset = winheight(0) / 4
 
 " Disable auto hover which is annoying and slow.
 let g:ycm_auto_hover = ''
@@ -788,6 +792,7 @@ au BufNewFile,BufRead *.fish               set syntax=fish
 au BufNewFile,BufRead *.ucl                set syntax=yaml
 au BufNewFile,BufRead *.dart               set syntax=dart
 au BufNewFile,BufRead *.fbs                set syntax=fbs
+au BufNewFile,BufRead *.peg                set syntax=peg
 
 au FileType vim     let g:commentstring="\" %s"
 au FileType sh      let g:commentstring="# %s"
@@ -884,6 +889,9 @@ else
     " setup for non-diff mode
     set cmdheight=1
 endif
+
+" Re-proportion window splits when terminal is resized.
+autocmd VimResized * exe "normal \<c-w>="
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 "                             Local

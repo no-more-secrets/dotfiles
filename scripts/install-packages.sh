@@ -6,6 +6,7 @@ sdl_version=2.0-0
 list="
     autoconf
     automake
+    bat
     bison
     build-essential
     cargo
@@ -14,6 +15,7 @@ list="
     cmake
     curl
     dconf-cli
+    dconf-editor
     entr
     exuberant-ctags
     fish
@@ -96,6 +98,10 @@ sudo apt install $list
 
 bash scripts/install-fd.sh
 
+export PATH=~/.local/bin:$PATH
 bash scripts/install-stack.sh
 
 sudo apt install system76-power
+
+rm -f ~/bin/bat
+ln -s "$(which batcat)" ~/bin/bat
