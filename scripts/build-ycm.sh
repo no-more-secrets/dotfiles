@@ -73,7 +73,7 @@ if [[ -e "$llvm_root" ]]; then
     clang_includes="$ycmd/clang_includes"
     [[ -e "$clang_includes.bak" ]] && \
         rm -rf "$clang_includes"
-    [[ -e "$clang_includes" ]] && \
+    [[ -L "$clang_includes" ]] && \
         mv "$clang_includes" "$clang_includes.bak"
     includes_location="$llvm_root/lib/clang/$full_version"
     ln -s "$includes_location" "$clang_includes"
