@@ -37,6 +37,16 @@ function key_bindings
         bind -M insert \ck binding-C-k
     end
 
+    bind \cy binding-C-y
+    if bind -M insert > /dev/null 2>&1
+        bind -M insert \cy binding-C-y
+    end
+
+    bind \co binding-C-o
+    if bind -M insert > /dev/null 2>&1
+        bind -M insert \co binding-C-o
+    end
+
     # F3
     bind -k f3 'binding-F3'
     if bind -M insert > /dev/null 2>&1
