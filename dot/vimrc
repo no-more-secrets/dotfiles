@@ -330,20 +330,6 @@ nnoremap Q :qa<CR>
 " Tab will auto-complete from words in file
 "inoremap <Tab> <C-n>
 
-" Re-map C-n from autocomplete to the nerd tree.
-nnoremap <C-n> :NERDTreeToggle<CR>
-nnoremap <C-p> :NERDTreeFocus<CR>
-" Find current file in NERDTree and expand tree to reveal it.
-nnoremap <Leader>n :NERDTreeFind<CR>
-let NERDTreeWinSize = 19
-if &columns > 190
-  let NERDTreeWinSize += 11
-endif
-if &columns > 230
-  let NERDTreeWinSize += 10
-endif
-let g:NERDTreeWinPos = "left"
-
 vnoremap <Leader>f :!sfmt 65<CR>
 
 " These are `back` and `forward`  actions, analogous to web brows-
@@ -383,6 +369,14 @@ nnoremap <Leader>es :YcmShowDetailedDiagnostic<CR>
 nnoremap <Leader>er :YcmForceCompileAndDiagnostics<CR>
 nnoremap <Leader>ee :YcmDiags<CR>
 
+" Add spaces after comment delimiters by default.
+let g:NERDSpaceDelims = 1
+" Allow commenting and inverting empty lines (useful when com-
+" menting a region).
+let g:NERDCommentEmptyLines = 1
+" Enable trimming of trailing whitespace when uncommenting.
+let g:NERDTrimTrailingWhitespace = 1
+
 let g:llvm_home = $HOME . '/dev/tools/llvm-current'
 
 function! ClangFormatAll()
@@ -415,12 +409,6 @@ nnoremap <Leader>S * :e %:p:s,.hpp$,.X123X,:s,.cpp$,.hpp,:s,.X123X$,.cpp,<CR>ggn
 " EasyMotions controls.
 nmap ; <Plug>(easymotion-bd-w)
 vmap ; <Plug>(easymotion-bd-w)
-
-" Case sensitivity of Sneak plugin is determined by 'ignorecase'
-" and 'smartcase'.
-let g:sneak#use_ic_scs = 1
-let g:sneak#s_next = 1
-let g:sneak#label = 1
 
 function! ReplaceWord()
     let l:w = expand( "<cword>" )
@@ -748,10 +736,8 @@ call vundle#begin()
     Plugin 'VundleVim/Vundle.vim'
     Plugin 'godlygeek/tabular'         " Auto alignment
     Plugin 'tpope/vim-fugitive'        " Git integration
-    Plugin 'scrooloose/nerdtree'       " File manager
     Plugin 'easymotion/vim-easymotion' " Web-browser-like navigation overlays
     Plugin 'scrooloose/nerdcommenter'  " Auto comment manipulation
-    "Plugin 'raimondi/delimitmate'      " Auto closing of quotes, parens, etc.
     Plugin 'simnalamburt/vim-mundo'    " Undo tree interaction
     Plugin 'morhetz/gruvbox'           " colorscheme
     Plugin 'junegunn/fzf'              " fuzzy searching
@@ -761,7 +747,6 @@ call vundle#begin()
     Plugin 'tibabit/vim-templates'     " file templates with placeholders
     Plugin 'octol/vim-cpp-enhanced-highlight'
     Plugin 'tikhomirov/vim-glsl'       " Syntax file for OpenGL shaders.
-    Plugin 'justinmk/vim-sneak'        " Use `s` for motion.
 if ! InGoogleCloud()
     Plugin 'valloric/youcompleteme'
 endif
@@ -857,16 +842,6 @@ endif
 "    " tmux knows the extended mouse mode
 "    set ttymouse=xterm2
 "endif
-
-" If  NerdTree  is  the only open window then quit from it, effec-
-" tively quitting vim if only NerdTree is open.
-function! ExitIfOnlyNerdTree()
-    if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree())
-        q
-    endif
-endfunction
-
-autocmd bufenter * :call ExitIfOnlyNerdTree()
 
 " This disables the intro  message  that  appears when vim starts.
 set shortmess=I " Read :help shortmess for everything else.
