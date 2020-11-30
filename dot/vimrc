@@ -285,10 +285,10 @@ endif
 
 " FIXME: get number of cores from above.
 " Saves all changes in all buffers before making.
-nnoremap <F5> :!make run -k -j16<CR>
-nnoremap <F6> :!make all -k -j16<CR>
+nnoremap <F5> :!make run<CR>
+nnoremap <F6> :!make all<CR>
 nnoremap <F7> :!bash -c "make all -j1 2>&1 \| head -n 50"<CR>
-nnoremap <F9> :!bash -c "make test -j16 2>&1 \| head -n 50"<CR>
+nnoremap <F9> :!make test<CR>
 
 " This function changes the standard `z.` so that if it is pressed twice
 " within one second then the first time it is pressed it will move the
