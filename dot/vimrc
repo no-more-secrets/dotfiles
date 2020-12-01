@@ -778,6 +778,9 @@ au BufNewFile,BufRead *.dart               set syntax=dart
 au BufNewFile,BufRead *.fbs                set syntax=fbs
 au BufNewFile,BufRead *.peg                set syntax=peg
 
+" libstdc++ seems to use tabs of width 8  :-E
+au BufRead /usr/include/c++* set tabstop=8
+
 au FileType vim     let g:commentstring="\" %s"
 au FileType sh      let g:commentstring="# %s"
 au FileType python  let g:commentstring="# %s"
