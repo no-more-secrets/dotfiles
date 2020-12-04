@@ -284,7 +284,7 @@ if filereadable( '/proc/cpuinfo' )
 endif
 
 function! BuildO()
-  :!~/dev/rn/scripts/o.sh @%
+  :!~/dev/rn/scripts/o.sh %
 endfunction
 
 " FIXME: get number of cores from above.
