@@ -3,5 +3,5 @@
 # is a kill command on the command line -- that fact should
 # already have been established before this call.
 function fzf-kill
-    fzf-ps
+    ps-fzf
 end
