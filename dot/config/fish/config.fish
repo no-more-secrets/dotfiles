@@ -20,7 +20,7 @@ set -g fish_prompt_pwd_dir_length 2
 
 set -gx EDITOR $HOME/dev/tools/vim-current/bin/vim
 
-set -x COLUMNS
+export COLUMNS
 
 # This scales Qt applications to look good on 4k screens. It
 # should however only do the scaling when there is a high pixel
