@@ -61,3 +61,6 @@ end
 # Someone is setting this above, don't know who, so we need to
 # set it down here.
 set -x EDITOR $HOME/dev/tools/vim-current/bin/vim
+
+set -x DSICILIA_NINJA_STATUS_PRINT_MODE scrolling
+set -x DSICILIA_NINJA_REFORMAT_MODE pretty
