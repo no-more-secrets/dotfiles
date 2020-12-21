@@ -105,3 +105,6 @@ sudo apt install system76-power
 
 rm -f ~/bin/bat
 ln -s "$(which batcat)" ~/bin/bat
+
+pip3 install --user \
+  spotipy  # For the spotify playlist sync script.
