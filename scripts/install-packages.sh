@@ -91,7 +91,9 @@ list="
     zip
 "
 
-sudo apt-add-repository -y ppa:system76-dev/stable
+if ! which gcert &>/dev/null; then
+  sudo apt-add-repository -y ppa:system76-dev/stable
+fi
 sudo apt update
 
 sudo apt install $list
@@ -101,7 +103,12 @@ bash scripts/install-fd.sh
 export PATH=~/.local/bin:$PATH
 bash scripts/install-stack.sh
 
-sudo apt install system76-power
+if ! which gcert &>/dev/null; then
+  sudo apt install system76-power
+fi
 
 rm -f ~/bin/bat
 ln -s "$(which batcat)" ~/bin/bat
+
+pip3 install --user \
+  spotipy  # For the spotify playlist sync script.
