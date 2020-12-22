@@ -49,9 +49,13 @@ main() {
         bash
         bashrc
         config/alacritty
+        config/awesome/autorun.sh
+        config/awesome/rc.lua
         config/bat
+        config/compton.conf
         config/fish
         config/nvim
+        config/polybar
         fdignore
         fonts
         ghc
