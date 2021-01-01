@@ -14,6 +14,10 @@ safe_link() {
     # src --> target
     local target="$(pwd)/dot/$1"
     local src="$HOME/.$1"
+    local dir="$(dirname "$src")"
+    if [[ ! -d "$dir" ]]; then
+        mkdir -p $dir
+    fi
     if [[ ! -e "$src" ]]; then
         # At this point the file does not exist, however we  will
         # run a forced remove on it anyway because it could be  a
