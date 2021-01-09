@@ -58,6 +58,7 @@ main() {
         config/bat
         config/compton.conf
         config/fish
+        config/jesseduffield/lazygit/config.yml
         config/nvim
         config/polybar
         fdignore
