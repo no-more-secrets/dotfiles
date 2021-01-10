@@ -40,3 +40,5 @@
     prompt = false
 [pull]
 	rebase = false
+[checkout]
+  defaultRemote = origin
