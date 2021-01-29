@@ -714,6 +714,16 @@ let g:netrw_browse_split=4  " open in prior window
 let g:netrw_altv=2          " open splits to the right
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+"                  vim-lua syntax highlighting
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+" NOTE: all options are off by default, but do not support
+" setting to 0 for off; so to turn an option off comment it out.
+" let g:lua_syntax_nosymboloperator = 1
+let g:lua_syntax_fancynotequal = 1
+let g:lua_syntax_nofold = 1
+" let g:lua_syntax_nostdlib = 1
+
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 "                            Vundle
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 " Brief help
@@ -747,6 +757,7 @@ call vundle#begin()
     Plugin 'tibabit/vim-templates'     " file templates with placeholders
     Plugin 'octol/vim-cpp-enhanced-highlight'
     Plugin 'tikhomirov/vim-glsl'       " Syntax file for OpenGL shaders.
+    Plugin 'tbastos/vim-lua'           " Improved lua syntax highlighting.
 if ! InGoogleCloud()
     Plugin 'valloric/youcompleteme'
 endif
@@ -814,8 +825,6 @@ endfunction
 set background=dark
 
 " These set file-type-specific rules for colorschemes
-au BufEnter sh      colorscheme sourcerer
-
 au BufEnter * :call SetDefaultColorScheme()
 
 hi IncSearch cterm=NONE ctermfg=black ctermbg=yellow
