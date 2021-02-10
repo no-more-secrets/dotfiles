@@ -1,3 +1,4 @@
 gui:
   git:
-    disableForcePushing: true
+    disableforcepushing: true
+startuppopupversion: 1

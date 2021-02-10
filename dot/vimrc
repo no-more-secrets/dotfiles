@@ -377,25 +377,45 @@ let g:NERDCommentEmptyLines = 1
 " Enable trimming of trailing whitespace when uncommenting.
 let g:NERDTrimTrailingWhitespace = 1
 
+let g:tools = $HOME . '/dev/tools'
 let g:llvm_home = $HOME . '/dev/tools/llvm-current'
 
 function! ClangFormatAll()
   if InGoogleCloud()
-    let l:lines = '1:' . line( '$' )
     let g:clang_format_path = '/usr/lib/clang-format/clang-format.py'
     exec ':py3f ' . g:clang_format_path
     return
   endif
-  "let l:formatdiff = 1
-  let l:lines = '1:' . line( '$' )
   let g:clang_format_path = g:llvm_home . '/bin/clang-format'
   exec ':py3f ' . g:llvm_home . '/share/clang/clang-format.py'
+endfunction
+
+function! LuaFormatAll()
+  let g:lua_format_path = g:tools . '/lua-format-current/bin/lua-format'
+  " For some reason the :%! command will move the cursor to the
+  " top of the document, so we need to save it and restore it.
+  let pos_info = getpos( '.' )
+  let line = pos_info[1]
+  let col = pos_info[2]
+  exec ':%!' . g:lua_format_path
+  call setpos( '.', [0, line, col, 0] )
+endfunction
+
+function! SmartFormatAll()
+  let ext = expand( '%:e' ) " current file extension
+  if ext == 'lua'
+    call LuaFormatAll()
+  elseif ext == 'cpp' || ext == 'hpp' || ext == 'cc' || ext == 'h'
+    call ClangFormatAll()
+  else
+    echo 'Cannot format this file type: ' . ext
+  endif
 endfunction
 
 " Since vim does not use Control-C to exit/kill we can map it to
 " something else, so we map it to invoke clang-format on the
 " current file.
-nnoremap <C-C> :call ClangFormatAll()<CR>
+nnoremap <C-C> :call SmartFormatAll()<CR>
 
 " This allows one to alternate between .cpp and .hpp files so long
 " as they are in the current directory.  It works by [e]diting the
