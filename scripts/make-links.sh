@@ -65,6 +65,7 @@ main() {
         fonts
         ghc
         gitconfig
+        lua-format
         nr-make-rc.mk
         tmux
         tmux.conf
