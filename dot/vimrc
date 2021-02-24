@@ -386,6 +386,7 @@ function! ClangFormatAll()
     exec ':py3f ' . g:clang_format_path
     return
   endif
+  let l:lines = '1:' . line( '$' )
   let g:clang_format_path = g:llvm_home . '/bin/clang-format'
   exec ':py3f ' . g:llvm_home . '/share/clang/clang-format.py'
 endfunction
