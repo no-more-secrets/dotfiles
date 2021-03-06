@@ -1,4 +1,5 @@
 gui:
   git:
     disableforcepushing: true
+reporting: "off"
 startuppopupversion: 1
