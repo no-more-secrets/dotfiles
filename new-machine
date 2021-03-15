@@ -74,6 +74,10 @@ make #REBUILD_YCM=
 echo "Creating recycle symlink."
 [[ ! -L ~/bin/recycle ]] && ln -s ~/dev/utilities/misc/recycle ~/bin/recycle
 
+echo "Updating gruvbox colorscheme local changes..."
+gruvbox_vim="$HOME/.dotfiles/dot/vim/bundle/gruvbox/colors/gruvbox.vim"
+scp dsicilia@$ip_address:$gruvbox_vim $gruvbox_vim
+
 echo
 echo 'Now do the following:
 
