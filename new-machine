@@ -39,7 +39,6 @@ echo "Cloning repos in ~/dev; should be passwordless."
 mkdir -p ~/dev
 cd ~/dev
 
-[[ ! -d nr-make        ]] && git clone ssh://git@github.com/dpacbach/nr-make
 [[ ! -d calcterm       ]] && git clone ssh://git@github.com/dpacbach/calcterm
 [[ ! -d cpp            ]] && git clone ssh://git@github.com/dpacbach/cpp
 [[ ! -d base/util      ]] && git clone ssh://git@github.com/dpacbach/base-util base/util

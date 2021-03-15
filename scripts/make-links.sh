@@ -50,7 +50,6 @@ main() {
 
     list='
         alsoftrc
-        bash
         bashrc
         config/alacritty
         config/awesome/autorun.sh
