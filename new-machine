@@ -5,6 +5,9 @@ set -e
 
 mkdir -p ~/bin
 
+echo "Setting locale (requires password)..."
+sudo locale-gen en_US.UTF-8
+
 mkdir -p ~/.ssh
 chmod 700 ~/.ssh
 
