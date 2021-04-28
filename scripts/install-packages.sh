@@ -26,6 +26,7 @@ list="
     htop
     libcurl4-openssl-dev
     libdw-dev
+    libevent-dev
     libfontconfig1-dev
     libfreetype6
     libfreetype6-dev
@@ -72,12 +73,12 @@ list="
     powertop
     protobuf-compiler
     python
+    python-pip-whl
     python2.7
     python2.7-dev
     python3
     python3-dev
     python3-pip
-    python-pip-whl
     qt5-default
     screenfetch
     silversearcher-ag
