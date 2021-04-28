@@ -67,6 +67,8 @@ scripts/build-hs-utils.sh
 
 echo "building vim..."
 [[ ! -e ~/dev/tools/vim-current ]] && ~/dev/utilities/building/vim.sh
+echo "building tmux..."
+[[ ! -e ~/dev/tools/tmux-current ]] && ~/dev/utilities/building/tmux.sh
 
 rm -f ~/.bashrc
 
