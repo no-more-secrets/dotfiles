@@ -290,6 +290,10 @@ nnoremap <F6> :!make all<CR>
 nnoremap <F7> :!bash -c "make all -j1 2>&1 \| head -n 50"<CR>
 nnoremap <F9> :!make test<CR>
 
+" Comment out the word that the cursor is on using /* ... */.
+" This does not work for words that are one character in length.
+nnoremap <Leader>cw lbi/*<ESC>lea*/<ESC>bb
+
 " This function changes the standard `z.` so that if it is pressed twice
 " within one second then the first time it is pressed it will move the
 " current line to the center of the screen as usual, but the second time it
