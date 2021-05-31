@@ -12,7 +12,7 @@ mkdir -p ~/.ssh
 chmod 700 ~/.ssh
 
 hostname='leopard'
-ip_address=192.168.1.14
+ip_address=192.168.1.109
 
 echo "Attempting to contact $ip_address (may be known as $hostname)"
 echo "for SSH keys.  Pinging..."
@@ -23,6 +23,7 @@ echo "$ip_address's ssh password twice."
 
 [[ ! -f ~/.ssh/id_rsa     ]] && scp dsicilia@$ip_address:/home/dsicilia/.ssh/id_rsa ~/.ssh
 [[ ! -f ~/.ssh/id_rsa.pub ]] && scp dsicilia@$ip_address:/home/dsicilia/.ssh/id_rsa.pub ~/.ssh
+[[ ! -f ~/.ssh/config ]] && scp dsicilia@$ip_address:/home/dsicilia/.ssh/config ~/.ssh
 
 echo "Installing git; you may be asked for your account password."
 sudo apt install git
@@ -67,8 +68,6 @@ scripts/build-hs-utils.sh
 
 echo "building vim..."
 [[ ! -e ~/dev/tools/vim-current ]] && ~/dev/utilities/building/vim.sh
-echo "building tmux..."
-[[ ! -e ~/dev/tools/tmux-current ]] && ~/dev/utilities/building/tmux.sh
 
 rm -f ~/.bashrc
 
