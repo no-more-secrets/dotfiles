@@ -59,6 +59,7 @@ main() {
         config/fish
         config/htop/htoprc
         config/jesseduffield/lazygit/config.yml
+        config/lua
         config/nvim
         config/polybar
         fdignore
