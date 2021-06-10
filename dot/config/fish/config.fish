@@ -22,6 +22,8 @@ set -gx EDITOR $HOME/dev/tools/vim-current/bin/vim
 
 export COLUMNS
 
+set -x LUA_INIT @$HOME/.config/lua/startup.lua
+
 # This scales Qt applications to look good on 4k screens. It
 # should however only do the scaling when there is a high pixel
 # density.
