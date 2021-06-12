@@ -901,8 +901,9 @@ else
     set cmdheight=1
 endif
 
-" Re-proportion window splits when terminal is resized.
-autocmd VimResized * exe "normal \<c-w>="
+" Re-proportion window splits on all tabs when terminal is re-
+" sized.
+autocmd VimResized * exe ":tabdo wincmd ="
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 "                             Local
