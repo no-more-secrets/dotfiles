@@ -12,13 +12,14 @@
     current      = "#b8bb26" bold
     local        = "#fb4934"
     remote       = "#98971a"
-[color "diff"]
-    meta         = "#bdae93"      ; light3
-    frag         = "#d3869b" bold ; bright_purple
-    old          = "#af3a03" bold ; faded_orange
-    new          = "#b8bb26" bold ; bright_green
-    func         = "#f9f5d7"      ; light0_hard
-    context      = "#928374"      ; grey
+; This section causes issues for lazygit.
+; [color "diff"]
+;     meta         = "#bdae93"      ; light3
+;     frag         = "#d3869b" bold ; bright_purple
+;     old          = "#af3a03" bold ; faded_orange
+;     new          = "#b8bb26" bold ; bright_green
+;     func         = "#f9f5d7"      ; light0_hard
+;     context      = "#928374"      ; grey
 [color "status"]
     header       = "#928374"      ; gray
     branch       = "#fe8019"      ; bright_orange

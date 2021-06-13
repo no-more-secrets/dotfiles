@@ -800,9 +800,13 @@ filetype off                  " required
 set rtp+=~/.vim/bundle/Vundle.vim
 
 let g:cpp_no_function_highlight = 1
-let g:c_no_curly_error=1
-"let g:cpp_member_variable_highlight = 1
-"let g:cpp_class_decl_highlight = 1
+" let g:c_no_curly_error=1
+" let g:cpp_member_variable_highlight = 1
+" let g:cpp_class_decl_highlight = 1
+let g:cpp_attributes_highlight = 1
+" Highlight struct/class member variables (affects both C and C++ files)
+let g:cpp_member_highlight = 1
+let g:cpp_concepts_highlight = 1
 
 call vundle#begin()
     " Note: Vundle needs to manage Vundle
@@ -818,9 +822,9 @@ call vundle#begin()
     Plugin 'terryma/vim-expand-region' " expand selected region
     Plugin 'majutsushi/tagbar'         " Code outline window
     Plugin 'tibabit/vim-templates'     " file templates with placeholders
-    Plugin 'octol/vim-cpp-enhanced-highlight'
     Plugin 'tikhomirov/vim-glsl'       " Syntax file for OpenGL shaders.
     Plugin 'tbastos/vim-lua'           " Improved lua syntax highlighting.
+    Plugin 'bfrg/vim-cpp-modern'       " Modern C++ syntax highlighting.
 if ! InGoogleCloud()
     Plugin 'valloric/youcompleteme'
 endif
@@ -839,18 +843,17 @@ filetype plugin indent on    " required
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 " Put these after the plugin stuff above since it looks like some
 " syntax settings can be overwridden there.
-au BufNewFile,BufRead *.cc,*.cpp,*.hpp,*.h set syntax=cpp11
-au BufNewFile,BufRead *.inl                set syntax=cpp11
-au BufNewFile,BufRead *.cc,*.cpp,*.hpp,*.h set ft=cpp
-au BufNewFile,BufRead *.lhs                set syntax=haskell_lit
-au BufNewFile,BufRead *.hs                 set syntax=haskell
-au BufNewFile,BufRead *.hs                 set ft=haskell
-au BufNewFile,BufRead *.mkh                set ft=make
-au BufNewFile,BufRead *.fish               set syntax=fish
-au BufNewFile,BufRead *.ucl                set syntax=yaml
-au BufNewFile,BufRead *.dart               set syntax=dart
-au BufNewFile,BufRead *.fbs                set syntax=fbs
-au BufNewFile,BufRead *.peg                set syntax=peg
+au BufNewFile,BufRead *.cc,*.cpp,*.hpp,*.h,*.inl set syntax=cpp
+au BufNewFile,BufRead *.cc,*.cpp,*.hpp,*.h,*.inl set ft=cpp
+au BufNewFile,BufRead *.lhs                      set syntax=haskell_lit
+au BufNewFile,BufRead *.hs                       set syntax=haskell
+au BufNewFile,BufRead *.hs                       set ft=haskell
+au BufNewFile,BufRead *.mkh                      set ft=make
+au BufNewFile,BufRead *.fish                     set syntax=fish
+au BufNewFile,BufRead *.ucl                      set syntax=yaml
+au BufNewFile,BufRead *.dart                     set syntax=dart
+au BufNewFile,BufRead *.fbs                      set syntax=fbs
+au BufNewFile,BufRead *.peg                      set syntax=peg
 
 " libstdc++ seems to use tabs of width 8  :-E
 au BufRead /usr/include/c++* set tabstop=8
