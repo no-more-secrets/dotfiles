@@ -944,9 +944,17 @@ else
     set cmdheight=1
 endif
 
+function! ReproportionWindowSplits()
+  let l:current_tabpage = tabpagenr()
+  :tabdo wincmd =
+  " The above command will have left us on the last tab page, so
+  " restore the tab that we were on.
+  exec 'normal ' . l:current_tabpage . 'gt'
+endfunction
+
 " Re-proportion window splits on all tabs when terminal is re-
 " sized.
-autocmd VimResized * exe ":tabdo wincmd ="
+au VimResized * :call ReproportionWindowSplits()
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 "                             Local
