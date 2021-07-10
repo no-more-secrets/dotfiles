@@ -49,6 +49,10 @@ cd ~/dev
 [[ ! -d revolution-now ]] && git clone ssh://git@github.com/dpacbach/revolution-now-game revolution-now
 [[ ! -d haskell        ]] && git clone ssh://git@github.com/dpacbach/Haskell-Utils haskell
 [[ ! -d utilities      ]] && git clone ssh://git@github.com/dpacbach/utilities
+[[ ! -d suckless       ]] && git clone ssh://git@github.com/dpacbach/suckless
+
+cd ~/dev/suckless
+make
 
 cd ~/dev/revolution-now
 git submodule update --init
