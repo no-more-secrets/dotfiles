@@ -62,6 +62,7 @@ list="
     libxcb-xfixes0
     libxcb-xfixes0-dev
     libxcursor-dev
+    libxft-dev
     libxml2
     libxml2-dev
     lua5.3
@@ -73,12 +74,12 @@ list="
     powertop
     protobuf-compiler
     python
-    python-pip-whl
     python2.7
     python2.7-dev
     python3
     python3-dev
     python3-pip
+    python-pip-whl
     qt5-default
     screenfetch
     silversearcher-ag
