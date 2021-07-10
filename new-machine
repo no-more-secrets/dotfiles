@@ -51,8 +51,8 @@ cd ~/dev
 [[ ! -d utilities      ]] && git clone ssh://git@github.com/dpacbach/utilities
 [[ ! -d suckless       ]] && git clone ssh://git@github.com/dpacbach/suckless
 
-cd ~/dev/suckless
-make
+cd ~/.dotfiles
+scripts/build-suckless.sh
 
 cd ~/dev/revolution-now
 git submodule update --init
