@@ -18,6 +18,7 @@ list="
     dconf-editor
     entr
     exuberant-ctags
+    fdfind
     fish
     flex
     fluid-soundfont-gm
@@ -99,8 +100,6 @@ fi
 sudo apt update
 
 sudo apt install $list
-
-bash scripts/install-fd.sh
 
 export PATH=~/.local/bin:$PATH
 bash scripts/install-stack.sh
