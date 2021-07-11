@@ -820,7 +820,8 @@ call vundle#begin()
     Plugin 'junegunn/fzf'              " fuzzy searching
     Plugin 'junegunn/fzf.vim'          " vim plugin for fzf
     Plugin 'terryma/vim-expand-region' " expand selected region
-    Plugin 'majutsushi/tagbar'         " Code outline window
+    " Too slow to be enabled by default.
+    " Plugin 'majutsushi/tagbar'         " Code outline window
     Plugin 'tibabit/vim-templates'     " file templates with placeholders
     Plugin 'tikhomirov/vim-glsl'       " Syntax file for OpenGL shaders.
     Plugin 'tbastos/vim-lua'           " Improved lua syntax highlighting.
