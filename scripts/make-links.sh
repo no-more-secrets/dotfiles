@@ -62,6 +62,7 @@ main() {
         config/lua
         config/nvim
         config/polybar
+        dwm
         fdignore
         fonts
         ghc
