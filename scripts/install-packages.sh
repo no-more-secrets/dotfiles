@@ -18,7 +18,7 @@ list="
     dconf-editor
     entr
     exuberant-ctags
-    fdfind
+    fd-find
     fish
     flex
     fluid-soundfont-gm
