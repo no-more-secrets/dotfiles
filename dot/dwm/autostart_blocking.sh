@@ -4,5 +4,8 @@
 #          to be run in the background using &.
 set -o pipefail
 
+# May not be necessary.
+xrdb --merge .Xresources
+
 bash ~/dev/utilities/kb/remap-caps.sh
 bash ~/dev/utilities/kb/set-repeat-rate.sh
