@@ -81,7 +81,6 @@ list="
     python3-dev
     python3-pip
     python-pip-whl
-    qt5-default
     screenfetch
     silversearcher-ag
     subversion
