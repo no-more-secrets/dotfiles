@@ -19,6 +19,7 @@ list="
     entr
     exuberant-ctags
     fd-find
+    feh
     fish
     flex
     fluid-soundfont-gm

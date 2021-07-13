@@ -10,6 +10,9 @@ set -o pipefail
 bash ~/dev/utilities/kb/remap-caps.sh
 bash ~/dev/utilities/kb/set-repeat-rate.sh
 
+# This should not be blocking.
+[[ -f ~/.fehbg ]] && bash ~/.fehbg
+
 # This is needed to kill previous status bar runners when we
 # restart dwm.
 pids="$(pgrep -f 'bash ./autostart_blocking.sh')"
