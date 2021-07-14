@@ -75,6 +75,7 @@ list="
     perl
     powertop
     protobuf-compiler
+    pulsemixer
     python
     python2.7
     python2.7-dev
