@@ -68,6 +68,7 @@ list="
     libxml2
     libxml2-dev
     lua5.3
+    ncal
     ninja-build
     nmap
     openssh-server
