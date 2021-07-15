@@ -3,3 +3,4 @@ gui:
     disableforcepushing: true
 reporting: "off"
 startuppopupversion: 1
+quitOnTopLevelReturn: true
