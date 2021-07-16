@@ -243,9 +243,6 @@ function! UpdateStatusBar(timer)
     if winnr('$') == 1
         setl statusline+=%#Identifier#
     endif
-    if exists('g:tagbar_autoclose')
-        setl statusline+=%{tagbar#currenttag('%s\ ','')}
-    endif
     setl statusline+=\ %y
     setl statusline+=\ %p%%
     setl statusline+=\ %l:%2c
@@ -563,30 +560,9 @@ let g:fzf_layout = {
 " Set current directory to current file with ,cd
 nnoremap <Leader>cd :cd %:p:h<CR>:pwd<CR>
 
-" Open/close code-outline window (TagBar plugin).
-nnoremap <Leader>o :TagbarOpenAutoClose<CR>
-" This one will open it so that it stays open (TagbarOpen) but
-" then call TagbarOpenAutoClose just to switch cursor focus to it.
-nnoremap <Leader>O :TagbarOpen<CR>:TagbarOpenAutoClose<CR>
-"
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 "                        Variable Settings
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-let g:tagbar_width = 19
-if &columns > 190
-  let g:tagbar_width += 11
-endif
-if &columns > 230
-  let g:tagbar_width += 10
-endif
-let g:tagbar_show_linenumbers = 2
-let g:tagbar_sort = 0
-let g:tagbar_singleclick = 1
-"let g:tagbar_left = 1
-" When jumping to a tag, put it 25% from top of screen.
-let g:tagbar_jump_offset = winheight(0) / 4
-let g:tagbar_jump_lazy_scroll = 1
 
 " Disable auto hover which is annoying and slow.
 let g:ycm_auto_hover = ''
@@ -820,8 +796,6 @@ call vundle#begin()
     Plugin 'junegunn/fzf'              " fuzzy searching
     Plugin 'junegunn/fzf.vim'          " vim plugin for fzf
     Plugin 'terryma/vim-expand-region' " expand selected region
-    " Too slow to be enabled by default.
-    " Plugin 'majutsushi/tagbar'         " Code outline window
     Plugin 'tibabit/vim-templates'     " file templates with placeholders
     Plugin 'tikhomirov/vim-glsl'       " Syntax file for OpenGL shaders.
     Plugin 'tbastos/vim-lua'           " Improved lua syntax highlighting.
