@@ -8,6 +8,11 @@ set nocompatible
 set t_Co=256
 set mouse=a
 
+" This is needed for the st terminal to display correct colors
+" when not in tmux. No idea why these work... need to figure that
+" out at some point.
+set t_8f=[38;2;%lu;%lu;%lum " set foreground color
+set t_8b=[48;2;%lu;%lu;%lum " set background color
 " Set 24-bit 'True Color' if supported.
 if exists( '+termguicolors' )
   set termguicolors

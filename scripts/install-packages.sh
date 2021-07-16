@@ -19,6 +19,7 @@ list="
     entr
     exuberant-ctags
     fd-find
+    feh
     fish
     flex
     fluid-soundfont-gm
@@ -67,6 +68,7 @@ list="
     libxml2
     libxml2-dev
     lua5.3
+    ncal
     ninja-build
     nmap
     openssh-server
@@ -74,6 +76,7 @@ list="
     perl
     powertop
     protobuf-compiler
+    pulsemixer
     python
     python2.7
     python2.7-dev
@@ -81,7 +84,6 @@ list="
     python3-dev
     python3-pip
     python-pip-whl
-    qt5-default
     screenfetch
     silversearcher-ag
     subversion
