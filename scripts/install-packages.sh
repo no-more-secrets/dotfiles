@@ -67,7 +67,7 @@ list="
     libxft-dev
     libxml2
     libxml2-dev
-    linux-tools
+    linux-tools-generic
     lua5.3
     ncal
     ninja-build
