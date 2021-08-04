@@ -104,6 +104,10 @@ sudo apt update
 
 sudo apt install $list
 
+# This is kernel support (for the current kernel version) for the
+# linux-tools package (in particular, the `perf' tool).
+sudo apt install "linux-tools-$(uname -r)"
+
 export PATH=~/.local/bin:$PATH
 bash scripts/install-stack.sh
 
