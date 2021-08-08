@@ -85,6 +85,7 @@ list="
     python3-dev
     python3-pip
     python-pip-whl
+    re2c
     screenfetch
     silversearcher-ag
     subversion
