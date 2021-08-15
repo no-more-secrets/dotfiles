@@ -22,11 +22,26 @@ for pid in $pids; do
   kill $pid
 done
 
+battery_percentage() {
+  which upower &>/dev/null || return
+  local dev=$(upower -e 2>/dev/null | grep BAT)
+  [[ -z "$dev" ]] && {
+    echo '??'
+    return 0
+  }
+  local percentage=$(upower -i $dev 2>/dev/null | awk '/percentage/ { print $2 }' | tr -d '%')
+  echo "$percentage"
+  return 0
+}
+
 status_bar() {
   while true; do
-    bar="$(date +"%A, %b %d, %Y | %r")"
+    local date="$(date +"%A, %b %d, %Y")"
+    local time="$(date +"%H:%m %p")"
+    local battery="Bat: $(battery_percentage)%"
+    local bar="$date | $time | $battery"
     xsetroot -name "$bar"
-    sleep 1
+    sleep 10
   done
 }
 
