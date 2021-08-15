@@ -70,6 +70,11 @@ cd ~/.dotfiles
 echo "building haskell utils..."
 scripts/build-hs-utils.sh
 
+# This allows running /usr/bin/light as root without password, which
+# then allows using it to control screen brightness.
+echo "May need sudo password to give /usr/bin/light +s:"
+sudo chmod +s /usr/bin/light
+
 echo "building vim..."
 [[ ! -e ~/dev/tools/vim-current ]] && ~/dev/utilities/building/vim.sh
 
