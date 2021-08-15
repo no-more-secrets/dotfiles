@@ -51,6 +51,11 @@ cd ~/dev
 [[ ! -d utilities      ]] && git clone ssh://git@github.com/dpacbach/utilities
 [[ ! -d suckless       ]] && git clone ssh://git@github.com/dpacbach/suckless
 
+cd ~
+mkdir -p Pictures
+cd Pictures
+[[ ! -d wallpapers     ]] && git clone ssh://git@github.com/dpacbach/wallpapers
+
 cd ~/.dotfiles
 scripts/build-suckless.sh
 
@@ -65,6 +70,8 @@ git submodule update --init
 echo "Installing packages."
 cd ~/.dotfiles
 scripts/install-packages.sh
+
+feh --bg-max ~/Pictures/wallpapers/default
 
 cd ~/.dotfiles
 echo "building haskell utils..."

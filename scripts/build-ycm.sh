@@ -17,7 +17,7 @@ check_folder() {
 ycm_folder=~/.vim/bundle/youcompleteme
 check_folder "$ycm_folder"
 
-check_cmd "python"
+check_cmd "python3"
 check_cmd "cmake"
 
 cd "$ycm_folder"; check "change to $ycm_folder"

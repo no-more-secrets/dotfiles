@@ -68,6 +68,7 @@ list="
     libxml2
     libxml2-dev
     light
+    linux-tools-generic
     lua5.3
     ncal
     ninja-build
@@ -85,6 +86,7 @@ list="
     python3-dev
     python3-pip
     python-pip-whl
+    re2c
     screenfetch
     silversearcher-ag
     subversion
@@ -103,6 +105,10 @@ fi
 sudo apt update
 
 sudo apt install $list
+
+# This is kernel support (for the current kernel version) for the
+# linux-tools package (in particular, the `perf' tool).
+sudo apt install "linux-tools-$(uname -r)"
 
 export PATH=~/.local/bin:$PATH
 bash scripts/install-stack.sh
