@@ -426,6 +426,7 @@ let g:llvm_home = $HOME . '/dev/tools/llvm-current'
 
 function! ClangFormatAll()
   if InGoogleCloud()
+    let l:lines = '1:' . line( '$' )
     let g:clang_format_path = '/usr/lib/clang-format/clang-format.py'
     exec ':py3f ' . g:clang_format_path
     return
