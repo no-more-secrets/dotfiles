@@ -79,9 +79,6 @@ list="
     powertop
     protobuf-compiler
     pulsemixer
-    python
-    python2.7
-    python2.7-dev
     python3
     python3-dev
     python3-pip
