@@ -37,7 +37,7 @@ battery_percentage() {
 status_bar() {
   while true; do
     local date="$(date +"%A, %b %d, %Y")"
-    local time="$(date +"%H:%m %p")"
+    local time="$(date +"%H:%M %p")"
     local battery="Bat: $(battery_percentage)%"
     local bar="$date | $time | $battery"
     xsetroot -name "$bar"
