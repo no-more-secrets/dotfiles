@@ -13,6 +13,7 @@ list="
     ccache
     cloc
     cmake
+    compton
     curl
     dconf-cli
     dconf-editor

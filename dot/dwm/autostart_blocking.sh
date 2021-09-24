@@ -10,6 +10,9 @@ set -o pipefail
 bash ~/dev/utilities/kb/remap-caps.sh
 bash ~/dev/utilities/kb/set-repeat-rate.sh
 
+# This should avoid starting if it is already started.
+compton --daemon
+
 # This should not be blocking.
 [[ -f ~/.fehbg ]] && bash ~/.fehbg
 
