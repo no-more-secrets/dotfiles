@@ -32,6 +32,8 @@ set textwidth=65
 
 " formatoptions
 " -------------
+" Don't auto-wrap text.
+set formatoptions-=t
 " Auto-wrap comments using textwidth, inserting the current com-
 " ment leader automatically.
 set formatoptions+=c
