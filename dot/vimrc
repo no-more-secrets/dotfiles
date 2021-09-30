@@ -28,6 +28,28 @@ set tabstop=2
 set expandtab
 set nofixeol
 set noeol
+set textwidth=65
+
+" formatoptions
+" -------------
+" Auto-wrap comments using textwidth, inserting the current com-
+" ment leader automatically.
+set formatoptions+=c
+" Where it makes sense, remove a comment leader when joining
+" lines.
+set formatoptions+=j
+"	Don't break lines at single spaces that follow periods.
+set formatoptions+=p
+"	Don't break a line after a one-letter word (do it before).
+set formatoptions+=1
+" Long lines are broken in insert mode.
+set formatoptions-=l
+" Don't automatically insert the current comment leader after
+" hitting 'o' or 'O' in Normal mode.
+set formatoptions-=o
+" Automatically insert the current comment leader after hitting
+" <Enter> in Insert mode.
+set formatoptions+=r
 
 " Searching
 set hlsearch
