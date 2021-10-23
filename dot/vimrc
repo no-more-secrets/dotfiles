@@ -197,12 +197,12 @@ function! GetYcmStatus()
     if !s:Pyeval( "'ycm_state' in globals()" )
         return
     endif
-    "if !s:Pyeval( "ycm_state.ShouldDisplayDiagnostics()" )
-        " If we're here then this is likely not a file or  buffer
-        " type where YCM will be used, so just suppress the  indi-
-        " cator altogether.
-    "    return
-    "endif
+    if !s:Pyeval( "ycm_state.NativeFiletypeCompletionAvailable()" )
+       " If we're here then this is likely not a file or buffer
+       " type where YCM will be used, so just suppress the indi-
+       " cator altogether.
+       return
+    endif
     let g:ycm_status_begin = ' ['
     setl statusline+=%{g:ycm_status_begin}
     if !s:Pyeval( "ycm_state.CheckIfServerIsReady()" )
