@@ -347,9 +347,9 @@ if filereadable( '/proc/cpuinfo' )
   let &makeprg = 'make -j'.(system('grep -c "^processor" /proc/cpuinfo')+1)
 endif
 
-" FIXME: get number of cores from above.
-" Saves all changes in all buffers before making.
-nnoremap <F5> :!make run<CR>
+" The double CR is to skip the 'Press enter to continue...' that
+" normally prompts the user after running a command.
+nnoremap <F5> :!make run<CR><CR>
 nnoremap <F6> :!make all<CR>
 nnoremap <F7> :!bash -c "make all -j1 2>&1 \| head -n 50"<CR>
 nnoremap <F9> :!make test<CR>
