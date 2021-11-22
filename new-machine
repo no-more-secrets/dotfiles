@@ -67,6 +67,12 @@ git submodule update --init
 
 [[ ! -e ~/bin/cmc      ]] && ln -s ~/dev/utilities/cmake/configure ~/bin/cmc
 
+echo "Setting ccache size to 100G..."
+mkdir -p ~/.ccache
+if [[ ! -e ~/.ccache/ccache.conf ]]; then
+  echo 'max_size = 100.0G' > ~/.ccache/ccache.conf
+fi
+
 echo "Installing packages."
 cd ~/.dotfiles
 scripts/install-packages.sh
