@@ -64,8 +64,11 @@ set splitright
 set sidescroll=1
 set number              " turn line numbers on
 set relativenumber      " line number deltas
-set cursorline
-set cursorlineopt=number
+if !has( 'nvim' )
+  " neovim doesn't seem to support these yet.
+  set cursorline
+  set cursorlineopt=number
+end
 set showmatch           " highlight matching braces
 set backspace=indent,eol,start
 
