@@ -405,8 +405,12 @@ vnoremap <Leader>f :!sfmt 65<CR>
 " `back` because it is to the left of the 'O' key and the  `back`
 " button is always positioned to the left of the `forward` button
 " in a web browser.
-nnoremap <C-I> <C-O>
-nnoremap <C-O> <C-I>
+nnoremap <SPACE>9 <C-O>
+nnoremap <SPACE>0 <C-I>
+
+" These are now available.
+" nnoremap <C-I> ???
+" nnoremap <C-O> ???
 
 " Move windows easily.
 nnoremap <C-H> <C-W>h
