@@ -62,6 +62,7 @@ main() {
         config/lua
         config/nvim
         config/polybar
+        config/redshift.conf
         dwm
         fdignore
         fonts
