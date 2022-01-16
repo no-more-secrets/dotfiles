@@ -26,6 +26,7 @@ list="
     fluid-soundfont-gm
     fluidsynth
     git
+    haskell-stack
     htop
     libcurl4-openssl-dev
     libdw-dev
@@ -84,6 +85,10 @@ list="
     python3-dev
     python3-pip
     python-pip-whl
+    qt5-qmake
+    qtbase5-dev
+    qtbase5-dev-tools
+    qtchooser
     re2c
     screenfetch
     silversearcher-ag
@@ -106,10 +111,10 @@ sudo apt install $list
 
 # This is kernel support (for the current kernel version) for the
 # linux-tools package (in particular, the `perf' tool).
-sudo apt install "linux-tools-$(uname -r)"
+#sudo apt install "linux-tools-$(uname -r)"
 
-export PATH=~/.local/bin:$PATH
-bash scripts/install-stack.sh
+#export PATH=~/.local/bin:$PATH
+#bash scripts/install-stack.sh
 
 if ! which gcert &>/dev/null; then
   sudo apt install system76-power
