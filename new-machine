@@ -25,6 +25,9 @@ echo "$ip_address's ssh password twice."
 [[ ! -f ~/.ssh/id_rsa.pub ]] && scp dsicilia@$ip_address:/home/dsicilia/.ssh/id_rsa.pub ~/.ssh
 [[ ! -f ~/.ssh/config ]] && scp dsicilia@$ip_address:/home/dsicilia/.ssh/config ~/.ssh
 
+mkdir -p ~/.vnc
+[[ ! -f ~/.vnc/passwd ]] && scp dsicilia@$ip_address:/home/dsicilia/.vnc/passwd ~/.vnc/
+
 echo "Installing git; you may be asked for your account password."
 sudo apt install git
 
