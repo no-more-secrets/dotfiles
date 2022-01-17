@@ -95,6 +95,7 @@ list="
     screenfetch
     silversearcher-ag
     subversion
+    tigervnc-common
     tlp
     tmux
     tree
