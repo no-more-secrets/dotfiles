@@ -28,6 +28,7 @@ list="
     git
     haskell-stack
     htop
+    iw
     libcurl4-openssl-dev
     libdw-dev
     libevent-dev
