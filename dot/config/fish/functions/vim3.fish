@@ -16,5 +16,8 @@ function vim3
     set -l bn (basename $argv[1])
     set -l stem (echo $bn | rev | cut -f 2- -d '.' | rev)
 
-    vim src/$stem.hpp src/$stem.cpp test/$stem.cpp -O
+    set -l dn (dirname $argv[1])/
+    set -l inner (echo $dn | sed -r 's/^[^/]+\///')
+
+    vim src/$inner$stem.hpp src/$inner$stem.cpp test/$inner$stem.cpp -O
 end
