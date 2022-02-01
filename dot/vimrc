@@ -100,6 +100,35 @@ function! InGoogleCloud()
 endfunction
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+"                            Tabs
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+" This quit command handler will intercept :q commands and check
+" if a tab is being closed and, if there are more tabs open to
+" the left, it will move to the leftward tab. Otherwise, the de-
+" fault behavior would be for vim to move to the rightward tab,
+" which is not ideal since it does not restore the tab to the
+" previously open one when opening and closing a new tab.
+function! OnQuit()
+  if winnr("$") == 1 && tabpagenr("$") > 1 &&
+   \ tabpagenr() > 1 && tabpagenr() < tabpagenr("$")
+    q | tabprev
+  else
+    q
+  endif
+endfunction
+
+cnoremap q<CR> :call OnQuit()<CR>
+
+" Use Control-Shift-t to open the current buffer in a new tab.
+nnoremap T :tabnew %<CR>
+
+" Moving tabs.
+nnoremap <C-f> :tabp<CR>
+nnoremap <C-g> :tabn<CR>
+inoremap <C-f> <ESC>:tabp<CR>i
+inoremap <C-g> <ESC>:tabn<CR>i
+
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 "                           Folding
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 set foldmethod=syntax
@@ -337,8 +366,6 @@ nnoremap \ i <ESC>l
 nnoremap ( O<ESC>j
 nnoremap } $
 nnoremap { ^
-nnoremap <Leader>[ :tabm -1<CR>
-nnoremap <Leader>] :tabm +1<CR>
 " Two <CR>s to keep <CR> working with the quickfix list.
 nnoremap <CR> :noh<CR><CR>
 nnoremap <SPACE> r l
@@ -387,11 +414,6 @@ function! ZeeDot()
   let g:zee_dot_timer = reltime()
 endfunction
 nnoremap z. :call ZeeDot()<CR>
-
-nnoremap <C-f> :tabp<CR>
-nnoremap <C-g> :tabn<CR>
-inoremap <C-f> <ESC>:tabp<CR>i
-inoremap <C-g> <ESC>:tabn<CR>i
 
 " Shift-q will close all windows; this is useful when there are
 " multiple windows open and you want to exit vim without having
