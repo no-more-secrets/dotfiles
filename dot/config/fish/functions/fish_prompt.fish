@@ -32,7 +32,7 @@ function fish_prompt --description 'Write out the prompt'
       set last_status $status_cache
     end
 
-	if not set -q __fish_git_prompt_show_informative_status
+    if not set -q __fish_git_prompt_show_informative_status
         set -g __fish_git_prompt_show_informative_status 1
     end
     if not set -q __fish_git_prompt_hide_untrackedfiles

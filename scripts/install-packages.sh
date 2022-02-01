@@ -28,6 +28,7 @@ list="
     git
     haskell-stack
     htop
+    iw
     libcurl4-openssl-dev
     libdw-dev
     libevent-dev
@@ -84,6 +85,7 @@ list="
     python3
     python3-dev
     python3-pip
+    python-is-python3
     python-pip-whl
     qt5-qmake
     qtbase5-dev
@@ -93,6 +95,7 @@ list="
     screenfetch
     silversearcher-ag
     subversion
+    tigervnc-common
     tlp
     tmux
     tree
