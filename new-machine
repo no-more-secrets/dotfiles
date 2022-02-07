@@ -10,7 +10,8 @@ set -eEo pipefail
 # ---------------------------------------------------------------
 echo 'Updating system.'
 sudo apt update
-sudo apt upgrade
+sudo apt upgrade --yes
+sudo apt autoremove --yes
 
 # ---------------------------------------------------------------
 # Set locale.
