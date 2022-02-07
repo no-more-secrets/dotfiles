@@ -1,119 +1,204 @@
 #!/bin/bash
-# This script must have the property that it can be run multiple
-# times and still succeed.
-set -e
+# ---------------------------------------------------------------
+# New Machine Setup Script.
+# ---------------------------------------------------------------
+# This script must be idempotent!
+set -eEo pipefail
 
-mkdir -p ~/bin
+# ---------------------------------------------------------------
+# Update system.
+# ---------------------------------------------------------------
+echo 'Updating system.'
+sudo apt update
+sudo apt upgrade
 
+# ---------------------------------------------------------------
+# Set locale.
+# ---------------------------------------------------------------
 echo "Setting locale (requires password)..."
 sudo locale-gen en_US.UTF-8
 
+# ---------------------------------------------------------------
+# Create home folder structure.
+# ---------------------------------------------------------------
+mkdir -p ~/bin
+
+# ---------------------------------------------------------------
+# Acquire ssh keys and config.
+# ---------------------------------------------------------------
 mkdir -p ~/.ssh
 chmod 700 ~/.ssh
 
 hostname='leopard'
-ip_address=192.168.1.109
+server=192.168.1.109
 
-echo "Attempting to contact $ip_address (may be known as $hostname)"
+echo "Attempting to contact $server (may be known as $hostname)"
 echo "for SSH keys.  Pinging..."
-ping -c1 -q $ip_address
+ping -c1 -q $server
 
 echo "Host $hostname is responding; you will now be asked for"
-echo "$ip_address's ssh password twice."
+echo "$server's ssh password twice."
 
-[[ ! -f ~/.ssh/id_rsa     ]] && scp dsicilia@$ip_address:/home/dsicilia/.ssh/id_rsa ~/.ssh
-[[ ! -f ~/.ssh/id_rsa.pub ]] && scp dsicilia@$ip_address:/home/dsicilia/.ssh/id_rsa.pub ~/.ssh
-[[ ! -f ~/.ssh/config ]] && scp dsicilia@$ip_address:/home/dsicilia/.ssh/config ~/.ssh
+[[ ! -f ~/.ssh/id_rsa     ]] && scp dsicilia@$server:/home/dsicilia/.ssh/id_rsa ~/.ssh
+[[ ! -f ~/.ssh/id_rsa.pub ]] && scp dsicilia@$server:/home/dsicilia/.ssh/id_rsa.pub ~/.ssh
+[[ ! -f ~/.ssh/config ]] && scp dsicilia@$server:/home/dsicilia/.ssh/config ~/.ssh
 
-mkdir -p ~/.vnc
-[[ ! -f ~/.vnc/passwd ]] && scp dsicilia@$ip_address:/home/dsicilia/.vnc/passwd ~/.vnc/
+server=linode
 
+# ---------------------------------------------------------------
+# Install git.
+# ---------------------------------------------------------------
 echo "Installing git; you may be asked for your account password."
-sudo apt install git
+sudo apt install git --yes
+
+# ---------------------------------------------------------------
+# Clone dotfiles.
+# ---------------------------------------------------------------
+clone() {
+  local repo="$1"
+  local where="$2"
+  [[ -z "$where" ]] && where="$repo"
+  [[ -d "$where" ]] && return 0
+  git clone ssh://git@github.com/dpacbach/$repo $where --recursive
+}
 
 echo "Cloning dotfiles repo; should be passwordless."
-if [[ ! -d ~/.dotfiles ]]; then
-    git clone ssh://git@github.com/dpacbach/dotfiles ~/.dotfiles
-    cd ~/.dotfiles
-else
-    cd ~/.dotfiles
-    git pull origin master
-fi
+cd ~
+clone dotfiles .dotfiles
 
+cd ~/.dotfiles
+git pull origin master
 git submodule update --init
 
+# ---------------------------------------------------------------
+# Create dev folder and contents.
+# ---------------------------------------------------------------
 echo "Cloning repos in ~/dev; should be passwordless."
 mkdir -p ~/dev
 cd ~/dev
 
-[[ ! -d calcterm       ]] && git clone ssh://git@github.com/dpacbach/calcterm
-[[ ! -d cpp            ]] && git clone ssh://git@github.com/dpacbach/cpp
-[[ ! -d base/util      ]] && git clone ssh://git@github.com/dpacbach/base-util base/util
-[[ ! -d revolution-now ]] && git clone ssh://git@github.com/dpacbach/revolution-now-game revolution-now
-[[ ! -d haskell        ]] && git clone ssh://git@github.com/dpacbach/Haskell-Utils haskell
-[[ ! -d utilities      ]] && git clone ssh://git@github.com/dpacbach/utilities
-[[ ! -d suckless       ]] && git clone ssh://git@github.com/dpacbach/suckless
+clone calcterm
+clone cpp
+clone base-util base/util
+clone revolution-now-game revolution-now
+clone Haskell-Utils haskell
+clone utilities
+clone suckless
 
-cd ~
-mkdir -p Pictures
-cd Pictures
-[[ ! -d wallpapers     ]] && git clone ssh://git@github.com/dpacbach/wallpapers
+# ---------------------------------------------------------------
+# Source bashlib
+# ---------------------------------------------------------------
+source ~/dev/utilities/bashlib/util.sh
 
-cd ~/.dotfiles
-scripts/build-suckless.sh
+# ---------------------------------------------------------------
+# VNC
+# ---------------------------------------------------------------
+mkdir -p ~/.vnc
+[[ ! -f ~/.vnc/passwd ]] && scp dsicilia@$server:/home/dsicilia/.vnc/passwd ~/.vnc/
 
-cd ~/dev/revolution-now
-git submodule update --init
+# ---------------------------------------------------------------
+# Suckless utils.
+# ---------------------------------------------------------------
+cd ~/dev/suckless
+make
+./dwm/install.sh
 
-cd ~/dev/base/util
-git submodule update --init
+# ---------------------------------------------------------------
+# Setup cmc
+# ---------------------------------------------------------------
+[[ ! -e ~/bin/cmc ]] && ln -s ~/dev/utilities/cmake/configure ~/bin/cmc
 
-[[ ! -e ~/bin/cmc      ]] && ln -s ~/dev/utilities/cmake/configure ~/bin/cmc
-
-echo "Setting ccache size to 100G..."
+# ---------------------------------------------------------------
+# ccache
+# ---------------------------------------------------------------
+log "Setting ccache size to 100G..."
 mkdir -p ~/.ccache
 if [[ ! -e ~/.ccache/ccache.conf ]]; then
   echo 'max_size = 100.0G' > ~/.ccache/ccache.conf
 fi
 
-echo "Installing packages."
+# ---------------------------------------------------------------
+# ccache
+# ---------------------------------------------------------------
+log "Installing packages."
 cd ~/.dotfiles
 scripts/install-packages.sh
 
+# ---------------------------------------------------------------
+# Wallpapers
+# ---------------------------------------------------------------
+cd ~
+mkdir -p Pictures
+cd Pictures
+clone wallpapers
+
 feh --bg-max ~/Pictures/wallpapers/default
 
+# ---------------------------------------------------------------
+# Haskell
+# ---------------------------------------------------------------
 cd ~/.dotfiles
-echo "building haskell utils..."
+log "Building haskell utils..."
 scripts/build-hs-utils.sh
 
+# ---------------------------------------------------------------
+# Make `light` work
+# ---------------------------------------------------------------
 # This allows running /usr/bin/light as root without password, which
 # then allows using it to control screen brightness.
-echo "May need sudo password to give /usr/bin/light +s:"
+log "May need sudo password to give /usr/bin/light +s:"
 sudo chmod +s /usr/bin/light
 
-echo "building vim..."
-[[ ! -e ~/dev/tools/vim-current ]] && ~/dev/utilities/building/vim.sh
+# ---------------------------------------------------------------
+# Build vim
+# ---------------------------------------------------------------
+# We need to do this before running `make` in the dotfiles folder
+# since that will update the plugins, and we want the latest vim
+# version for that to work.
+log "Building vim..."
+~/dev/utilities/building/vim.sh
 
+# ---------------------------------------------------------------
+# Run dotfiles.
+# ---------------------------------------------------------------
 rm -f ~/.bashrc
 
-echo "Running setup scripts."
+log "Running setup scripts."
 cd ~/.dotfiles
-make #REBUILD_YCM=
+# No REBUILD_YCM= here, since we don't have clang yet.
+make
 
-echo "Creating recycle symlink."
+# ---------------------------------------------------------------
+# Setup "recycling".
+# ---------------------------------------------------------------
+log "Creating recycle symlink."
 [[ ! -L ~/bin/recycle ]] && ln -s ~/dev/utilities/misc/recycle ~/bin/recycle
 
-echo "Updating gruvbox colorscheme local changes..."
+# ---------------------------------------------------------------
+# Pull in gruvbox config from server.
+# ---------------------------------------------------------------
+log "Updating gruvbox colorscheme local changes..."
 gruvbox_vim="$HOME/.dotfiles/dot/vim/bundle/gruvbox/colors/gruvbox.vim"
-scp dsicilia@$ip_address:$gruvbox_vim $gruvbox_vim
+scp dsicilia@$server:$gruvbox_vim $gruvbox_vim
 
 echo
-echo 'Now do the following:
+log 'Finished setup, press enter to begin building tools...'
+read
 
-  * Edit terminal profile preferences to select Liberation Mono for Powerline.
-  * Make /usr/bin/fish default shell.
-  * Run tmux.
-  * Run `make` in dotfiles folder.
-  * Build utilities.
+# ---------------------------------------------------------------
+# Run build scripts.
+# ---------------------------------------------------------------
+~/dev/utilities/building/new-machine.sh
 
-'
+# ---------------------------------------------------------------
+# Rebuild YCM.
+# ---------------------------------------------------------------
+# Must do this after clang is built by the above script.
+log "Rebuilding YCM."
+cd ~/.dotfiles
+./scripts/build-ycm.sh
+
+# ---------------------------------------------------------------
+# Finished.
+# ---------------------------------------------------------------
+log 'Finished.'

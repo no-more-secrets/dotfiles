@@ -71,7 +71,6 @@ list="
     libxml2
     libxml2-dev
     light
-    linux-tools-generic
     lua5.3
     ncal
     ninja-build
@@ -110,17 +109,10 @@ if ! which gcert &>/dev/null; then
 fi
 sudo apt update
 
-sudo apt install $list
-
-# This is kernel support (for the current kernel version) for the
-# linux-tools package (in particular, the `perf' tool).
-#sudo apt install "linux-tools-$(uname -r)"
-
-#export PATH=~/.local/bin:$PATH
-#bash scripts/install-stack.sh
+sudo apt install $list --yes
 
 if ! which gcert &>/dev/null; then
-  sudo apt install system76-power
+  sudo apt install system76-power --yes
 fi
 
 rm -f ~/bin/bat
