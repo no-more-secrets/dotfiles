@@ -73,6 +73,7 @@ list="
     light
     lua5.3
     ncal
+    ncdu
     ninja-build
     nmap
     openssh-server
