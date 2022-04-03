@@ -45,14 +45,10 @@ list="
     libsdl2-$sdl_version
     libsdl2-dev
     libsdl2-doc
-    libsdl2-image-$sdl_version
-    libsdl2-image-dev
     libsdl2-mixer-$sdl_version
     libsdl2-mixer-dev
     libsdl2-net-$sdl_version
     libsdl2-net-dev
-    libsdl2-ttf-$sdl_version
-    libsdl2-ttf-dev
     libsqlite3-0
     libsqlite3-dev
     libssl-dev
@@ -73,6 +69,7 @@ list="
     light
     lua5.3
     ncal
+    ncdu
     ninja-build
     nmap
     openssh-server
