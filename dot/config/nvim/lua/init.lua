@@ -1,1 +1,2 @@
-print( 'hello from init.lua' )
+-- print( 'hello from init.lua' )
+require 'dsicilia'
