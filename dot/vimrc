@@ -482,8 +482,10 @@ function! LuaFormatAll()
   let pos_info = getpos( '.' )
   let line = pos_info[1]
   let col = pos_info[2]
-  exec ':%!' . g:lua_format_path
-  call setpos( '.', [0, line, col, 0] )
+  " undojoin will prevent the undo list from getting messed up,
+  " although I'm not exactly sure how it works.
+  :undojoin | exec ':%!' . g:lua_format_path
+  :call setpos( '.', pos_info )
 endfunction
 
 function! SmartFormatAll()
