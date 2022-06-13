@@ -931,6 +931,18 @@ autocmd BufReadPost *
 au BufEnter * highlight EndOfBuffer guifg=bg
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+"                            cmdheight
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+if has('nvim')
+  set cmdheight=0
+endif
+
+" Detect if we are in diff mode, e.g. `vimdiff`
+if &diff
+  set cmdheight=2
+endif
+
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 "                              Misc
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 " This  was inserted to allow using the mouse to resize vim panes
@@ -955,15 +967,6 @@ set shortmess=I " Read :help shortmess for everything else.
 
 " Limit the number of VCS's that vim-signify searches for.
 let g:signify_vcs_list = ['git', 'perforce']
-
-" Detect if we are in diff mode, e.g. `vimdiff`
-if &diff
-    " setup for diff mode
-    set cmdheight=2
-else
-    " setup for non-diff mode
-    set cmdheight=1
-endif
 
 function! ReproportionWindowSplits()
   let l:current_tabpage = tabpagenr()
