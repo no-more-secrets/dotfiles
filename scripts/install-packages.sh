@@ -30,7 +30,6 @@ list="
     htop
     iw
     libcurl4-openssl-dev
-    libc++abi1
     libdw-dev
     libevent-dev
     libfontconfig1-dev
