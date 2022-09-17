@@ -639,9 +639,7 @@ let g:ycm_add_preview_to_completeopt = 0
 " This will cause the error signs to appear over the line numbers
 " instead of putting them in the 'gutter' and taking up an extra
 " line of horizontal space.
-if !has('nvim')
-  set signcolumn=number
-endif
+set signcolumn=number
 
 " Whitelist of .ycm_extra_conf.py  files  which  will  be  loaded
 " without asking the user  permission  each  time. Items starting
