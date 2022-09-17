@@ -68,7 +68,6 @@ list="
     libxml2-dev
     light
     lua5.3
-    lua-bit32
     lua-posix
     ncal
     ncdu
