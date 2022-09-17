@@ -585,7 +585,7 @@ nnoremap <C-T> :Files<CR>
 " <Leader>tt is reserved for global files.
 nmap <Leader>ts :GFiles?<CR>
 nmap <Leader>tl :Lines<CR>
-nmap <Leader>tb :BLines<CR>
+nmap <Leader>/  :BLines<CR>
 nmap <Leader>ta :Ag<CR>
 nmap <Leader>tw :call AgWord()<CR>
 vmap <Leader>tw :call AgWordVisual()<CR>
