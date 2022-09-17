@@ -934,7 +934,9 @@ au BufEnter * highlight EndOfBuffer guifg=bg
 "                            cmdheight
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 if has('nvim')
-  set cmdheight=0
+  " TODO: I believe is is currently (?) in neovim's master branch
+  " but may not have been released yet.
+  " set cmdheight=0
 endif
 
 " Detect if we are in diff mode, e.g. `vimdiff`
