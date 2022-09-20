@@ -1,82 +1,6 @@
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 "                            Options
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-set enc=utf-8
-set fenc=utf-8
-set termencoding=utf-8
-set nocompatible
-set t_Co=256
-set mouse=a
-
-" This is needed for the st terminal to display correct colors
-" when not in tmux. No idea why these work... need to figure that
-" out at some point.
-set t_8f=[38;2;%lu;%lu;%lum " set foreground color
-set t_8b=[48;2;%lu;%lu;%lum " set background color
-" Set 24-bit 'True Color' if supported.
-if exists( '+termguicolors' )
-  set termguicolors
-endif
-
-" Spacing and spaces
-set nowrap
-set sw=2
-set autoindent
-set smartindent
-set shiftwidth=2
-set tabstop=2
-set expandtab
-set nofixeol
-set noeol
-set textwidth=65
-
-" formatoptions
-" -------------
-" Don't auto-wrap text.
-set formatoptions-=t
-" Auto-wrap comments using textwidth, inserting the current com-
-" ment leader automatically.
-set formatoptions+=c
-" Where it makes sense, remove a comment leader when joining
-" lines.
-set formatoptions+=j
-"	Don't break lines at single spaces that follow periods.
-set formatoptions+=p
-"	Don't break a line after a one-letter word (do it before).
-set formatoptions+=1
-" Long lines are broken in insert mode.
-set formatoptions-=l
-" Don't automatically insert the current comment leader after
-" hitting 'o' or 'O' in Normal mode.
-set formatoptions-=o
-" Automatically insert the current comment leader after hitting
-" <Enter> in Insert mode.
-set formatoptions+=r
-
-" Searching
-set hlsearch
-set incsearch
-set ignorecase          " Ignore case when searching (\c)
-set smartcase           " Ignore case unless there is a cap
-
-set splitbelow
-set splitright
-set sidescroll=1
-set number              " turn line numbers on
-set relativenumber      " line number deltas
-set cursorline
-set cursorlineopt=number
-set showmatch           " highlight matching braces
-set backspace=indent,eol,start
-
-" This sets the window pane divider char to empty, instead of the
-" default |
-set fillchars+=vert:\   " Must be a space after \
-
-" Don't show a preview window when autocompleting.
-set completeopt-=preview
-
-syntax on
 " If syntax file supports it (with Spell/NoSpell directives) then
 " this will cause spelling to be checked in code comments (in  ad-
 " dition to normal text files).
@@ -95,21 +19,6 @@ set timeoutlen=1000 ttimeoutlen=0
 function! InGoogleCloud()
   return getcwd() =~ 'cloud.*google3'
 endfunction
-
-" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-"                            Tabs
-" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-" Use Shift-t to open the current buffer in a new tab.
-nnoremap T :tabnew %<CR>
-
-" Use Shift-e to open the current buffer in a new tab.
-nnoremap E :tabclose<CR>:tabp<CR>
-
-" Moving tabs.
-nnoremap <C-f> :tabp<CR>
-nnoremap <C-g> :tabn<CR>
-inoremap <C-f> <ESC>:tabp<CR>i
-inoremap <C-g> <ESC>:tabn<CR>i
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 "                           Folding
@@ -170,13 +79,6 @@ function! s:Pyeval( eval_string )
     endif
     return pyeval( a:eval_string )
 endfunction
-
-" This allows us to run an external command which, when finished,
-" causes control to pass back to vim with the screen redrawn and
-" with vim now waiting for the user to press enter.
-command! -nargs=1 Silent
-      \   execute 'silent !' . <q-args>
-      \ | execute 'redraw!'
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 "                           Status Bar
@@ -328,45 +230,16 @@ let g:mundo_preview_bottom = 1
 " hitting enter on a node).
 let g:mundo_close_on_revert = 1
 
-" This toggles the Mundo (plugin) undo tree  window.  The  reason
-" for the two <CR>'s is because this command  normally  seems  to
-" cause  a 'Press ENTER...' prompt to appear the first time it is
-" started in a vim session which is  somewhat  annoying,  and  so
+" This toggles the Mundo (plugin) undo tree window. The reason
+" for the two <CR>'s is because this command normally seems to
+" cause a 'Press ENTER...' prompt to appear the first time it is
+" started in a vim session which is somewhat annoying, and so
 " this seems to be be a workaround that fixes that.
 nnoremap U :MundoToggle<CR><CR>
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-"                          The Leader
-" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-" An  arbitrary key that we use as a namespace for additional key-
-" bindings to avoid conflicts with the standard n/v modes.
-let mapleader = ','
-
-" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 "                         Key Mappings
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-nnoremap \ i <ESC>l
-nnoremap ( O<ESC>j
-nnoremap } $
-nnoremap { ^
-" Two <CR>s to keep <CR> working with the quickfix list.
-nnoremap <CR> :noh<CR><CR>
-nnoremap <SPACE> r l
-
-nnoremap Y y$
-
-" FIXME: use this below.
-if filereadable( '/proc/cpuinfo' )
-  let &makeprg = 'make -j'.(system('grep -c "^processor" /proc/cpuinfo')+1)
-endif
-
-" The double CR is to skip the 'Press enter to continue...' that
-" normally prompts the user after running a command.
-nnoremap <F5> :!make run<CR><CR>
-nnoremap <F6> :!make all<CR>
-nnoremap <F7> :!bash -c "make all -j1 2>&1 \| head -n 50"<CR>
-nnoremap <F9> :!make test<CR>
-
 " Comment out the word that the cursor is on using /* ... */.
 " This does not work for words that are one character in length.
 nnoremap <Leader>cw lbi/*<ESC>lea*/<ESC>bb
@@ -397,41 +270,6 @@ function! ZeeDot()
   let g:zee_dot_timer = reltime()
 endfunction
 nnoremap z. :call ZeeDot()<CR>
-
-" Shift-q will close all windows; this is useful when there are
-" multiple windows open and you want to exit vim without having
-" to type :q<CR> for each one of them.
-nnoremap Q :qa<CR>
-
-" Tab will auto-complete from words in file
-"inoremap <Tab> <C-n>
-
-vnoremap <Leader>f :!sfmt 65<CR>
-
-" These are `back` and `forward`  actions, analogous to web brows-
-" ing.  However  we  swap  them  because <C-I> "should" represent
-" `back` because it is to the left of the 'O' key and the  `back`
-" button is always positioned to the left of the `forward` button
-" in a web browser.
-nnoremap <SPACE>9 <C-O>
-nnoremap <SPACE>0 <C-I>
-
-" These are now available.
-" nnoremap <C-I> ???
-" nnoremap <C-O> ???
-
-" Move windows easily.
-nnoremap <C-H> <C-W>h
-nnoremap <C-L> <C-W>l
-inoremap <C-H> <ESC><C-W>h
-inoremap <C-L> <ESC><C-W>l
-nnoremap <C-J> <C-W>j
-nnoremap <C-K> <C-W>k
-inoremap <C-J> <ESC><C-W>j
-inoremap <C-K> <ESC><C-W>k
-
-"nnoremap <C-J> 10j
-"nnoremap <C-K> 10k
 
 nnoremap <Leader>Y :set syntax=yaml<CR>
 
@@ -633,11 +471,6 @@ let g:ycm_warning_symbol = 'WN'  " default is '>>'
 "let g:ycm_autoclose_preview_window_after_insertion = 1
 let g:ycm_add_preview_to_completeopt = 0
 
-" This will cause the error signs to appear over the line numbers
-" instead of putting them in the 'gutter' and taking up an extra
-" line of horizontal space.
-set signcolumn=number
-
 " Whitelist of .ycm_extra_conf.py  files  which  will  be  loaded
 " without asking the user  permission  each  time. Items starting
 " with a '!' character  will  be  blacklisted; items not starting
@@ -761,29 +594,6 @@ endfunction
 
 map <RightMouse> :call CreateLspPopupFromClick()<CR>
 map <C-b>        :call CreateLspPopupAtCursor()<CR>
-
-" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-"                           Clipboard
-" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-" If  vim has clipboard support then just use that by default for
-" yanking.
-if has( 'clipboard' )
-    set clipboard=unnamed
-end
-
-" When we either don't have clipboard support or vim can't access
-" the system clipboard then we will use these  bindings  to  simu-
-" late  it using a temporary file. Note we don't support deleting
-" here,  and  also  these only support entire lines as opposed to
-" selections within a line.
-
-" Standard paste below cursor
-nnoremap <Leader>p  :r     ~/.vimbuf<CR>
-" Standard paste above cursor
-nnoremap <Leader>P  :.-1r  ~/.vimbuf<CR>
-" Yank into tmp file (will yank entire line always).
-vnoremap <Leader>y  :w!    ~/.vimbuf<CR>
-nmap     <Leader>yy  V<Leader>y
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 "                             netrw
@@ -926,20 +736,6 @@ autocmd BufReadPost *
 au BufEnter * highlight EndOfBuffer guifg=bg
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-"                            cmdheight
-" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-if has('nvim')
-  " TODO: I believe is is currently (?) in neovim's master branch
-  " but may not have been released yet.
-  " set cmdheight=0
-endif
-
-" Detect if we are in diff mode, e.g. `vimdiff`
-if &diff
-  set cmdheight=2
-endif
-
-" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 "                              Misc
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 " This  was inserted to allow using the mouse to resize vim panes
@@ -952,15 +748,6 @@ endif
 "    " tmux knows the extended mouse mode
 "    set ttymouse=xterm2
 "endif
-
-" This disables the intro  message  that  appears when vim starts.
-set shortmess=I " Read :help shortmess for everything else.
-
-" This flag to the vim-hardtime plugin enables it for all buffers.
-" When enabled, the hjkl/arrow keys are limited to one per second
-" in order to encourage learning and using vim's more advanced
-" motions.
-"let g:hardtime_default_on = 1
 
 " Limit the number of VCS's that vim-signify searches for.
 let g:signify_vcs_list = ['git', 'perforce']
