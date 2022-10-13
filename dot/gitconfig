@@ -41,5 +41,7 @@
     prompt = false
 [pull]
 	rebase = false
+[merge]
+  autostash = true
 [checkout]
   defaultRemote = origin
