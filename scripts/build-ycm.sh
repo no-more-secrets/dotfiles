@@ -55,13 +55,14 @@ if [[ -e "$llvm_root" ]]; then
     msg "Found Clang version: $full_version"
 
     if [[ $(uname) =~ Linux ]]; then
-        # For some reason the YCM build does not always create
-        # the libclang.so.* symlink properly when we specify a
-        # custom llvm root, so we will do it here manually.
+        # For some reason the YCM build sets the rpath of the
+        # ycm_core.* binary to a nested folder, and so it will
+        # only locate libclang.so.* (to which it is linked) if it
+        # can find it there, so we will create a symlink.
         major=$($llvm_root/bin/clang --version | sed -n 's/clang version \([0-9]\+\)\..*/\1/p')
         [[ ! -z "$major" ]]; check "extract llvm major version."
         [[ -d "$ycmd" ]]; check "find ycmd folder."
-        symlink="$ycmd/libclang.so.$major"
+        symlink="$ycmd/third_party/clang/lib/libclang.so.$major"
         rm -f $symlink; check "remove libclang.so.$major symlink"
         ln -s "$llvm_root/lib/libclang.so.$major" "$symlink"
         check "create $symlink symlink"
