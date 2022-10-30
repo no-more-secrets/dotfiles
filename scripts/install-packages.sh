@@ -26,6 +26,7 @@ list="
     fluid-soundfont-gm
     fluidsynth
     git
+    gpick
     haskell-stack
     htop
     iw
