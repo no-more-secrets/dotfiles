@@ -157,7 +157,7 @@ sudo chmod +s /usr/bin/light
 # since that will update the plugins, and we want the latest vim
 # version for that to work.
 log "Building vim..."
-~/dev/utilities/building/vim.sh
+~/dev/utilities/building/nvim.sh
 
 # ---------------------------------------------------------------
 # Run dotfiles.
