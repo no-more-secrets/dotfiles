@@ -3,6 +3,6 @@ function rm
     if test -x ~/dev/utilities/misc/recycle
         ~/dev/utilities/misc/recycle $argv
     else
-        command rm $argv
+        command rm -i $argv
     end
 end
