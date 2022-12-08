@@ -53,18 +53,19 @@ if [[ -e "$llvm_root" ]]; then
     full_version=$($llvm_root/bin/clang --version | sed -n 's/clang version \([0-9\.]*\).*/\1/p')
     [[ ! -z "$full_version" ]]; check "extract clang full version"
     msg "Found Clang version: $full_version"
+    major=$($llvm_root/bin/clang --version | sed -n 's/clang version \([0-9]\+\)\..*/\1/p')
+    msg "Found Clang major version: $major"
+    [[ ! -z "$major" ]]; check "extract llvm major version."
 
     if [[ $(uname) =~ Linux ]]; then
         # For some reason the YCM build sets the rpath of the
         # ycm_core.* binary to a nested folder, and so it will
         # only locate libclang.so.* (to which it is linked) if it
         # can find it there, so we will create a symlink.
-        major=$($llvm_root/bin/clang --version | sed -n 's/clang version \([0-9]\+\)\..*/\1/p')
-        [[ ! -z "$major" ]]; check "extract llvm major version."
         [[ -d "$ycmd" ]]; check "find ycmd folder."
-        symlink="$ycmd/third_party/clang/lib/libclang.so.$major"
+        symlink="$ycmd/third_party/clang/lib/libclang.so.${major}git"
         rm -f $symlink; check "remove libclang.so.$major symlink"
-        ln -s "$llvm_root/lib/libclang.so.$major" "$symlink"
+        ln -s "$llvm_root/lib/libclang.so.${major}git" "$symlink"
         check "create $symlink symlink"
     fi
 
@@ -76,7 +77,7 @@ if [[ -e "$llvm_root" ]]; then
         rm -rf "$clang_includes"
     [[ -L "$clang_includes" ]] && \
         mv "$clang_includes" "$clang_includes.bak"
-    includes_location="$llvm_root/lib/clang/$full_version"
+    includes_location="$llvm_root/lib/clang/$major"
     ln -s "$includes_location" "$clang_includes"
     check "create clang_includes symlink"
     # We need to create another link to the same place but from
