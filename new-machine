@@ -31,7 +31,7 @@ mkdir -p ~/.ssh
 chmod 700 ~/.ssh
 
 hostname='leopard'
-server=192.168.1.109
+server=192.168.1.111
 
 echo "Attempting to contact $server (may be known as $hostname)"
 echo "for SSH keys.  Pinging..."
@@ -98,13 +98,6 @@ mkdir -p ~/.vnc
 [[ ! -f ~/.vnc/passwd ]] && scp dsicilia@$server:/home/dsicilia/.vnc/passwd ~/.vnc/
 
 # ---------------------------------------------------------------
-# Suckless utils.
-# ---------------------------------------------------------------
-cd ~/dev/suckless
-make
-./dwm/install.sh
-
-# ---------------------------------------------------------------
 # Setup cmc
 # ---------------------------------------------------------------
 [[ ! -e ~/bin/cmc ]] && ln -s ~/dev/utilities/cmake/configure ~/bin/cmc
@@ -119,11 +112,18 @@ if [[ ! -e ~/.ccache/ccache.conf ]]; then
 fi
 
 # ---------------------------------------------------------------
-# ccache
+# Install Packages.
 # ---------------------------------------------------------------
 log "Installing packages."
 cd ~/.dotfiles
 scripts/install-packages.sh
+
+# ---------------------------------------------------------------
+# Suckless utils.
+# ---------------------------------------------------------------
+cd ~/dev/suckless
+make
+./dwm/install.sh
 
 # ---------------------------------------------------------------
 # Wallpapers
@@ -157,7 +157,7 @@ sudo chmod +s /usr/bin/light
 # since that will update the plugins, and we want the latest vim
 # version for that to work.
 log "Building vim..."
-~/dev/utilities/building/vim.sh
+~/dev/utilities/building/nvim.sh
 
 # ---------------------------------------------------------------
 # Run dotfiles.
