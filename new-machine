@@ -55,13 +55,17 @@ sudo apt install git --yes
 # ---------------------------------------------------------------
 # Clone dotfiles.
 # ---------------------------------------------------------------
-clone() {
-  local repo="$1"
-  local where="$2"
+clone_impl() {
+  local org="$1"
+  local repo="$2"
+  local where="$3"
   [[ -z "$where" ]] && where="$repo"
   [[ -d "$where" ]] && return 0
-  git clone ssh://git@github.com/dpacbach/$repo $where --recursive
+  git clone ssh://git@github.com/$org/$repo $where --recursive
 }
+
+clone()    { clone_impl dpacbach       "$@"; }
+clone_rn() { clone_impl revolution-now "$@"; }
 
 echo "Cloning dotfiles repo; should be passwordless."
 cd ~
@@ -78,13 +82,15 @@ echo "Cloning repos in ~/dev; should be passwordless."
 mkdir -p ~/dev
 cd ~/dev
 
-clone calcterm
-clone cpp
-clone base-util base/util
-clone revolution-now-game revolution-now
-clone Haskell-Utils haskell
-clone utilities
-clone suckless
+clone    calcterm
+clone    cpp
+clone    base-util base/util
+clone_rn revolution-now revolution-now
+clone_rn revolution-now rn-art
+clone_rn revolution-now rn-music
+clone    Haskell-Utils haskell
+clone    utilities
+clone    suckless
 
 # ---------------------------------------------------------------
 # Source bashlib
