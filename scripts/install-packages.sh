@@ -84,7 +84,6 @@ list="
     python3-dev
     python3-pip
     python-is-python3
-    python-pip-whl
     qt5-qmake
     qtbase5-dev
     qtbase5-dev-tools

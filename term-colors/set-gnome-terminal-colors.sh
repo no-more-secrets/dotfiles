@@ -29,7 +29,7 @@ echo "$settings"
 foreground="'$(./to-hex.sh $(<foreground.txt))'"
 background="'$(./to-hex.sh $(<background.txt))'"
 
-dconf write ${full_profile}background-color "$background"
-dconf write ${full_profile}foreground-color "$foreground"
+dconf write "${full_profile}background-color" "$background"
+dconf write "${full_profile}foreground-color" "$foreground"
 
 echo Success.
