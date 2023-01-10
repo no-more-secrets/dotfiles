@@ -18,6 +18,7 @@ list="
     dconf-cli
     dconf-editor
     entr
+    exa
     exuberant-ctags
     fd-find
     feh
