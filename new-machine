@@ -132,6 +132,12 @@ make
 ./dwm/install.sh
 
 # ---------------------------------------------------------------
+# Keyboard shortcuts.
+# ---------------------------------------------------------------
+log 'Setting gnome workspace switching keybindings...'
+~/dev/utilities/keyboard/set-gnome-workspace-shortcuts.sh
+
+# ---------------------------------------------------------------
 # Wallpapers
 # ---------------------------------------------------------------
 cd ~

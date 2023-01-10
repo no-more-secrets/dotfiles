@@ -93,6 +93,7 @@ list="
     silversearcher-ag
     subversion
     tigervnc-common
+    tigervnc-viewer
     tlp
     tmux
     tree
