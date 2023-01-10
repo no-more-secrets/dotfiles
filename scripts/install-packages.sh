@@ -38,7 +38,7 @@ list="
     libfreetype6-dev
     libgl1-mesa-dev
     libharfbuzz-dev
-    liblua5.3-dev
+    liblua5.4-dev
     libncurses5
     libncurses5-dev
     libncursesw5
@@ -68,7 +68,7 @@ list="
     libxml2
     libxml2-dev
     light
-    lua5.3
+    lua5.4
     lua-posix
     ncal
     ncdu
