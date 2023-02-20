@@ -6,14 +6,6 @@
 set -eEo pipefail
 
 # ---------------------------------------------------------------
-# Update system.
-# ---------------------------------------------------------------
-echo 'Updating system.'
-sudo apt update
-sudo apt upgrade --yes
-sudo apt autoremove --yes
-
-# ---------------------------------------------------------------
 # Set locale.
 # ---------------------------------------------------------------
 echo "Setting locale (requires password)..."
@@ -130,6 +122,12 @@ scripts/install-packages.sh
 cd ~/dev/suckless
 make
 ./dwm/install.sh
+
+# ---------------------------------------------------------------
+# Keyboard shortcuts.
+# ---------------------------------------------------------------
+log 'Setting gnome workspace switching keybindings...'
+~/dev/utilities/keyboard/set-gnome-workspace-shortcuts.sh
 
 # ---------------------------------------------------------------
 # Wallpapers
