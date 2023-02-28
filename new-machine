@@ -128,6 +128,8 @@ make
 # ---------------------------------------------------------------
 log 'Setting gnome workspace switching keybindings...'
 ~/dev/utilities/keyboard/set-gnome-workspace-shortcuts.sh
+log 'Disabling workspace switch animations...'
+~/dev/utilities/keyboard/disable-workspace-switch-animation.sh
 
 # ---------------------------------------------------------------
 # Wallpapers
