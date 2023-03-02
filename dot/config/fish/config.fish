@@ -18,7 +18,7 @@ set PATH ~/bin ~/.local/bin $PATH
 
 set -g fish_prompt_pwd_dir_length 2
 
-set -gx EDITOR $HOME/dev/tools/vim-current/bin/vim
+set -gx EDITOR $HOME/dev/tools/nvim-current/bin/nvim
 
 export COLUMNS
 
