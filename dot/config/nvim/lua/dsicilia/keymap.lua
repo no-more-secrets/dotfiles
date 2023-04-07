@@ -5,6 +5,7 @@
 -- Imports
 -- ==============================================================
 local mappers = require( 'dsicilia.mappers' )
+local tabs = require( 'dsicilia.tabs' )
 
 -- Aliases
 -- ==============================================================
@@ -45,22 +46,7 @@ nmap['<SPACE>0'] = '<C-I>'
 -- Use Shift-t to open the current buffer in a new tab.
 nmap['T'] = ':tabnew %<CR>'
 
--- Use Shift-e to close the current tab. By default, if we are
--- closing a tab that is not the first or last, then vim will se-
--- lect the tab to the right after closing, which feels like the
--- wrong default, so we will select the one on the left.
-local function close_current_tab()
-  local num_tabs = vim.call( 'tabpagenr', '$' )
-  if num_tabs <= 1 then return end
-  -- Starts at 1. Need to measure this before closing the tab.
-  local old_tab = vim.call( 'tabpagenr' )
-  vim.cmd[[tabclose]]
-  if old_tab ~= 1 and old_tab ~= num_tabs then
-    vim.cmd[[tabp]]
-  end
-end
-
-nmap['E'] = close_current_tab
+nmap['E'] = tabs.close_current_tab
 
 -- Moving tabs.
 nmap['<C-f>'] = ':tabp<CR>'
