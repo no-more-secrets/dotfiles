@@ -14,5 +14,5 @@ local cwd = vim.fn.getcwd()
 local rn_start, rn_end = cwd:find( '.*revolution%-now' )
 if rn_start then
   local rn = cwd:sub( rn_start, rn_end )
-  vim.cmd( format( 'source %s/.vimrc', rn ) )
+  vim.cmd( format( 'source %s/.nvimrc', rn ) )
 end
