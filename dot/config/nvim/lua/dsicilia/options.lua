@@ -5,11 +5,6 @@
 -- ==============================================================
 local function has( what ) return vim.call( 'has', what ) end
 
-local function InGoogleCloud()
-  local cwd = vim.call( 'getcwd' )
-  return string.match( cwd, 'cloud.*google3' ) ~= nil
-end
-
 -- Encoding
 -- ==============================================================
 vim.o.enc = 'utf-8'
@@ -117,3 +112,9 @@ vim.o.mouse = 'a'
 -- If vim has clipboard support then just use that by default for
 -- yanking.
 if has( 'clipboard' ) then vim.o.clipboard = 'unnamed' end
+
+-- Security
+-- ==============================================================
+-- Do not allow unsafe commands (such as shell commands) in
+-- project-specific vimrc files.
+vim.o.secure = true

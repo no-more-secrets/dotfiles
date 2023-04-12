@@ -16,10 +16,6 @@ set updatetime=250
 " as arrow keys).
 set timeoutlen=1000 ttimeoutlen=0
 
-function! InGoogleCloud()
-  return getcwd() =~ 'cloud.*google3'
-endfunction
-
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 "                           Folding
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -30,9 +26,6 @@ set foldlevel=1000
 nnoremap K za
 
 let s:fold_line_length = 65
-if InGoogleCloud()
-  let s:fold_line_length = 80
-endif
 
 " Inspired by a more complicated version here:
 "   https://vim.fandom.com/wiki/Customize_text_for_closed_folds
@@ -299,12 +292,6 @@ let g:tools = $HOME . '/dev/tools'
 let g:llvm_home = $HOME . '/dev/tools/llvm-current'
 
 function! ClangFormatAll()
-  if InGoogleCloud()
-    let l:lines = '1:' . line( '$' )
-    let g:clang_format_path = '/usr/lib/clang-format/clang-format.py'
-    exec ':py3f ' . g:clang_format_path
-    return
-  endif
   let l:lines = '1:' . line( '$' )
   let g:clang_format_path = g:llvm_home . '/bin/clang-format'
   exec ':py3f ' . g:llvm_home . '/share/clang/clang-format.py'
@@ -651,15 +638,7 @@ call vundle#begin()
     Plugin 'tikhomirov/vim-glsl'       " Syntax file for OpenGL shaders.
     Plugin 'tbastos/vim-lua'           " Improved lua syntax highlighting.
     Plugin 'bfrg/vim-cpp-modern'       " Modern C++ syntax highlighting.
-if ! InGoogleCloud()
     Plugin 'valloric/youcompleteme'
-endif
-if InGoogleCloud()
-    Plugin 'prabirshrestha/async.vim'
-    Plugin 'prabirshrestha/vim-lsp'
-    Plugin 'prabirshrestha/asyncomplete.vim'
-    Plugin 'prabirshrestha/asyncomplete-lsp.vim'
-endif
 call vundle#end()            " required
 
 filetype plugin indent on    " required
@@ -763,24 +742,3 @@ endfunction
 " Re-proportion window splits on all tabs when terminal is re-
 " sized.
 au VimResized * :call ReproportionWindowSplits()
-
-" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-"                             Local
-" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-if filereadable(glob("~/.vimrclocal"))
-  if InGoogleCloud()
-    source ~/.vimrclocal
-  endif
-endif
-
-" Somehow we need this  after  the  .vimrclocal otherwise it gets
-" disabled, and then only for some fish files... strange.
-au BufNewFile,BufRead *.fish set syntax=fish
-
-" Project-specific vimrc files. This setting causes vim to load
-" the .vimrc file in the current directory in addition to this
-" one.
-set exrc
-" Do not allow unsafe commands (such as shell commands) in
-" project-specific vimrc files.
-set secure
