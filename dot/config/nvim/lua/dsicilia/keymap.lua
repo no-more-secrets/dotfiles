@@ -69,6 +69,20 @@ nmap['<SPACE>'] = 'r l'
 -- Two <CR>s to keep <CR> working with the quickfix list.
 nmap['<CR>'] = ':noh<CR><CR>'
 
+-- Type & to highlight all instances of word under cursor.
+nmap['&'] = function()
+  -- Basically does this:
+  --   :let @/ = '\V\<some_keyword\>'
+  --   :set hls
+  -- Use :h \V for info on what \V means.
+  local prefix = [[let @/ = '\V\<]]
+  local search = vim.fn.expand( '<cword>' )
+  local suffix = [[\>']]
+  local highlight_cmd = prefix .. search .. suffix
+  vim.cmd( highlight_cmd )
+  vim.cmd( 'set hls' )
+end
+
 -- Copy/Paste
 -- ==============================================================
 nmap['Y'] = 'y$'

@@ -1,14 +1,6 @@
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 "                            Options
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-" If syntax file supports it (with Spell/NoSpell directives) then
-" this will cause spelling to be checked in code comments (in  ad-
-" dition to normal text files).
-"set spell spelllang=en_us
-
-" milliseconds.  Don't make it too low...
-set updatetime=250
-
 " This apparently fixes the 'escape time delay', a delay that
 " happens after hitting the escape key (since vim is waiting for
 " further characters to form a sequence). This makes that delay
@@ -467,38 +459,6 @@ let g:ycm_extra_conf_globlist = [
   \ '~/dev/nr-make/ycm_extra_conf.py',
   \ '~/dev/revolution-now-game/.ycm_extra_conf.py'
   \ ]
-
-" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-"                          Auto-Highlight
-" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-" Highlight all instances of word under cursor, when idle. Useful
-" when studying strange source code.
-"
-" Type <Leader>* to toggle highlighting on/off.
-"
-" Adapted from:
-"     vim.wikia.com/wiki/Auto_highlight_current_word_when_idle
-
-nnoremap <Leader>* :if AutoHighlightToggle()<Bar>set hls<Bar>endif<CR>
-
-function! AutoHighlightToggle()
-  let @/ = ''
-  if exists('#auto_highlight')
-    au! auto_highlight
-    augroup! auto_highlight
-    setl updatetime=4000
-    echo 'Highlight current word: off'
-    return 0
-  else
-    augroup auto_highlight
-      au!
-      au CursorHold * let @/ = '\V\<'.escape(expand('<cword>'), '\').'\>'
-    augroup end
-    setl updatetime=250
-    echo 'Highlight current word: ON'
-    return 1
-  endif
-endfunction
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 "                         Context Menu

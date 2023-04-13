@@ -73,6 +73,14 @@ vim.o.syntax = 'on'
 -- Highlight matching braces.
 vim.o.showmatch = true
 
+-- If syntax file supports it (with Spell/NoSpell directives)
+-- then this will cause spelling to be checked in code comments
+-- (in addition to normal text files).
+if false then
+  vim.o.spell = true
+  vim.o.spelllang = 'en_us'
+end
+
 -- Format Options
 -- ==============================================================
 -- Don't auto-wrap text.
