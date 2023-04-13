@@ -461,88 +461,6 @@ let g:ycm_extra_conf_globlist = [
   \ ]
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-"                         Context Menu
-" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-function! LspPopupSel(id, result)
-  if a:result == -2
-    " window closed
-  elseif a:result == 1
-    :LspDefinition
-  elseif a:result == 2
-    :LspPeekDefinition
-  elseif a:result == 3
-    :LspReferences
-  elseif a:result == 4
-    :LspHover
-  else
-    echo 'Invalid selection.'
-  endif
-endfunction
-
-function! LspPopupFilter(winid, key)
-  if a:key == "\<LeftMouse>"
-    let l:mouse_info = getmousepos()
-    " If the click is in the popup window then handle it.
-    if l:mouse_info.winid == a:winid
-      call LspPopupSel(a:winid, l:mouse_info.line)
-      call popup_close(a:winid)
-    else
-      call popup_close(a:winid)
-    endif
-  elseif a:key == "\<RightMouse>"
-    call popup_close(a:winid)
-  elseif a:key == '\<ESC>'
-    call popup_close(a:winid)
-  elseif a:key == 'x'
-    call popup_close(a:winid)
-  else
-    " It is sometimes suggested to fall back to this builtin
-    " function when the key is not handled, but we don't do that
-    " here because then that allows e.g. the cursor to be moved.
-    return popup_filter_menu(a:winid, a:key)
-  endif
-  return 1
-endfunc
-
-function! CreateLspPopupFromClick()
-  let l:mouse_info = getmousepos()
-  " We need this because normally in vim just right-clicking on a
-  " character does not move the mouse cursor there, so if we
-  " didn't do this than the popup would appear at the location of
-  " the cursor and not the right-click.
-  call setpos('.', [0, l:mouse_info.line, l:mouse_info.column, 0])
-  call CreateLspPopupAtCursor()
-endfunction
-
-function! CreateLspPopupAtCursor()
-  call popup_create(
-    \ [
-    \   'Goto Definition',
-    \   'Peak Definition',
-    \   'Find References',
-    \   'Hover',
-    \ ],
-    \ #{
-    \   line:      'cursor',
-    \   col:       'cursor+1',
-    \   zindex:     200,
-    \   drag:       1,
-    \   wrap:       0,
-    \   border:     [],
-    \   cursorline: 1,
-    \   padding:    [0,1,0,1],
-    \   mapping:    0,
-    \   filter:    'LspPopupFilter',
-    \   callback:  'LspPopupSel',
-    \   close:     'button',
-    \   moved:     'any',
-    \ })
-endfunction
-
-map <RightMouse> :call CreateLspPopupFromClick()<CR>
-map <C-b>        :call CreateLspPopupAtCursor()<CR>
-
-" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 "                             netrw
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 " Default file manager
@@ -610,19 +528,13 @@ filetype plugin indent on    " required
 " syntax settings can be overwridden there.
 au BufNewFile,BufRead *.cc,*.cpp,*.hpp,*.h,*.inl set syntax=cpp
 au BufNewFile,BufRead *.cc,*.cpp,*.hpp,*.h,*.inl set ft=cpp
-au BufNewFile,BufRead *.lhs                      set syntax=haskell_lit
 au BufNewFile,BufRead *.hs                       set syntax=haskell
 au BufNewFile,BufRead *.hs                       set ft=haskell
 au BufNewFile,BufRead *.mkh                      set ft=make
 au BufNewFile,BufRead *.fish                     set syntax=fish
-au BufNewFile,BufRead *.ucl                      set syntax=yaml
-au BufNewFile,BufRead *.dart                     set syntax=dart
-au BufNewFile,BufRead *.fbs                      set syntax=fbs
-au BufNewFile,BufRead *.peg                      set syntax=peg
 
-" libstdc++ seems to use tabs of width 8  :-E
-au BufRead /usr/include/c++* set tabstop=8
-
+" :h commentstring seems to say that this is only currently used
+" to 'add markers for folding.'
 au FileType vim     let g:commentstring="\" %s"
 au FileType sh      let g:commentstring="# %s"
 au FileType python  let g:commentstring="# %s"
@@ -633,37 +545,17 @@ au FileType make    let g:commentstring="# %s"
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 "                             Themes
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-" If there is no colorscheme already  set  then this will set one.
-" It  will  be  called as an auto command after the auto commands
-" used to set the colorscheme for particular file types.
-function! SetDefaultColorScheme()
-    " colorschemes:
-    "    wombat256   sourcerer
-    "    hipster     scheakur
-    "    gruvbox     primary
-    try
-        :silent echo g:colors_name
-    catch /E121/
-        colorscheme gruvbox
-    endtry
-    "highlight YcmWarningLine guibg=#ffff00 guifg=#000000
-    "highlight YcmErrorLine   guibg=#ff0000 guifg=#000000
-
-    " Make comments italic.
-    highlight Comment cterm=italic gui=italic
-    " This is so that we don't see an ugly horizontal bar.
-    highlight Folded guibg=#262626
-    " Don't seem to need these.
-    " highlight IncSearch cterm=NONE ctermfg=black ctermbg=yellow
-    " highlight Search cterm=NONE ctermfg=black ctermbg=yellow
-endfunction
-
 set background=dark
+colorscheme gruvbox
 
-" These set file-type-specific rules for colorschemes
-au BufEnter * :call SetDefaultColorScheme()
+" Make comments italic.
+highlight Comment cterm=italic gui=italic
 
-" Return  to  last edit position when opening files and make that
+" This is so that we don't see an ugly horizontal bar when code
+" is folded.
+highlight Folded guibg=#262626
+
+" Return to last edit position when opening files and make that
 " line in the center of the screen.
 autocmd BufReadPost *
      \ if line("'\"") > 0 && line("'\"") <= line("$") |
@@ -677,20 +569,6 @@ au BufEnter * highlight EndOfBuffer guifg=bg
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 "                              Misc
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-" This  was inserted to allow using the mouse to resize vim panes
-" from within a tmux pane.
-set mouse+=a
-if !has('nvim')
-  set ttymouse=sgr
-endif
-"if &term =~ '^screen'
-"    " tmux knows the extended mouse mode
-"    set ttymouse=xterm2
-"endif
-
-" Limit the number of VCS's that vim-signify searches for.
-let g:signify_vcs_list = ['git', 'perforce']
-
 function! ReproportionWindowSplits()
   let l:current_tabpage = tabpagenr()
   :tabdo wincmd =
