@@ -9,41 +9,6 @@
 set timeoutlen=1000 ttimeoutlen=0
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-"                           Folding
-" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-set foldmethod=syntax
-" Don't initially fold anything.
-set foldlevel=1000
-" Toggle fold at cursor.
-nnoremap K za
-
-let s:fold_line_length = 65
-
-" Inspired by a more complicated version here:
-"   https://vim.fandom.com/wiki/Customize_text_for_closed_folds
-function! MyFoldText()
-  " clear fold from fillchars to set it up the way we want later
-  let &l:fillchars = substitute(&l:fillchars,',\?fold:.','','gi')
-  let l:foldtext = ' { --- '.(v:foldend-v:foldstart).' lines folded --- }'
-  let l:endofline = s:fold_line_length
-  let l:linetext = getline(v:foldstart)
-  " If the line ends with a { then strip it off since we'll be
-  " adding one manually in the fold line text below.
-  if strpart( l:linetext, strlen( l:linetext )-1, 1 ) == '{'
-    let l:linetext = strpart( l:linetext, 0, strlen( l:linetext )-1 )
-  endif
-  " If the line ends with a space then strip it off (it might
-  " since we just stripped a curly brace).
-  if strpart( l:linetext, strlen( l:linetext )-1, 1 ) == ' '
-    let l:linetext = strpart( l:linetext, 0, strlen( l:linetext )-1 )
-  endif
-  let l:linetext = strpart( l:linetext, 0, l:endofline-strlen( l:foldtext ) )
-  return printf( '%s%s', l:linetext, l:foldtext )
-endfunction
-
-set foldtext=MyFoldText()
-
-" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 "                           Utilities
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
