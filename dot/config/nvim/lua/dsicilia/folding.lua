@@ -14,14 +14,11 @@ local format = string.format
 -----------------------------------------------------------------
 -- Fold based on the syntax of the language in question.
 vim.o.foldmethod = 'syntax'
-
 -- Don't initially fold anything.
 vim.o.foldlevel = 1000
 
-local FOLD_LINE_LENGTH = 65
+local MAX_FOLD_LENGTH = 65
 
--- Inspired by a more complicated version here:
---   https://vim.fandom.com/wiki/Customize_text_for_closed_folds
 function M.fold_text_gen()
   local linetext = getline( vim.v.foldstart )
   local rm_if_last_char = function( char )
@@ -36,8 +33,18 @@ function M.fold_text_gen()
   rm_if_last_char( '{' )
   rm_if_last_char( ' ' )
   local num_lines_folded = vim.v.foldend - vim.v.foldstart
-  return format( '%s { --- %d lines folded --- }', linetext,
-                 num_lines_folded )
+  local FMT = '%s { --- %d lines folded --- }'
+  -- If necessary, trim some more from the end of linetext so
+  -- that the entire formatted fold string fits into our desired
+  -- line width.
+  do
+    local longest = format( FMT, linetext, num_lines_folded )
+    local extra_chars = #longest - MAX_FOLD_LENGTH
+    if extra_chars > 0 then
+      linetext = linetext:sub( 1, #linetext - extra_chars )
+    end
+  end
+  return format( FMT, linetext, num_lines_folded )
 end
 
 -- The 'foldtext' option is an option that takes a string con-
