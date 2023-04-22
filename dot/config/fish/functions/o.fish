@@ -1,3 +1,3 @@
 function o
-  ~/dev/revolution-now/scripts/o.sh $argv
+  ~/dev/revolution-now/tools/o.sh $argv
 end
