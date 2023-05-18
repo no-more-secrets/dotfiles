@@ -31,138 +31,6 @@ function! s:Pyeval( eval_string )
 endfunction
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-"                           Status Bar
-" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-" In the following code  we  set  the  `statusline` variable as a
-" local variable (setl) so that we  get  a  status  bar  that  is
-" unique to each given buffer.
-"
-" Status bar always visible
-set laststatus=2
-
-" Currently disabled because it cause display problems (random
-" keys pressed in normal mode appear in the buffer, then disappear
-" when display is refreshed).
-"function! GitBranch()
-"    let l:cmd = 'git rev-parse --abbrev-ref HEAD'
-"    return system(l:cmd . " 2>/dev/null | tr -d '\n'")
-"endfunction
-
-"function! StatuslineGit()
-"    let l:branchname = GitBranch()
-"    return strlen(l:branchname) > 0?'  '.l:branchname.' ':''
-"endfunction
-
-" This  function  inserts  a small piece of text into the current
-" statusline  variable  giving  the  status  of  YCM's background
-" parsing request. If there is  is  a  file parse request pending
-" for the current buffer then this will show a series  of  dashes.
-" If  the  parse request is complete then it will show the number
-" of errors, which may be zero. Also, different status of colored
-" accordingly.
-function! GetYcmStatus()
-    if !s:Pyeval( "'ycm_state' in globals()" )
-        return
-    endif
-    if !s:Pyeval( "ycm_state.NativeFiletypeCompletionAvailable()" )
-       " If we're here then this is likely not a file or buffer
-       " type where YCM will be used, so just suppress the indi-
-       " cator altogether.
-       return
-    endif
-    let g:ycm_status_begin = ' ['
-    setl statusline+=%{g:ycm_status_begin}
-    if !s:Pyeval( "ycm_state.CheckIfServerIsReady()" )
-        if winnr('$') == 1
-            setl statusline+=%#SpecialKey#
-        endif
-        setl statusline+=---------
-    elseif s:Pyeval( "ycm_state.FileParseRequestReady()" )
-        let g:ycm_n_errors = s:Pyeval( 'ycm_state.GetErrorCount()' )
-        let g:ycm_n_warnings = s:Pyeval( 'ycm_state.GetWarningCount()' )
-        if g:ycm_n_errors > 0
-            let g:ycm_status_middle = 'errors: '
-            setl statusline+=%#ErrorMsg#
-            setl statusline+=%{g:ycm_status_middle}
-            setl statusline+=%{g:ycm_n_errors}
-            setl statusline+=%#StatusLineNC#
-        elseif g:ycm_n_warnings > 0
-            let g:ycm_status_middle = 'warnings: '
-            setl statusline+=%#SyntasticWarningSign#
-            setl statusline+=%{g:ycm_status_middle}
-            setl statusline+=%{g:ycm_n_warnings}
-            setl statusline+=%#StatusLineNC#
-        else
-            if winnr('$') == 1
-                setl statusline+=%#SpecialKey#
-            endif
-            setl statusline+=no\ errors
-        endif
-    else
-        setl statusline+=%#WarningMsg#
-        setl statusline+=compiling
-        setl statusline+=%#StatusLineNC#
-    endif
-    if winnr('$') == 1
-        setl statusline+=%#LineNr#
-    endif
-    let g:ycm_status_end = ']'
-    setl statusline+=%{g:ycm_status_end}
-endfunction
-
-" Vim  allows  one to put function calls inline in the status bar
-" text so that they will be called  whenever the status bar is up-
-" dated. However, we don't do that since  some  of  the  function
-" calls have overhead, and the status bar is  updated  each  time
-" the cursor moves. So instead, we  just put the status update in
-" a timer function that updates the status variable.
-"
-" The winnr('$') calls are to test if we only have a single window
-" open, in which case we make the status bar background color to be
-" darker since it looks better.
-let g:status_update_timer =
-  \ timer_start(1000, 'UpdateStatusBar',{'repeat':-1})
-function! UpdateStatusBar(timer)
-    setl statusline=
-    "set statusline+=%#PmenuSel#
-    "let g:git_status = StatuslineGit()
-    "set statusline+=%{g:git_status}
-    if winnr('$') == 1 && a:timer != 2
-        setl statusline+=%#LineNr#
-    else
-        setl statusline+=%#StatusLineNC#
-    endif
-    setl statusline+=\ %f
-    call GetYcmStatus()
-    setl statusline+=%m
-    setl statusline+=%=
-    if winnr('$') == 1
-        setl statusline+=%#Identifier#
-    endif
-    setl statusline+=\ %y
-    setl statusline+=\ %p%%
-    setl statusline+=\ %l:%2c
-    let g:space_char = ' '
-    setl statusline+=%{g:space_char}
-endfunction
-
-" Seems  that  when  we  leave a window the timer function may no
-" longer  be  called, and so we need to update the status bar one
-" last time before leaving so that any changes can go into effect
-" that  depend  on  the number of windows there are. Normally the
-" argument to the function would be the timer, but here we pass a
-" `2` to signal that a) we are manually calling  it,  and  b)  we
-" want it to assume that there are multiple windows.
-au WinLeave * :call UpdateStatusBar(2)
-
-" Initially we want to update the  status bar without waiting for
-" the timer to start running. Normally the argument to  the  func-
-" tion would be the timer, but here  we pass a `1` to signal that
-" a) we are manually calling it, and b) we want it to assume that
-" there is only one window.
-:call UpdateStatusBar(1)
-
-" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 "                              Undo
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -223,20 +91,6 @@ nnoremap z. :call ZeeDot()<CR>
 
 nnoremap <Leader>Y :set syntax=yaml<CR>
 
-" The `Imprecise` variants will perform  the operation without re-
-" compiling the translation unit.  Useful  if compilation is slow,
-" but can yield incorrect results if the file is out of date (not
-" sure when this would happen  though,  since  YCM seems to recom-
-" pile the file as one types).
-nnoremap <Leader>eg :YcmCompleter GoTo<CR>
-nnoremap <Leader>eG :YcmCompleter GoToReferences<CR>
-nnoremap <Leader>et :YcmCompleter GetType<CR>
-nnoremap <Leader>ef :YcmCompleter FixIt<CR>
-nnoremap <Leader>ep :YcmCompleter GetParent<CR>
-nnoremap <Leader>es :YcmShowDetailedDiagnostic<CR>
-nnoremap <Leader>er :YcmForceCompileAndDiagnostics<CR>
-nnoremap <Leader>ee :YcmDiags<CR>
-
 " Add spaces after comment delimiters by default.
 let g:NERDSpaceDelims = 1
 " Allow commenting and inverting empty lines (useful when com-
@@ -246,13 +100,6 @@ let g:NERDCommentEmptyLines = 1
 let g:NERDTrimTrailingWhitespace = 1
 
 let g:tools = $HOME . '/dev/tools'
-let g:llvm_home = $HOME . '/dev/tools/llvm-current'
-
-function! ClangFormatAll()
-  let l:lines = '1:' . line( '$' )
-  let g:clang_format_path = g:llvm_home . '/bin/clang-format'
-  exec ':py3f ' . g:llvm_home . '/share/clang/clang-format.py'
-endfunction
 
 function! LuaFormatAll()
   let g:lua_format_path = g:tools . '/lua-format-current/bin/lua-format'
@@ -271,8 +118,6 @@ function! SmartFormatAll()
   let ext = expand( '%:e' ) " current file extension
   if ext == 'lua'
     call LuaFormatAll()
-  elseif ext == 'cpp' || ext == 'hpp' || ext == 'cc' || ext == 'h'
-    call ClangFormatAll()
   else
     echo 'Cannot format this file type: ' . ext
   endif
@@ -387,45 +232,6 @@ let g:fzf_layout = {
 nnoremap <Leader>cd :cd %:p:h<CR>:pwd<CR>
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-"                        Variable Settings
-" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-" Disable auto hover which is annoying and slow.
-let g:ycm_auto_hover = ''
-
-" This  option controls the key mapping used to invoke the comple-
-" tion menu for semantic completion. By default, semantic  comple-
-" tion  is  triggered  automatically after typing ., -> and :: in
-" insert  mode  (if semantic completion support has been compiled
-" in). This key mapping can be used to  trigger  semantic  comple-
-" tion anywhere. Useful for searching for top-level functions and
-" classes. This applies in INSERT mode.
-let g:ycm_key_invoke_completion = '<C-S>'
-" This tells YCM to populate the location list with errors.
-let g:ycm_always_populate_location_list = 1
-" These characters appear in the gutter on error.
-"let g:ycm_error_symbol = '→'   " default is '>>'
-"let g:ycm_error_symbol = '✖'   " default is '>>'
-"let g:ycm_error_symbol = '😡'  " default is '>>'
-let g:ycm_error_symbol = 'ER'
-
-let g:ycm_warning_symbol = 'WN'  " default is '>>'
-"let g:ycm_warning_symbol = '☹ '
-"let g:ycm_autoclose_preview_window_after_completion = 1
-"let g:ycm_autoclose_preview_window_after_insertion = 1
-let g:ycm_add_preview_to_completeopt = 0
-
-" Whitelist of .ycm_extra_conf.py  files  which  will  be  loaded
-" without asking the user  permission  each  time. Items starting
-" with a '!' character  will  be  blacklisted; items not starting
-" with '!' are whitelists. Stars are globs.  Most projects just
-" have a symlink to this single file in the /nr-make/ folder.
-let g:ycm_extra_conf_globlist = [
-  \ '~/dev/nr-make/ycm_extra_conf.py',
-  \ '~/dev/revolution-now-game/.ycm_extra_conf.py'
-  \ ]
-
-" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 "                             netrw
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 " Default file manager
@@ -481,7 +287,7 @@ call vundle#begin()
     Plugin 'tikhomirov/vim-glsl'       " Syntax file for OpenGL shaders.
     Plugin 'tbastos/vim-lua'           " Improved lua syntax highlighting.
     Plugin 'bfrg/vim-cpp-modern'       " Modern C++ syntax highlighting.
-    Plugin 'valloric/youcompleteme'
+    Plugin 'neovim/nvim-lspconfig'     " Configs for language servers.
 call vundle#end()            " required
 
 filetype plugin indent on    " required
