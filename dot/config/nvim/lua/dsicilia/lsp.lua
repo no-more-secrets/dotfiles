@@ -19,15 +19,27 @@ local augroup = vim.api.nvim_create_augroup
 
 local ErrorCodes = protocol.ErrorCodes
 
+local sign_define = vim.fn.sign_define
+
+-----------------------------------------------------------------
+-- Gutter signs.
+-----------------------------------------------------------------
+sign_define( 'DiagnosticSignError', { text='ER', texthl='DiagnosticError' } )
+sign_define( 'DiagnosticSignWarn',  { text='WN', texthl='DiagnosticWarn'  } )
+
 -----------------------------------------------------------------
 -- Colors
 -----------------------------------------------------------------
-vim.api.nvim_set_hl( 0, 'DiagnosticError',            { fg='black', bg='red'    } )
-vim.api.nvim_set_hl( 0, 'DiagnosticVirtualTextError', { fg='red'                } )
-vim.api.nvim_set_hl( 0, 'DiagnosticFloatingError',    { fg='red'                } )
-vim.api.nvim_set_hl( 0, 'DiagnosticWarn',             { fg='black', bg='yellow' } )
-vim.api.nvim_set_hl( 0, 'DiagnosticVirtualTextWarn',  { fg='yellow'             } )
-vim.api.nvim_set_hl( 0, 'DiagnosticFloatingWarn',     { fg='yellow'             } )
+local RED = '#fb4934' -- gruvbox "bright_red".
+local YLW = '#fabd2f' -- gruvbox "bright_yellow".
+local BLK = '#1d2021' -- gruvbox "dark0_hard".
+
+vim.api.nvim_set_hl( 0, 'DiagnosticVirtualTextError', { fg=RED } )
+vim.api.nvim_set_hl( 0, 'DiagnosticFloatingError',    { fg=RED } )
+vim.api.nvim_set_hl( 0, 'DiagnosticVirtualTextWarn',  { fg=YLW } )
+vim.api.nvim_set_hl( 0, 'DiagnosticFloatingWarn',     { fg=YLW } )
+vim.api.nvim_set_hl( 0, 'DiagnosticError',    { fg=BLK, bg=RED } )
+vim.api.nvim_set_hl( 0, 'DiagnosticWarn',     { fg=BLK, bg=YLW } )
 
 -----------------------------------------------------------------
 -- Keyboard mappings.
@@ -121,11 +133,6 @@ function M.with_error_handler( fn )
     vim.notify( msg, vim.log.levels.ERROR )
   end
 end
-
------------------------------------------------------------------
--- Specific language servers.
------------------------------------------------------------------
-require( 'dsicilia.lsp-servers.clangd' )
 
 -----------------------------------------------------------------
 -- Finished.

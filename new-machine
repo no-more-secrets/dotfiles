@@ -172,7 +172,6 @@ rm -f ~/.bashrc
 
 log "Running setup scripts."
 cd ~/.dotfiles
-# No REBUILD_YCM= here, since we don't have clang yet.
 make
 
 # ---------------------------------------------------------------
@@ -196,14 +195,6 @@ read
 # Run build scripts.
 # ---------------------------------------------------------------
 ~/dev/utilities/building/new-machine.sh
-
-# ---------------------------------------------------------------
-# Rebuild YCM.
-# ---------------------------------------------------------------
-# Must do this after clang is built by the above script.
-log "Rebuilding YCM."
-cd ~/.dotfiles
-./scripts/build-ycm.sh
 
 # ---------------------------------------------------------------
 # Finished.
