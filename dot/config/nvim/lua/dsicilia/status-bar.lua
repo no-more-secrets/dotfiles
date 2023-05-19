@@ -113,7 +113,7 @@ local function build_impl( buf )
     if not buffer_clangd_compilation_begun[buf] then
       return '---------'
     end
-    if buffer_clangd_compilation_begun[buf].is_compiling then
+    if buffer_clangd_compilation_begun[buf].compiling then
       return compiling_color .. 'compiling'
     end
     local diagnostics = lsp.diagnostics_for_buffer( buf )
@@ -151,10 +151,11 @@ local function build_impl( buf )
     return ' [' .. diagnostics() .. bg .. ']' .. indexing()
   end
 
-  --                          Status bar layout.
-  --      ____________________________A_______________________________
-  --     [                            |                               ]
-  return { bg,' %f',lsp_state,'%m',  '%=',' %y',' %p%%',' %l:%2c',' ' }
+  return
+  --                     Status bar layout.
+  --  ____________________________A_______________________________
+  -- [                            |                               ]
+     { bg,' %f',lsp_state,'%m',  '%=',' %y',' %p%%',' %l:%2c',' ' }
 end
 
 local function build( buf )
@@ -206,17 +207,16 @@ local function clangd_file_status_handler( result, ctx, _ )
   -- buffer number from the URI of the file in question.
   local buf = assert( uri.uri_to_bufnr( result.uri ) )
   local stage = assert( result.state )
-  local is_queued       = match( stage, 'queued' )  ~= nil
-  local is_idle         = match( stage, 'idle' )    ~= nil
-  local is_building_ast = match( stage, 'AST' )     ~= nil
-  local is_parsing      = match( stage, 'parsing' ) ~= nil
-  if not is_queued and not is_idle and not is_building_ast and not is_parsing then
-    vim.notify( stage, vim.log.levels.ERROR )
-  end
-  local is_compiling = is_parsing or is_building_ast
-  if buffer_clangd_compilation_begun[buf] or is_compiling then
+  local queued       = match( stage, 'queued' )  ~= nil
+  local idle         = match( stage, 'idle' )    ~= nil
+  local building_ast = match( stage, 'AST' )     ~= nil
+  local parsing      = match( stage, 'parsing' ) ~= nil
+  local any = queued or idle or building_ast or parsing
+  assert( any )
+  local compiling = parsing or building_ast
+  if buffer_clangd_compilation_begun[buf] or compiling then
     buffer_clangd_compilation_begun[buf] = {
-      is_compiling=is_compiling
+      compiling=compiling
     }
   end
   rebuild_for_buffer( buf )
@@ -282,18 +282,16 @@ end
 
 -- These are "user auto-commands" which means that they are exe-
 -- cuted manually, and the "pattern" holds the event name.
+local function user_autocmd( event, callback )
+  autocmd( 'User', {
+    pattern  = event,
+    group    = augroup( 'StatusBar' .. event, {} ),
+    callback = callback
+  } )
+end
 
-autocmd( 'User', {
-  pattern  = 'LspProgressUpdate',
-  group    =  augroup( 'StatusBarUpdate', {} ),
-  callback =  on_progress
-} )
-
-autocmd( 'User', {
-  pattern  = 'LspRequest',
-  group    =  augroup( 'StatusBarUpdate', {} ),
-  callback =  on_progress
-} )
+user_autocmd( 'LspRequest', on_progress )
+user_autocmd( 'LspProgressUpdate', on_progress )
 
 -----------------------------------------------------------------
 -- Finished.

@@ -68,13 +68,15 @@ local function on_lsp_attach( ev )
   nmap['gd']         = buf.definition
   nmap['gi']         = buf.implementation
   nmap['<Leader>D']  = buf.type_definition
-  nmap['<Leader>et'] = buf.hover
+  nmap['K']          = buf.hover
   nmap['<C-k>']      = buf.signature_help
   nmap['<Leader>er'] = buf.rename
   nmap['<Leader>ca'] = buf.code_action
   vmap['<Leader>ca'] = buf.code_action
   nmap['<Leader>R']  = buf.references
   nmap['<C-C>']      = buf.format
+  -- This command comes from nvim-lspconfig.
+  nmap['<Leader>S']  = vim.cmd.ClangdSwitchSourceHeader
 end
 
 -----------------------------------------------------------------

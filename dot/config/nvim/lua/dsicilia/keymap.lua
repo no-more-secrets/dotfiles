@@ -64,10 +64,6 @@ nmap['\\'] = 'i <ESC>l'
 nmap['('] = 'O<ESC>j'
 nmap['<SPACE>'] = 'r l'
 
--- Folding
--- ==============================================================
-nmap['K'] = 'za'
-
 -- Searching
 -- ==============================================================
 -- Two <CR>s to keep <CR> working with the quickfix list.
