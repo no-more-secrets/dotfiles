@@ -20,3 +20,5 @@ dot/config/fish/functions/fzf_key_bindings.fish
 dot/fonts/.uuid
 
 dot/tmux/plugins/*
+
+.luarc.json

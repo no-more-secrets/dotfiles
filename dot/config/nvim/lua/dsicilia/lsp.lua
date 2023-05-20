@@ -7,12 +7,11 @@ local M = {}
 -- Imports.
 -----------------------------------------------------------------
 local protocol = require( 'vim.lsp.protocol' )
-local mappers  = require( 'dsicilia.mappers' )
 
 -----------------------------------------------------------------
 -- Aliases.
 -----------------------------------------------------------------
-local nmap, imap, vmap = mappers.nmap, mappers.imap, mappers.vmap
+local format = string.format
 
 local autocmd = vim.api.nvim_create_autocmd
 local augroup = vim.api.nvim_create_augroup
@@ -26,6 +25,8 @@ local sign_define = vim.fn.sign_define
 -----------------------------------------------------------------
 sign_define( 'DiagnosticSignError', { text='ER', texthl='DiagnosticError' } )
 sign_define( 'DiagnosticSignWarn',  { text='WN', texthl='DiagnosticWarn'  } )
+sign_define( 'DiagnosticSignHint',  { text='HN', texthl='DiagnosticHint'  } )
+sign_define( 'DiagnosticSignInfo',  { text='IN', texthl='DiagnosticInfo'  } )
 
 -----------------------------------------------------------------
 -- Colors
@@ -33,23 +34,24 @@ sign_define( 'DiagnosticSignWarn',  { text='WN', texthl='DiagnosticWarn'  } )
 local RED = '#fb4934' -- gruvbox "bright_red".
 local YLW = '#fabd2f' -- gruvbox "bright_yellow".
 local BLK = '#1d2021' -- gruvbox "dark0_hard".
+local WHT = '#fbf1c7' -- gruvbox "light0".
 
 vim.api.nvim_set_hl( 0, 'DiagnosticVirtualTextError', { fg=RED } )
 vim.api.nvim_set_hl( 0, 'DiagnosticFloatingError',    { fg=RED } )
 vim.api.nvim_set_hl( 0, 'DiagnosticVirtualTextWarn',  { fg=YLW } )
 vim.api.nvim_set_hl( 0, 'DiagnosticFloatingWarn',     { fg=YLW } )
+vim.api.nvim_set_hl( 0, 'DiagnosticVirtualTextHint',  { fg=WHT } )
+vim.api.nvim_set_hl( 0, 'DiagnosticFloatingHint',     { fg=WHT } )
+vim.api.nvim_set_hl( 0, 'DiagnosticVirtualTextInfo',  { fg=WHT } )
+vim.api.nvim_set_hl( 0, 'DiagnosticFloatingInfo',     { fg=WHT } )
 vim.api.nvim_set_hl( 0, 'DiagnosticError',    { fg=BLK, bg=RED } )
 vim.api.nvim_set_hl( 0, 'DiagnosticWarn',     { fg=BLK, bg=YLW } )
+vim.api.nvim_set_hl( 0, 'DiagnosticHint',     { fg=BLK, bg=WHT } )
+vim.api.nvim_set_hl( 0, 'DiagnosticInfo',     { fg=BLK, bg=WHT } )
 
 -----------------------------------------------------------------
 -- Keyboard mappings.
 -----------------------------------------------------------------
--- Global mappings.
-nmap['<Leader>es'] = vim.diagnostic.open_float
-nmap['<Leader>eq'] = vim.diagnostic.setloclist
-nmap['g[']         = vim.diagnostic.goto_prev
-nmap['g]']         = vim.diagnostic.goto_next
-
 -- Performs actions only after the language server attaches to
 -- the current buffer. These actions will apply to all language
 -- servers, so should be generic.
@@ -59,21 +61,27 @@ local function on_lsp_attach( ev )
 
   -- Buffer local mappings.
   -- See `:help vim.lsp.*` for documentation on any of the below functions
+  local mappers  = require( 'dsicilia.mappers' )
   local opts = { buffer = ev.buf }
   local nmap = mappers.build_mapper( 'n', opts )
   local vmap = mappers.build_mapper( 'v', opts )
   local buf = vim.lsp.buf
 
+  nmap['<leader>ee'] = vim.diagnostic.open_float
+  nmap['<leader>eq'] = vim.diagnostic.setloclist
+  nmap['gp']         = vim.diagnostic.goto_prev
+  nmap['gn']         = vim.diagnostic.goto_next
+
   nmap['gD']         = buf.declaration
   nmap['gd']         = buf.definition
   nmap['gi']         = buf.implementation
-  nmap['<Leader>D']  = buf.type_definition
+  nmap['<leader>D']  = buf.type_definition
   nmap['K']          = buf.hover
-  nmap['<C-k>']      = buf.signature_help
-  nmap['<Leader>er'] = buf.rename
-  nmap['<Leader>ca'] = buf.code_action
-  vmap['<Leader>ca'] = buf.code_action
-  nmap['<Leader>R']  = buf.references
+  nmap['<leader>es']      = buf.signature_help
+  nmap['<leader>er'] = buf.rename
+  nmap['<leader>ca'] = buf.code_action
+  vmap['<leader>ca'] = buf.code_action
+  nmap['<leader>R']  = buf.references
   nmap['<C-C>']      = buf.format
   -- This command comes from nvim-lspconfig.
   nmap['<Leader>S']  = vim.cmd.ClangdSwitchSourceHeader
@@ -95,17 +103,14 @@ function M.diagnostics_for_buffer( buf )
   local LEVELS = {
     errors = vim.diagnostic.severity.ERROR,
     warnings = vim.diagnostic.severity.WARN,
-    info = vim.diagnostic.severity.INFO,
+    infos = vim.diagnostic.severity.INFO,
     hints = vim.diagnostic.severity.HINT,
   }
-  local result = {}
-  local total = 0
+  local res = {}
   for name, level in pairs( LEVELS ) do
-    result[name] = #vim.diagnostic.get( buf, { severity = level } )
-    total = total + result[name]
+    res[name] = #vim.diagnostic.get( buf, { severity = level } )
   end
-  if total == 0 then return nil end
-  return result
+  return res
 end
 
 vim.diagnostic.config {

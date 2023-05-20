@@ -53,6 +53,7 @@ local function make_bold_fg( template, new_hl, color )
   end )
 end
 
+local GRUVBOX_LIGHT0        = '#fbf1c7'
 local GRUVBOX_LIGHT2        = '#d5c4a1'
 local GRUVBOX_BRIGHT_ORANGE = '#fe8019'
 
@@ -61,6 +62,9 @@ make_bold_fg( 'StatusNWin', 'LspIndexingMsgNWin', GRUVBOX_LIGHT2 )
 
 make_bold_fg( 'Status1Win', 'Compiling1Win', GRUVBOX_BRIGHT_ORANGE )
 make_bold_fg( 'StatusNWin', 'CompilingNWin', GRUVBOX_BRIGHT_ORANGE )
+
+make_bold_fg( 'Status1Win', 'HintInfo1Win', GRUVBOX_LIGHT0 )
+make_bold_fg( 'StatusNWin', 'HintInfoNWin', GRUVBOX_LIGHT0 )
 
 -----------------------------------------------------------------
 -- Global state.
@@ -89,6 +93,14 @@ local lsp_indexing_progress = {}
 -----------------------------------------------------------------
 -- Status bar creation.
 -----------------------------------------------------------------
+local function has_clangd_attached( buf )
+  local clients = vim.lsp.get_active_clients{ bufnr=buf }
+  for _, client in ipairs( clients ) do
+    if client.name == 'clangd' then return true end
+  end
+  return false
+end
+
 -- Vim allows one to put function calls inline in the status bar
 -- text so that they will be called whenever the status bar is
 -- updated. However, we don't want to do that since the status
@@ -107,41 +119,49 @@ local function build_impl( buf )
                                         or '%#LspIndexingMsgNWin#'
   local compiling_color = (n_wins == 1) and '%#Compiling1Win#'
                                          or '%#CompilingNWin#'
+  local hint_info_color = (n_wins == 1) and '%#HintInfo1Win#'
+                                         or '%#HintInfoNWin#'
 
   -- No string.format here as it messes up the inline highlights.
   local function diagnostics()
-    if not buffer_clangd_compilation_begun[buf] then
-      return '---------'
+    if has_clangd_attached( buf ) then
+      if not buffer_clangd_compilation_begun[buf] then
+        return '---------'
+      end
+      if buffer_clangd_compilation_begun[buf].compiling then
+        return compiling_color .. 'compiling'
+      end
     end
-    if buffer_clangd_compilation_begun[buf].compiling then
-      return compiling_color .. 'compiling'
-    end
-    local diagnostics = lsp.diagnostics_for_buffer( buf )
-    if diagnostics == nil then return 'no errors' end
-    if diagnostics.errors > 0 then
-      return '%#ErrorMsg#errors: ' .. diagnostics.errors
-    elseif diagnostics.warnings > 0 then
+    local diags = lsp.diagnostics_for_buffer( buf )
+    if diags.errors > 0 then
+      return '%#ErrorMsg#errors: ' .. diags.errors
+    elseif diags.warnings > 0 then
       return '%#SyntasticWarningSign#' ..
-             'warnings: ' .. diagnostics.warnings
+             'warnings: ' .. diags.warnings
+    elseif diags.infos > 0 then
+      return hint_info_color .. 'infos: ' .. diags.infos
+    elseif diags.hints > 0 then
+      return hint_info_color .. 'hints: ' .. diags.hints
     end
+    return 'no errors'
   end
 
   -- No string.format here as it messes up the inline highlights.
   local function indexing()
     local clients = vim.lsp.get_active_clients{ bufnr = buf }
-    local indexing = {}
+    local indexing_lst = {}
     for _, client in ipairs( clients ) do
       local name = client.name
       local msg = lsp_indexing_progress[name]
       if msg and msg.done ~= true and msg.message then
         local indexing_msg = 'indexing: ' .. progress_color ..
                                msg.message .. bg
-        table.insert( indexing, indexing_msg )
+        table.insert( indexing_lst, indexing_msg )
       end
     end
-    indexing = table.concat( indexing, ', ' )
-    if indexing == '' then return '' end
-    return ' [' .. indexing .. ']'
+    local indexing_str = table.concat( indexing_lst, ', ' )
+    if indexing_str == '' then return '' end
+    return ' [' .. indexing_str .. ']'
   end
 
   -- No string.format here as it messes up the inline highlights.
@@ -200,7 +220,7 @@ end
 -----------------------------------------------------------------
 -- Clangd file status.
 -----------------------------------------------------------------
-local function clangd_file_status_handler( result, ctx, _ )
+local function clangd_file_status_handler( result, _, _ )
   -- The code in vim.lsp.handlers would seem to suggest that the
   -- buffer number should be accessible via ctx.bufnr, but that
   -- does not seem to be populated here. So instead we get the
