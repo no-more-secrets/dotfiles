@@ -77,7 +77,7 @@ local function on_lsp_attach( ev )
   nmap['gi']         = buf.implementation
   nmap['<leader>D']  = buf.type_definition
   nmap['K']          = buf.hover
-  nmap['<leader>es']      = buf.signature_help
+  nmap['<leader>es'] = buf.signature_help
   nmap['<leader>er'] = buf.rename
   nmap['<leader>ca'] = buf.code_action
   vmap['<leader>ca'] = buf.code_action
