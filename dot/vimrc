@@ -298,6 +298,7 @@ au BufNewFile,BufRead *.hs                       set syntax=haskell
 au BufNewFile,BufRead *.hs                       set ft=haskell
 au BufNewFile,BufRead *.mkh                      set ft=make
 au BufNewFile,BufRead *.fish                     set syntax=fish
+au BufNewFile,BufRead *.glsl,*.vert,*.frag       set ft=glsl
 
 " :h commentstring seems to say that this is only currently used
 " to 'add markers for folding.'

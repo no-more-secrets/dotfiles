@@ -2,24 +2,12 @@
 -- Imports.
 -----------------------------------------------------------------
 local lspconfig  = require( 'lspconfig' )
-local paths      = require( 'dsicilia.paths' )
-
------------------------------------------------------------------
--- Aliases.
------------------------------------------------------------------
-local format = string.format
 
 -----------------------------------------------------------------
 -- Setup.
 -----------------------------------------------------------------
-local lua_ls = lspconfig.lua_ls
-
-assert( paths.TOOLS )
-local lls = '%s/lua-language-server-current/bin/lua-language-server'
-local LLS = format( lls, paths.TOOLS )
-
-lua_ls.setup {
-  cmd = { LLS },
+lspconfig.lua_ls.setup {
+  cmd = { 'lua-language-server' },
   settings = {
     -- See the settings.lua file in the lua-language-server
     -- package for all of the settings.

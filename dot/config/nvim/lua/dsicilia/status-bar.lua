@@ -173,9 +173,9 @@ local function build_impl( buf )
 
   return
   --                     Status bar layout.
-  --  ____________________________A_______________________________
-  -- [                            |                               ]
-     { bg,' %f',lsp_state,'%m',  '%=',' %y',' %p%%',' %l:%2c',' ' }
+  --  _____________________________A_______________________________
+  -- [                             |                               ]
+     { bg,' %f',lsp_state,' %m',  '%=',' %y',' %p%%',' %l:%2c',' ' }
 end
 
 local function build( buf )
@@ -188,19 +188,24 @@ local function build( buf )
   return table.concat( list )
 end
 
+local function window_ids_in_current_tab()
+  return vim.fn.gettabinfo( vim.fn.tabpagenr() )[1].windows
+end
+
 local function rebuild_for_buffer( buf )
   assert( type( buf ) == 'number' )
   -- statusline is a window-level option, but we can't use vim.wo
   -- because that would give us the current window; we need to
   -- set it for the window(s) associated with the given buffer.
   -- That way, the status bar for windows other than the current
-  -- one can e.g. update its status in response to events.
-  local windows = {}
-  -- TODO: limit to windows visible in the current tab.
-  for winnr = 1, vim.fn.winnr( '$' ) do
-    local winbuf = vim.fn.winbufnr( winnr )
-    if winbuf == buf then
-      local win_id = vim.fn.win_getid( winnr )
+  -- one can update its status in response to events. For effi-
+  -- ciency, we limit the set of possible windows only to those
+  -- that are visible in the current tab; if the user changes
+  -- tabs then the status bars will be redrawn anyway because we
+  -- hook into TabEnter below.
+  local win_ids = window_ids_in_current_tab()
+  for _, win_id in ipairs( win_ids ) do
+    if vim.fn.winbufnr( win_id ) == buf then
       vim.wo[win_id].statusline = build( buf )
     end
   end

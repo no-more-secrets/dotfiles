@@ -21,6 +21,16 @@ local ErrorCodes = protocol.ErrorCodes
 local sign_define = vim.fn.sign_define
 
 -----------------------------------------------------------------
+-- Logging.
+-----------------------------------------------------------------
+-- If you need to debug an issue with the neovim LSP then enable
+-- logging by changing this to "DEBUG". That will then generate a
+-- log file that can be seen by running :LspInfo, typically in
+-- ~/.local/state/nvim/lsp.log. We don't leave it on all the time
+-- because otherwise it seems to grow indefinitely.
+vim.lsp.set_log_level( "OFF" )
+
+-----------------------------------------------------------------
 -- Gutter signs.
 -----------------------------------------------------------------
 sign_define( 'DiagnosticSignError', { text='ER', texthl='DiagnosticError' } )
@@ -49,42 +59,89 @@ vim.api.nvim_set_hl( 0, 'DiagnosticWarn',     { fg=BLK, bg=YLW } )
 vim.api.nvim_set_hl( 0, 'DiagnosticHint',     { fg=BLK, bg=WHT } )
 vim.api.nvim_set_hl( 0, 'DiagnosticInfo',     { fg=BLK, bg=WHT } )
 
+-- This can optionally be used to turn off semantic highlighting.
+-- But once it is off, it cannot be turned back on without
+-- restarting the editor. Also, this will have to be re-called if
+-- the colorscheme is changed.
+function M.disable_semantic_highlighting()
+  local highlight_groups =
+      vim.fn.getcompletion( "@lsp", "highlight" )
+  for _, group in ipairs( highlight_groups ) do
+    vim.api.nvim_set_hl( 0, group, {} )
+  end
+end
+
+-----------------------------------------------------------------
+-- Hover window.
+-----------------------------------------------------------------
+local function close_all_floating_windows()
+  local n_closed = 0
+  for _, win_id in ipairs( vim.api.nvim_list_wins() ) do
+    -- Test if window is floating.
+    if vim.api.nvim_win_get_config( win_id ).relative ~= '' then
+      -- Force close if called with !
+      vim.api.nvim_win_close( win_id, {} )
+      n_closed = n_closed + 1
+    end
+  end
+  return n_closed
+end
+
+-- This allows us to open and close the hover window with the
+-- same key binding. Otherwise we'd have to close it by pressing
+-- one of the motion keys which moves the cursor.
+local function toggle_hover()
+  local n_closed = close_all_floating_windows()
+  if n_closed > 0 then return end
+  vim.lsp.buf.hover()
+end
+
 -----------------------------------------------------------------
 -- Keyboard mappings.
 -----------------------------------------------------------------
 -- Performs actions only after the language server attaches to
 -- the current buffer. These actions will apply to all language
 -- servers, so should be generic.
-local function on_lsp_attach( ev )
+local function on_lsp_attach( args )
+  local bufnr = args.buf
+  local client = vim.lsp.get_client_by_id( args.data.client_id )
+
   -- Enable completion triggered by <c-x><c-o>
-  vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
+  vim.bo[bufnr].omnifunc = 'v:lua.vim.lsp.omnifunc'
 
   -- Buffer local mappings.
   -- See `:help vim.lsp.*` for documentation on any of the below functions
   local mappers  = require( 'dsicilia.mappers' )
-  local opts = { buffer = ev.buf }
+  local opts = { buffer = bufnr }
   local nmap = mappers.build_mapper( 'n', opts )
   local vmap = mappers.build_mapper( 'v', opts )
   local buf = vim.lsp.buf
 
-  nmap['<leader>ee'] = vim.diagnostic.open_float
-  nmap['<leader>eq'] = vim.diagnostic.setloclist
+  -- These actions cause the cursor/view to go somewhere.
   nmap['gp']         = vim.diagnostic.goto_prev
   nmap['gn']         = vim.diagnostic.goto_next
-
   nmap['gD']         = buf.declaration
   nmap['gd']         = buf.definition
   nmap['gi']         = buf.implementation
-  nmap['<leader>D']  = buf.type_definition
-  nmap['K']          = buf.hover
+  nmap['gt']         = buf.type_definition
+  if client.name == 'clangd' then
+    nmap['gS']  = vim.cmd.ClangdSwitchSourceHeader
+  end
+
+  -- These actions cause a box to open with info somewhere.
+  nmap['K']          = toggle_hover
+  -- TODO: make the list of references open in an fzf or tele-
+  -- scope window.
+  nmap['<leader>r']  = buf.references
+  nmap['<leader>ee'] = vim.diagnostic.open_float
+  nmap['<leader>eq'] = vim.diagnostic.setloclist
   nmap['<leader>es'] = buf.signature_help
+
+  -- These perform actions on the code.
   nmap['<leader>er'] = buf.rename
   nmap['<leader>ca'] = buf.code_action
   vmap['<leader>ca'] = buf.code_action
-  nmap['<leader>R']  = buf.references
   nmap['<C-C>']      = buf.format
-  -- This command comes from nvim-lspconfig.
-  nmap['<Leader>S']  = vim.cmd.ClangdSwitchSourceHeader
 end
 
 -----------------------------------------------------------------
