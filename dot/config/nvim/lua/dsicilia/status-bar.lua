@@ -113,14 +113,13 @@ local function build_impl( buf )
   -- which case we make the status bar background color to be
   -- darker since it looks better.
   local n_wins = vim.fn.winnr( '$' )
-  -- TODO: clean this up.
   local bg = (n_wins == 1) and '%#Status1Win#' or '%#StatusNWin#'
-  local progress_color = (n_wins == 1) and '%#LspIndexingMsg1Win#'
-                                        or '%#LspIndexingMsgNWin#'
-  local compiling_color = (n_wins == 1) and '%#Compiling1Win#'
-                                         or '%#CompilingNWin#'
-  local hint_info_color = (n_wins == 1) and '%#HintInfo1Win#'
-                                         or '%#HintInfoNWin#'
+  local choose_hi = function( prefix )
+    return '%#'..prefix..((n_wins == 1) and '1Win#' or 'NWin#')
+  end
+  local progress_color  = choose_hi( 'LspIndexingMsg' )
+  local compiling_color = choose_hi( 'Compiling' )
+  local hint_info_color = choose_hi( 'HintInfo' )
 
   -- No string.format here as it messes up the inline highlights.
   local function diagnostics()

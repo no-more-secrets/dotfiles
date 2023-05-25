@@ -24,10 +24,10 @@ endfunction
 let s:using_python3 = s:UsingPython3()
 
 function! s:Pyeval( eval_string )
-    if s:using_python3
-        return py3eval( a:eval_string )
-    endif
-    return pyeval( a:eval_string )
+  if s:using_python3
+    return py3eval( a:eval_string )
+  endif
+  return pyeval( a:eval_string )
 endfunction
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -283,6 +283,14 @@ call vundle#begin()
     Plugin 'tbastos/vim-lua'           " Improved lua syntax highlighting.
     Plugin 'bfrg/vim-cpp-modern'       " Modern C++ syntax highlighting.
     Plugin 'neovim/nvim-lspconfig'     " Configs for language servers.
+    Plugin 'hrsh7th/nvim-cmp'          " Auto-completion.
+    Plugin 'L3MON4D3/LuaSnip'          " Snippet engine. Required by nvim-cmp.
+    Plugin 'hrsh7th/cmp-nvim-lsp'      " Neovim LSP source for nvim-cmp.
+    Plugin 'hrsh7th/cmp-buffer'        " nvim-cmp source from current buffer.
+    Plugin 'hrsh7th/cmp-path'          " nvim-cmp source for file paths.
+    Plugin 'hrsh7th/cmp-cmdline'       " nvim-cmp source for vim : commands.
+    Plugin 'hrsh7th/cmp-nvim-lua'      " nvim-cmp source for nvim lua api functions.
+    Plugin 'saadparwaiz1/cmp_luasnip'  " nvim-cmp source from list of snippets.
 call vundle#end()            " required
 
 filetype plugin indent on    " required

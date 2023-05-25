@@ -106,9 +106,6 @@ local function on_lsp_attach( args )
   local bufnr = args.buf
   local client = vim.lsp.get_client_by_id( args.data.client_id )
 
-  -- Enable completion triggered by <c-x><c-o>
-  vim.bo[bufnr].omnifunc = 'v:lua.vim.lsp.omnifunc'
-
   -- Buffer local mappings.
   -- See `:help vim.lsp.*` for documentation on any of the below functions
   local mappers  = require( 'dsicilia.mappers' )
