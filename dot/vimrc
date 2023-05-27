@@ -34,26 +34,14 @@ endfunction
 "                              Undo
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-" For each edited file vim will persist all the undo info for
-" all history in a .*~ file in central location.
-set undofile
-set undodir=~/.vim/undo
-
 " The Undo diff view will be in a new window below the file being
 " edited instead of (the default, which is) to place it below the
 " graph view on the left.
-let g:mundo_preview_bottom = 1
+"let g:mundo_preview_bottom = 1
 
 " Close the Undo view automatically when reverting (i.e., when
 " hitting enter on a node).
-let g:mundo_close_on_revert = 1
-
-" This toggles the Mundo (plugin) undo tree window. The reason
-" for the two <CR>'s is because this command normally seems to
-" cause a 'Press ENTER...' prompt to appear the first time it is
-" started in a vim session which is somewhat annoying, and so
-" this seems to be be a workaround that fixes that.
-nnoremap U :MundoToggle<CR><CR>
+"let g:mundo_close_on_revert = 1
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 "                         Key Mappings
@@ -248,16 +236,6 @@ let g:lua_syntax_nofold = 1
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 "                            Vundle
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-" Brief help
-" :PluginList       - lists configured plugins
-" :PluginInstall    - installs plugins
-" :PluginUpdate     - update plugins
-" :PluginClean      - confirms removal of unused plugins
-filetype off                  " required
-
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-
 let g:cpp_function_highlight = 0
 let g:c_no_curly_error=1
 " let g:cpp_member_variable_highlight = 1
@@ -266,34 +244,6 @@ let g:cpp_attributes_highlight = 1
 " Highlight struct/class member variables (affects both C and C++ files)
 let g:cpp_member_highlight = 1
 let g:cpp_concepts_highlight = 1
-
-call vundle#begin()
-    " Note: Vundle needs to manage Vundle
-    Plugin 'VundleVim/Vundle.vim'
-    Plugin 'godlygeek/tabular'         " Auto alignment
-    Plugin 'easymotion/vim-easymotion' " Web-browser-like navigation overlays
-    Plugin 'scrooloose/nerdcommenter'  " Auto comment manipulation
-    Plugin 'simnalamburt/vim-mundo'    " Undo tree interaction
-    Plugin 'morhetz/gruvbox'           " colorscheme
-    Plugin 'junegunn/fzf'              " fuzzy searching
-    Plugin 'junegunn/fzf.vim'          " vim plugin for fzf
-    Plugin 'terryma/vim-expand-region' " expand selected region
-    Plugin 'tibabit/vim-templates'     " file templates with placeholders
-    Plugin 'tikhomirov/vim-glsl'       " Syntax file for OpenGL shaders.
-    Plugin 'tbastos/vim-lua'           " Improved lua syntax highlighting.
-    Plugin 'bfrg/vim-cpp-modern'       " Modern C++ syntax highlighting.
-    Plugin 'neovim/nvim-lspconfig'     " Configs for language servers.
-    Plugin 'hrsh7th/nvim-cmp'          " Auto-completion.
-    Plugin 'L3MON4D3/LuaSnip'          " Snippet engine. Required by nvim-cmp.
-    Plugin 'hrsh7th/cmp-nvim-lsp'      " Neovim LSP source for nvim-cmp.
-    Plugin 'hrsh7th/cmp-buffer'        " nvim-cmp source from current buffer.
-    Plugin 'hrsh7th/cmp-path'          " nvim-cmp source for file paths.
-    Plugin 'hrsh7th/cmp-cmdline'       " nvim-cmp source for vim : commands.
-    Plugin 'hrsh7th/cmp-nvim-lua'      " nvim-cmp source for nvim lua api functions.
-    Plugin 'saadparwaiz1/cmp_luasnip'  " nvim-cmp source from list of snippets.
-call vundle#end()            " required
-
-filetype plugin indent on    " required
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 "                            Buffers
@@ -320,8 +270,8 @@ au FileType make    let g:commentstring="# %s"
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 "                             Themes
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-set background=dark
-colorscheme gruvbox
+"set background=dark
+"colorscheme gruvbox
 
 " Make comments italic.
 highlight Comment cterm=italic gui=italic

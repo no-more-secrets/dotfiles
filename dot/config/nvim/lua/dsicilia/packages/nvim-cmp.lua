@@ -121,10 +121,16 @@ cmp.setup.cmdline( ':', {
   mapping = cmp.mapping.preset.cmdline(),
   sources = cmp.config.sources(
     { -- Priority 1.
-      { name = 'path' }
+      {
+        name = 'path',
+        keyword_length=2
+      }
     },
     { -- Priority 2.
-      { name = 'cmdline' }
+      {
+        name = 'cmdline',
+        keyword_length=2
+      }
     }
   )
 } )

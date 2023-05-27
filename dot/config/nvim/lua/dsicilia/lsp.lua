@@ -13,9 +13,6 @@ local protocol = require( 'vim.lsp.protocol' )
 -----------------------------------------------------------------
 local format = string.format
 
-local autocmd = vim.api.nvim_create_autocmd
-local augroup = vim.api.nvim_create_augroup
-
 local ErrorCodes = protocol.ErrorCodes
 
 local sign_define = vim.fn.sign_define
@@ -102,7 +99,7 @@ end
 -- Performs actions only after the language server attaches to
 -- the current buffer. These actions will apply to all language
 -- servers, so should be generic.
-local function on_lsp_attach( args )
+function M.on_lsp_attach( args )
   local bufnr = args.buf
   local client = vim.lsp.get_client_by_id( args.data.client_id )
 
@@ -140,14 +137,6 @@ local function on_lsp_attach( args )
   vmap['<leader>ca'] = buf.code_action
   nmap['<C-C>']      = buf.format
 end
-
------------------------------------------------------------------
--- Auto-commands.
------------------------------------------------------------------
-autocmd( 'LspAttach', {
-  group = augroup( 'UserLspConfig', {} ),
-  callback = on_lsp_attach
-} )
 
 -----------------------------------------------------------------
 -- Diagnostics.

@@ -33,16 +33,6 @@ local function clone_hl( template, new_hl, modifier_fn )
   vim.api.nvim_set_hl( 0, new_hl, existing )
 end
 
--- StatusLineNC is the status line on non-active windows; we use
--- it for all windows when there are multiple windows because it
--- has a non-highlighted color (unlike StatusLine) that looks
--- better and blends with the color of the dividers. For when
--- there is only one window open we use LineNr for the status
--- line so that it will have a transparent background, which
--- tends to look better when there is only one window.
-clone_hl( 'LineNr',       'Status1Win' )
-clone_hl( 'StatusLineNC', 'StatusNWin' )
-
 -- Takes a highlight group and clones it but makes the foreground
 -- text bright bold white.
 local function make_bold_fg( template, new_hl, color )
@@ -57,14 +47,35 @@ local GRUVBOX_LIGHT0        = '#fbf1c7'
 local GRUVBOX_LIGHT2        = '#d5c4a1'
 local GRUVBOX_BRIGHT_ORANGE = '#fe8019'
 
-make_bold_fg( 'Status1Win', 'LspIndexingMsg1Win', GRUVBOX_LIGHT2 )
-make_bold_fg( 'StatusNWin', 'LspIndexingMsgNWin', GRUVBOX_LIGHT2 )
+local function recompute_status_bar_colors()
+  -- StatusLineNC is the status line on non-active windows; we
+  -- use it for all windows when there are multiple windows be-
+  -- cause it has a non-highlighted color (unlike StatusLine)
+  -- that looks better and blends with the color of the dividers.
+  -- For when there is only one window open we use LineNr for the
+  -- status line so that it will have a transparent background,
+  -- which tends to look better when there is only one window.
+  clone_hl( 'LineNr',       'Status1Win' )
+  clone_hl( 'StatusLineNC', 'StatusNWin' )
 
-make_bold_fg( 'Status1Win', 'Compiling1Win', GRUVBOX_BRIGHT_ORANGE )
-make_bold_fg( 'StatusNWin', 'CompilingNWin', GRUVBOX_BRIGHT_ORANGE )
+  make_bold_fg( 'Status1Win', 'LspIndexingMsg1Win', GRUVBOX_LIGHT2 )
+  make_bold_fg( 'StatusNWin', 'LspIndexingMsgNWin', GRUVBOX_LIGHT2 )
 
-make_bold_fg( 'Status1Win', 'HintInfo1Win', GRUVBOX_LIGHT0 )
-make_bold_fg( 'StatusNWin', 'HintInfoNWin', GRUVBOX_LIGHT0 )
+  make_bold_fg( 'Status1Win', 'Compiling1Win', GRUVBOX_BRIGHT_ORANGE )
+  make_bold_fg( 'StatusNWin', 'CompilingNWin', GRUVBOX_BRIGHT_ORANGE )
+
+  make_bold_fg( 'Status1Win', 'HintInfo1Win', GRUVBOX_LIGHT0 )
+  make_bold_fg( 'StatusNWin', 'HintInfoNWin', GRUVBOX_LIGHT0 )
+end
+
+recompute_status_bar_colors()
+
+-- When we set the colorscheme we need to update these. This is
+-- so that after we e.g. load the gruvbox plugin (which sets our
+-- colorscheme) the status bar colors will be recomputed, so that
+-- way we don't have to worry about importing this module in any
+-- order with respect to loading that plugin.
+autocmd( 'ColorScheme', { callback = recompute_status_bar_colors } )
 
 -----------------------------------------------------------------
 -- Global state.
