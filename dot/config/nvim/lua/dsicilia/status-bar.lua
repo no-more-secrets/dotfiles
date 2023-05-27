@@ -6,8 +6,9 @@ local M = {}
 -----------------------------------------------------------------
 -- Imports.
 -----------------------------------------------------------------
-local lsp = require( 'dsicilia.lsp' )
-local uri = require( 'vim.uri' )
+local lsp    = require( 'dsicilia.lsp' )
+local uri    = require( 'vim.uri' )
+local colors = require( 'dsicilia.colors' )
 
 -----------------------------------------------------------------
 -- Aliases.
@@ -17,6 +18,8 @@ local match   = string.match
 local autocmd = vim.api.nvim_create_autocmd
 local augroup = vim.api.nvim_create_augroup
 
+local clone_hl = colors.clone_hl
+
 -----------------------------------------------------------------
 -- Options.
 -----------------------------------------------------------------
@@ -25,14 +28,6 @@ vim.o.laststatus = 2
 -----------------------------------------------------------------
 -- Colors.
 -----------------------------------------------------------------
--- Takes a highlight group and clones it but makes the foreground
--- text bright bold white.
-local function clone_hl( template, new_hl, modifier_fn )
-  local existing = vim.api.nvim_get_hl( 0, { name=template } )
-  if modifier_fn then modifier_fn( existing ) end
-  vim.api.nvim_set_hl( 0, new_hl, existing )
-end
-
 -- Takes a highlight group and clones it but makes the foreground
 -- text bright bold white.
 local function make_bold_fg( template, new_hl, color )

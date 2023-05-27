@@ -9,47 +9,8 @@
 set timeoutlen=1000 ttimeoutlen=0
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-"                           Utilities
-" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-let g:space_char = ' '
-
-function! s:UsingPython3()
-    if has( 'python3' )
-        return 1
-    endif
-    return 0
-endfunction
-
-let s:using_python3 = s:UsingPython3()
-
-function! s:Pyeval( eval_string )
-  if s:using_python3
-    return py3eval( a:eval_string )
-  endif
-  return pyeval( a:eval_string )
-endfunction
-
-" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-"                              Undo
-" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-" The Undo diff view will be in a new window below the file being
-" edited instead of (the default, which is) to place it below the
-" graph view on the left.
-"let g:mundo_preview_bottom = 1
-
-" Close the Undo view automatically when reverting (i.e., when
-" hitting enter on a node).
-"let g:mundo_close_on_revert = 1
-
-" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 "                         Key Mappings
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-" Comment out the word that the cursor is on using /* ... */.
-" This does not work for words that are one character in length.
-nnoremap <Leader>cw lbi/*<ESC>lea*/<ESC>bb
-
 " This function changes the standard `z.` so that if it is pressed twice
 " within one second then the first time it is pressed it will move the
 " current line to the center of the screen as usual, but the second time it
@@ -78,14 +39,6 @@ endfunction
 nnoremap z. :call ZeeDot()<CR>
 
 nnoremap <Leader>Y :set syntax=yaml<CR>
-
-" Add spaces after comment delimiters by default.
-let g:NERDSpaceDelims = 1
-" Allow commenting and inverting empty lines (useful when com-
-" menting a region).
-let g:NERDCommentEmptyLines = 1
-" Enable trimming of trailing whitespace when uncommenting.
-let g:NERDTrimTrailingWhitespace = 1
 
 let g:tools = $HOME . '/dev/tools'
 
@@ -234,18 +187,6 @@ let g:lua_syntax_nofold = 1
 " let g:lua_syntax_nostdlib = 1
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-"                            Vundle
-" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-let g:cpp_function_highlight = 0
-let g:c_no_curly_error=1
-" let g:cpp_member_variable_highlight = 1
-" let g:cpp_class_decl_highlight = 1
-let g:cpp_attributes_highlight = 1
-" Highlight struct/class member variables (affects both C and C++ files)
-let g:cpp_member_highlight = 1
-let g:cpp_concepts_highlight = 1
-
-" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 "                            Buffers
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 " Put these after the plugin stuff above since it looks like some
@@ -270,12 +211,6 @@ au FileType make    let g:commentstring="# %s"
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 "                             Themes
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-"set background=dark
-"colorscheme gruvbox
-
-" Make comments italic.
-highlight Comment cterm=italic gui=italic
-
 " This is so that we don't see an ugly horizontal bar when code
 " is folded.
 highlight Folded guibg=#262626

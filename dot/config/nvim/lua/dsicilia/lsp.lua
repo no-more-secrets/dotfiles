@@ -16,6 +16,7 @@ local format = string.format
 local ErrorCodes = protocol.ErrorCodes
 
 local sign_define = vim.fn.sign_define
+local autocmd = vim.api.nvim_create_autocmd
 
 -----------------------------------------------------------------
 -- Logging.
@@ -43,18 +44,29 @@ local YLW = '#fabd2f' -- gruvbox "bright_yellow".
 local BLK = '#1d2021' -- gruvbox "dark0_hard".
 local WHT = '#fbf1c7' -- gruvbox "light0".
 
-vim.api.nvim_set_hl( 0, 'DiagnosticVirtualTextError', { fg=RED } )
-vim.api.nvim_set_hl( 0, 'DiagnosticFloatingError',    { fg=RED } )
-vim.api.nvim_set_hl( 0, 'DiagnosticVirtualTextWarn',  { fg=YLW } )
-vim.api.nvim_set_hl( 0, 'DiagnosticFloatingWarn',     { fg=YLW } )
-vim.api.nvim_set_hl( 0, 'DiagnosticVirtualTextHint',  { fg=WHT } )
-vim.api.nvim_set_hl( 0, 'DiagnosticFloatingHint',     { fg=WHT } )
-vim.api.nvim_set_hl( 0, 'DiagnosticVirtualTextInfo',  { fg=WHT } )
-vim.api.nvim_set_hl( 0, 'DiagnosticFloatingInfo',     { fg=WHT } )
-vim.api.nvim_set_hl( 0, 'DiagnosticError',    { fg=BLK, bg=RED } )
-vim.api.nvim_set_hl( 0, 'DiagnosticWarn',     { fg=BLK, bg=YLW } )
-vim.api.nvim_set_hl( 0, 'DiagnosticHint',     { fg=BLK, bg=WHT } )
-vim.api.nvim_set_hl( 0, 'DiagnosticInfo',     { fg=BLK, bg=WHT } )
+local function recompute_diagnostic_colors()
+  vim.api.nvim_set_hl( 0, 'DiagnosticVirtualTextError', { fg=RED } )
+  vim.api.nvim_set_hl( 0, 'DiagnosticFloatingError',    { fg=RED } )
+  vim.api.nvim_set_hl( 0, 'DiagnosticVirtualTextWarn',  { fg=YLW } )
+  vim.api.nvim_set_hl( 0, 'DiagnosticFloatingWarn',     { fg=YLW } )
+  vim.api.nvim_set_hl( 0, 'DiagnosticVirtualTextHint',  { fg=WHT } )
+  vim.api.nvim_set_hl( 0, 'DiagnosticFloatingHint',     { fg=WHT } )
+  vim.api.nvim_set_hl( 0, 'DiagnosticVirtualTextInfo',  { fg=WHT } )
+  vim.api.nvim_set_hl( 0, 'DiagnosticFloatingInfo',     { fg=WHT } )
+  vim.api.nvim_set_hl( 0, 'DiagnosticError',    { fg=BLK, bg=RED } )
+  vim.api.nvim_set_hl( 0, 'DiagnosticWarn',     { fg=BLK, bg=YLW } )
+  vim.api.nvim_set_hl( 0, 'DiagnosticHint',     { fg=BLK, bg=WHT } )
+  vim.api.nvim_set_hl( 0, 'DiagnosticInfo',     { fg=BLK, bg=WHT } )
+end
+
+recompute_diagnostic_colors()
+
+-- When we set the colorscheme we need to update these. This is
+-- so that after we e.g. load the gruvbox plugin (which sets our
+-- colorscheme) the status bar colors will be recomputed, so that
+-- way we don't have to worry about importing this module in any
+-- order with respect to loading that plugin.
+autocmd( 'ColorScheme', { callback = recompute_diagnostic_colors } )
 
 -- This can optionally be used to turn off semantic highlighting.
 -- But once it is off, it cannot be turned back on without

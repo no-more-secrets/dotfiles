@@ -44,6 +44,28 @@ return require( 'packer' ).startup( function( use )
     end
   }
 
+  -- Auto-commenter plugin.
+  use {
+    'numToStr/Comment.nvim',
+    config = function()
+      require( 'dsicilia.packages.comments' )
+    end
+  }
+
+  -- Improved lua syntax highlighting.
+  use 'tbastos/vim-lua'
+
+  -- Modern C++ syntax highlighting. Note that this won't really
+  -- be used when clangd is providing semantic highlighting. It's
+  -- mainly for when we are viewing a cpp file and don't have
+  -- clangd running.
+  use {
+    'bfrg/vim-cpp-modern',
+    config = function()
+      require( 'dsicilia.packages.vim-cpp-modern' )
+    end
+  }
+
   -- Auto-completion Engine.
   use {
     'hrsh7th/nvim-cmp',
@@ -70,9 +92,6 @@ return require( 'packer' ).startup( function( use )
   -- Web-browser-like navigation overlays.
   -- use 'easymotion/vim-easymotion'
 
-  -- Auto comment manipulation.
-  -- use 'scrooloose/nerdcommenter'
-
   -- fuzzy searching.
   -- use 'junegunn/fzf'
 
@@ -81,12 +100,6 @@ return require( 'packer' ).startup( function( use )
 
   ------------------------------------
   -- Needed?
-
-  -- Improved lua syntax highlighting.
-  use 'tbastos/vim-lua'
-
-  -- Modern C++ syntax highlighting.
-  -- use 'bfrg/vim-cpp-modern'
 
   -- Should go last.
   if bootstrapping then require( 'packer' ).sync() end
