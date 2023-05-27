@@ -72,14 +72,12 @@ return require( 'packer' ).startup( function( use )
     end
   }
 
-  --if vim.fn.executable( 'tree-sitter' ) == 1 then
   use {
     'nvim-treesitter/nvim-treesitter',
     config = function()
       require( 'dsicilia.packages.tree-sitter' )
     end
   }
-  --end
 
   -- Auto-completion Engine.
   use {

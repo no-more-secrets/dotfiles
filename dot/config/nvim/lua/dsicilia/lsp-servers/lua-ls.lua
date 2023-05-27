@@ -9,6 +9,10 @@ local lspconfig  = require( 'lspconfig' )
 local autocomplete_capabilities =
     require( 'cmp_nvim_lsp' ).default_capabilities()
 
+if vim.fn.executable( 'lua-language-server' ) == 0 then
+  return
+end
+
 lspconfig.lua_ls.setup {
   cmd = { 'lua-language-server' },
   capabilities = autocomplete_capabilities,
