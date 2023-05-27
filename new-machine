@@ -184,12 +184,17 @@ log "Creating recycle symlink."
 # Pull in gruvbox config from server.
 # ---------------------------------------------------------------
 log "Updating gruvbox colorscheme local changes..."
-gruvbox_vim="$HOME/.dotfiles/dot/vim/bundle/gruvbox/colors/gruvbox.vim"
+gruvbox_vim="$HOME/.local/share/nvim/site/pack/packer/start/gruvbox/colors/gruvbox.vim"
 scp dsicilia@$server:$gruvbox_vim $gruvbox_vim
 
 echo
 log 'Finished setup, press enter to begin building tools...'
 read
+
+# ---------------------------------------------------------------
+# Install tree-sitter.
+# ---------------------------------------------------------------
+cargo install tree-sitter-cli
 
 # ---------------------------------------------------------------
 # Run build scripts.

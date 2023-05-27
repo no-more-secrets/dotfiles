@@ -17,9 +17,6 @@ msg 'Sourcing new .bashrc...'
 # commands.
 source ~/.bashrc; check 'source new .bashrc'
 
-# Install all the vim plugins.
-bash scripts/vundle.sh; check 'setup vundle'
-
 bash scripts/rebuild.sh "$@"; check 'rebuild and/or update components'
 
 # Set terminal colors (probably assumes GNOME terminal).

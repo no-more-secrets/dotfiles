@@ -38,7 +38,7 @@ alias tmux='tmux -2'
 # ║                          Variables                          ║
 # ╚═════════════════════════════════════════════════════════════╝
 export PS1="\$? [\u@\h \W]$ "
-export PATH=~/bin:~/opt/bin:~/.local/bin:$PATH
+export PATH=~/bin:~/opt/bin:~/.local/bin:~/.cargo/bin:$PATH
 export LD_LIBRARY_PATH=~/lib
 export GREP_COLORS="mt=01;32"
 export EDITOR=$HOME/dev/tools/vim-current/bin/vim

@@ -1,11 +1,17 @@
 -----------------------------------------------------------------
 -- packer.nvim package setup.
 -----------------------------------------------------------------
--- Bootstrapping needs to go first.
-local bootstrap = require( 'dsicilia.packages.bootstrap' )
 
+-----------------------------------------------------------------
+-- Bootstrap.
+-----------------------------------------------------------------
+-- Bootstrapping needs to go before packer.nvim startup.
+local bootstrap = require( 'dsicilia.packages.bootstrap' )
 local bootstrapping = bootstrap.ensure_packer()
 
+-----------------------------------------------------------------
+-- Setup.
+-----------------------------------------------------------------
 return require( 'packer' ).startup( function( use )
   use 'wbthomason/packer.nvim'
 
@@ -56,15 +62,24 @@ return require( 'packer' ).startup( function( use )
   use 'tbastos/vim-lua'
 
   -- Modern C++ syntax highlighting. Note that this won't really
-  -- be used when clangd is providing semantic highlighting. It's
-  -- mainly for when we are viewing a cpp file and don't have
-  -- clangd running.
+  -- be used when clangd or tree-sitter are providing semantic
+  -- highlighting. It's mainly for when we are viewing a cpp file
+  -- and don't have clangd running.
   use {
     'bfrg/vim-cpp-modern',
     config = function()
       require( 'dsicilia.packages.vim-cpp-modern' )
     end
   }
+
+  --if vim.fn.executable( 'tree-sitter' ) == 1 then
+  use {
+    'nvim-treesitter/nvim-treesitter',
+    config = function()
+      require( 'dsicilia.packages.tree-sitter' )
+    end
+  }
+  --end
 
   -- Auto-completion Engine.
   use {

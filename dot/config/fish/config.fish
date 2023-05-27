@@ -14,7 +14,7 @@ set -g fish_key_bindings my_vi_bindings
 
 set -l fish_local_config ~/.config/fish/local-config.fish
 
-set PATH ~/bin ~/.local/bin $PATH
+set PATH ~/bin ~/.local/bin ~/.cargo/bin $PATH
 
 set -g fish_prompt_pwd_dir_length 2
 
