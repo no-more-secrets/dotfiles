@@ -1,5 +1,5 @@
 -----------------------------------------------------------------
--- C++ snippets.
+-- Lua snippets.
 -----------------------------------------------------------------
 local assembler = require( 'dsicilia.snippets.assemble' )
 local S = {}
@@ -7,15 +7,13 @@ local S = {}
 -----------------------------------------------------------------
 -- Snippets.
 -----------------------------------------------------------------
-S.section =
-[[/****************************************************************
-** $1
-*****************************************************************/
-$0]]
+-- Sample lua snippet. Trigger by typing =zzz.
+S.zzz =
+[[local function $1( $2 )
+  $0
+end
 
--- Parameter label. This theoretically is supposed to work in all
--- languages, but it doesn't seem to work in Lua.
-S.plabel = '$BLOCK_COMMENT_START$1=$BLOCK_COMMENT_END$0'
+]]
 
 -----------------------------------------------------------------
 -- Assemble and parse snippets.

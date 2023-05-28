@@ -34,19 +34,25 @@ imap['<C-p>'] = function()
 end
 
 -----------------------------------------------------------------
--- Load snippets.
+-- Load lua snippets.
 -----------------------------------------------------------------
-local SNIPPETS_FOLDER = '~/.config/nvim/lua/dsicilia/snippets'
-
--- There are a couple of ways to add snippets with LuaSnip; the
--- one we're doing is to store them in separate files, repre-
--- sented in Lua, and then load them per file type. The docs for
--- this method are here:
---
---   https://github.com/L3MON4D3/LuaSnip/blob/master/DOC.md#lua
---
 -- NOTE: it appears that the plugin will watch for any changes to
 -- those files an automatically pick them up, so if you add a
 -- snippet in the future then you don't have to source the file
 -- or reload the editor.
-require( "luasnip.loaders.from_lua" ).load{ paths=SNIPPETS_FOLDER }
+local SNIPPETS_FOLDER = '~/.config/nvim/lua/dsicilia/snippets'
+
+-- This will load snippets from SnipMate files. This should be
+-- the default way to store simple snippets, unless the more pow-
+-- erful Lua method (below) is needed.
+require( "luasnip.loaders.from_snipmate" ).lazy_load {
+  paths = { SNIPPETS_FOLDER .. '/snipmate' }
+}
+
+-- This will load snippets defined as strings (to be parsed) in-
+-- side lua files. This method is the most flexible, but is more
+-- difficult to use.  Most standard/simple snippets should be
+-- defined in the snipmate files further below.
+require( "luasnip.loaders.from_lua" ).load {
+  paths = { SNIPPETS_FOLDER .. '/lua' }
+}
