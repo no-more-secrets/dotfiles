@@ -12,6 +12,9 @@ local bootstrapping = bootstrap.ensure_packer()
 -----------------------------------------------------------------
 -- Setup.
 -----------------------------------------------------------------
+-- BEWARE: packer precompiles the code inside the config function
+-- objects, so they cannot use any upvalues of any kind. They can
+-- only reference globals.
 return require( 'packer' ).startup( function( use )
   use 'wbthomason/packer.nvim'
 
@@ -20,6 +23,13 @@ return require( 'packer' ).startup( function( use )
     'mbbill/undotree',
     config = function()
       require( 'dsicilia.packages.undotree' )
+    end
+  }
+
+  use {
+    'ggandor/leap.nvim',
+    config = function()
+      require( 'dsicilia.packages.leap' )
     end
   }
 
@@ -46,7 +56,6 @@ return require( 'packer' ).startup( function( use )
     'neovim/nvim-lspconfig',
     config = function()
       require( 'dsicilia.packages.nvim-lspconfig' )
-      require( 'dsicilia.lsp-servers' )
     end
   }
 
@@ -75,17 +84,17 @@ return require( 'packer' ).startup( function( use )
   use {
     'nvim-treesitter/nvim-treesitter',
     config = function()
-      require( 'dsicilia.packages.tree-sitter' )
+      require( 'dsicilia.packages.nvim-treesitter' )
     end
   }
 
   -- Auto-completion Engine.
   use {
     'hrsh7th/nvim-cmp',
-    requires = { 'L3MON4D3/LuaSnip' },
     config = function()
       require( 'dsicilia.packages.nvim-cmp' )
-    end
+    end,
+    requires = { 'L3MON4D3/LuaSnip' }
   }
 
   -- Auto-completion sources.
@@ -97,13 +106,15 @@ return require( 'packer' ).startup( function( use )
   use 'hrsh7th/cmp-nvim-lsp'     -- Source from Neovim LSP.
 
   -- Snippet engine.
-  use 'L3MON4D3/LuaSnip'
+  use {
+    'L3MON4D3/LuaSnip',
+    config = function()
+      require( 'dsicilia.packages.lua-snip' )
+    end
+  }
 
   ------------------------------------
   -- To be replaced:
-
-  -- Web-browser-like navigation overlays.
-  -- use 'easymotion/vim-easymotion'
 
   -- fuzzy searching.
   -- use 'junegunn/fzf'

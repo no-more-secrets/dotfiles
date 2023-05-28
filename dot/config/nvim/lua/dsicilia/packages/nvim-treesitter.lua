@@ -11,7 +11,7 @@ require( 'nvim-treesitter.configs' ).setup {
     'html',   'ini',        'java',      'json',
     'passwd', 'perl',       'python',    'regex',
     'rust',   'sql',        'toml',      'yaml',
-    'make',   'markdown',   'ninja',
+    'make',   'markdown',   'ninja',     'comment',
   },
 
   -- Install parsers synchronously (only applied to

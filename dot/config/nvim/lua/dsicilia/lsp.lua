@@ -68,16 +68,21 @@ recompute_diagnostic_colors()
 -- order with respect to loading that plugin.
 autocmd( 'ColorScheme', { callback = recompute_diagnostic_colors } )
 
--- This can optionally be used to turn off semantic highlighting.
--- But once it is off, it cannot be turned back on without
--- restarting the editor. Also, this will have to be re-called if
--- the colorscheme is changed.
 function M.disable_semantic_highlighting()
   local highlight_groups =
       vim.fn.getcompletion( "@lsp", "highlight" )
   for _, group in ipairs( highlight_groups ) do
     vim.api.nvim_set_hl( 0, group, {} )
   end
+end
+
+-- This can optionally be used to turn off semantic highlighting.
+-- But once it is off, it cannot be turned back on without
+-- restarting the editor.
+if false then
+  autocmd( 'ColorScheme', {
+    callback = M.disable_semantic_highlighting
+  } )
 end
 
 -----------------------------------------------------------------

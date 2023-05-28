@@ -1,27 +1,20 @@
 -----------------------------------------------------------------
--- Package: nvim-lspconfig
+-- Package: leap
 -----------------------------------------------------------------
+-- This is a quick navigation plugin.
 
 -----------------------------------------------------------------
 -- Imports.
 -----------------------------------------------------------------
-local lsp = require( 'dsicilia.lsp' )
+local mappers = require( 'dsicilia.mappers' )
 
 -----------------------------------------------------------------
 -- Aliases.
 -----------------------------------------------------------------
-local autocmd = vim.api.nvim_create_autocmd
-local augroup = vim.api.nvim_create_augroup
+local nmap = mappers.nmap
 
 -----------------------------------------------------------------
--- Auto-commands.
+-- Keymaps.
 -----------------------------------------------------------------
-autocmd( 'LspAttach', {
-  group = augroup( 'UserLspConfig', {} ),
-  callback = lsp.on_lsp_attach
-} )
-
------------------------------------------------------------------
--- Load language servers.
------------------------------------------------------------------
-require( 'dsicilia.lsp-servers' )
+nmap['s'] = '<Plug>(leap-forward-to)'
+nmap['S'] = '<Plug>(leap-backward-to)'
