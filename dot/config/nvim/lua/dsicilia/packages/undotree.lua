@@ -17,7 +17,7 @@ local cmd = vim.cmd
 -- Config.
 -----------------------------------------------------------------
 -- vim.o.undodir should already be set to a decent location.
-vim.o.undofile = false
+vim.o.undofile = true
 
 -----------------------------------------------------------------
 -- Keymaps.
