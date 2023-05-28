@@ -66,17 +66,17 @@ telescope.load_extension( 'fzf' )
 -- one mapped, then you just have to remember this one. It will
 -- show a list of all builtin pickers, allow you to pick one,
 -- then will run that picker.
-nmap['<leader>tb'] = builtin.builtin
+nmap['<leader>t?'] = builtin.builtin
 
 -- General.
 nmap['<C-t>']      = builtin.find_files
 nmap['<leader>ta'] = builtin.live_grep
-nmap['<leader>t/'] = builtin.buffers
+nmap['<leader>tb'] = builtin.buffers
 nmap['<leader>tw'] = builtin.grep_string
 -- FIXME: this one is supposed to search for the highlighted
 -- text, but doesn't seem to work.
 vmap['<leader>tw'] = builtin.grep_string
-nmap['<leader>tl'] = builtin.current_buffer_fuzzy_find
+nmap['<leader>t/'] = builtin.current_buffer_fuzzy_find
 
 -- Help tags.
 nmap['<leader>th'] = builtin.help_tags
