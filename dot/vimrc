@@ -126,34 +126,6 @@ function! AgWordVisual()
     call feedkeys( ':Ag ' . l:w . "\<CR>" )
 endfunction
 
-" Mappings for the fzf.vim plugin.
-" Files under CWD.
-nnoremap <C-T> :Files<CR>
-" <Leader>tt is reserved for global files.
-nmap <Leader>ts :GFiles?<CR>
-nmap <Leader>tl :Lines<CR>
-nmap <Leader>/  :BLines<CR>
-nmap <Leader>ta :Ag<CR>
-nmap <Leader>tw :call AgWord()<CR>
-vmap <Leader>tw :call AgWordVisual()<CR>
-nmap <F4> :Ag<CR>
-
-"let g:fzf_height = '20%'
-let g:fzf_layout = {
- \   'up':'~90%',
- \   'window': {
- \     'width':      0.8,
- \     'height':     0.8,
- \     'yoffset':    0.5,
- \     'xoffset':    0.5,
- \     'highlight': 'Todo',
- \     'border':    'sharp'
- \   }
- \ }
-
-" Set current directory to current file with ,cd
-nnoremap <Leader>cd :cd %:p:h<CR>:pwd<CR>
-
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 "                             netrw
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

@@ -113,17 +113,18 @@ return require( 'packer' ).startup( function( use )
     end
   }
 
-  ------------------------------------
-  -- To be replaced:
-
-  -- fuzzy searching.
-  -- use 'junegunn/fzf'
-
-  -- vim plugin for fzf.
-  -- use 'junegunn/fzf.vim'
-
-  ------------------------------------
-  -- Needed?
+  -- Telescope fuzzy finder.
+  use {
+    'nvim-telescope/telescope.nvim',
+    branch = '0.1.x',
+    config = function()
+      require( 'dsicilia.packages.telescope' )
+    end,
+    requires = {
+      { 'nvim-lua/plenary.nvim' },
+      { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
+    }
+  }
 
   -- Should go last.
   if bootstrapping then require( 'packer' ).sync() end

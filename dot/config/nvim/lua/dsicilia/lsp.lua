@@ -7,6 +7,7 @@ local M = {}
 -- Imports.
 -----------------------------------------------------------------
 local protocol = require( 'vim.lsp.protocol' )
+local telescope = require( 'telescope.builtin' )
 
 -----------------------------------------------------------------
 -- Aliases.
@@ -141,11 +142,9 @@ function M.on_lsp_attach( args )
 
   -- These actions cause a box to open with info somewhere.
   nmap['K']          = toggle_hover
-  -- TODO: make the list of references open in an fzf or tele-
-  -- scope window.
-  nmap['<leader>r']  = buf.references
+  nmap['gr']         = telescope.lsp_references
   nmap['<leader>ee'] = vim.diagnostic.open_float
-  nmap['<leader>eq'] = vim.diagnostic.setloclist
+  nmap['<leader>eq'] = telescope.diagnostics
   nmap['<leader>es'] = buf.signature_help
 
   -- These perform actions on the code.
