@@ -192,11 +192,6 @@ log 'Finished setup, press enter to begin building tools...'
 read
 
 # ---------------------------------------------------------------
-# Install tree-sitter.
-# ---------------------------------------------------------------
-cargo install tree-sitter-cli
-
-# ---------------------------------------------------------------
 # Run build scripts.
 # ---------------------------------------------------------------
 ~/dev/utilities/building/new-machine.sh
