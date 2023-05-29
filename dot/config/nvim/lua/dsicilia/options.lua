@@ -126,3 +126,9 @@ if has( 'clipboard' ) then vim.o.clipboard = 'unnamed' end
 -- Do not allow unsafe commands (such as shell commands) in
 -- project-specific vimrc files.
 vim.o.secure = true
+
+-- Netrw
+-- ==============================================================
+-- Disable netrw.
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1

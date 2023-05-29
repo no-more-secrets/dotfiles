@@ -69,8 +69,10 @@ telescope.load_extension( 'fzf' )
 nmap['<leader>t?'] = builtin.builtin
 
 -- General.
-nmap['<C-t>']      = builtin.find_files
+nmap['<C-t>']      = builtin.find_files -- under cwd
+nmap['<leader>tt'] = function() builtin.find_files{ cwd='~' } end
 nmap['<leader>ta'] = builtin.live_grep
+nmap['<leader>tA'] = function() builtin.live_grep{ cwd='~' } end
 nmap['<leader>tb'] = builtin.buffers
 nmap['<leader>tw'] = builtin.grep_string
 -- FIXME: this one is supposed to search for the highlighted
@@ -82,7 +84,8 @@ nmap['<leader>t/'] = builtin.current_buffer_fuzzy_find
 nmap['<leader>th'] = builtin.help_tags
 
 -- Git specific.
-nmap['<leader>ts'] = builtin.git_status
+nmap['<leader>tg'] = builtin.git_files -- all files in repo.
+nmap['<leader>ts'] = builtin.git_status -- changed files.
 
 -- Commands.
 nmap['<leader>tc'] = builtin.commands

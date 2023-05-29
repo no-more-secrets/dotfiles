@@ -129,6 +129,13 @@ return require( 'packer' ).startup( function( use )
     }
   }
 
+  use {
+    'nvim-tree/nvim-tree.lua',
+    config = function()
+      require( 'dsicilia.packages.nvim-tree' )
+    end
+  }
+
   -- Should go last.
   if bootstrapping then require( 'packer' ).sync() end
 end )
