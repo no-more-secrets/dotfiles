@@ -15,7 +15,7 @@ local function is_prev_char_a_space_or_nothing()
   return char_before_cursor:match( '%s' )
 end
 
-local DEFAULT_CMP_LENGTH = 4
+local DEFAULT_CMP_LENGTH = 1
 
 cmp.setup( {
   -- A snippet engine is required by nvim-cmp; some investigation
