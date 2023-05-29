@@ -7,12 +7,12 @@
 -- Imports.
 -----------------------------------------------------------------
 local mappers = require( 'dsicilia.mappers' )
+local colors = require( 'dsicilia.colors' )
 
 -----------------------------------------------------------------
 -- Aliases.
 -----------------------------------------------------------------
 local nmap = mappers.nmap
-local autocmd = vim.api.nvim_create_autocmd
 
 -----------------------------------------------------------------
 -- Keymaps.
@@ -20,9 +20,9 @@ local autocmd = vim.api.nvim_create_autocmd
 nmap['s'] = '<Plug>(leap-forward-to)'
 nmap['S'] = '<Plug>(leap-backward-to)'
 
-autocmd( 'ColorScheme', { callback = function()
-  vim.api.nvim_set_hl( 0, 'LeapBackdrop', { link='Comment' } )
-end } )
+colors.hl_setter( 'Leap', function( hi )
+  hi.LeapBackdrop = { link='Comment' }
+end )
 
 -- Bidirectional. Uncomment this is the directional keys above
 -- don't work out; this has a disadvantage that it won't auto

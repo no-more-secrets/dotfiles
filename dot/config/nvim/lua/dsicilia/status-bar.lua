@@ -42,7 +42,7 @@ local GRUVBOX_LIGHT0        = '#fbf1c7'
 local GRUVBOX_LIGHT2        = '#d5c4a1'
 local GRUVBOX_BRIGHT_ORANGE = '#fe8019'
 
-local function recompute_status_bar_colors()
+colors.hl_setter( 'StatusBar', function( _ )
   -- StatusLineNC is the status line on non-active windows; we
   -- use it for all windows when there are multiple windows be-
   -- cause it has a non-highlighted color (unlike StatusLine)
@@ -61,16 +61,7 @@ local function recompute_status_bar_colors()
 
   make_bold_fg( 'Status1Win', 'HintInfo1Win', GRUVBOX_LIGHT0 )
   make_bold_fg( 'StatusNWin', 'HintInfoNWin', GRUVBOX_LIGHT0 )
-end
-
-recompute_status_bar_colors()
-
--- When we set the colorscheme we need to update these. This is
--- so that after we e.g. load the gruvbox plugin (which sets our
--- colorscheme) the status bar colors will be recomputed, so that
--- way we don't have to worry about importing this module in any
--- order with respect to loading that plugin.
-autocmd( 'ColorScheme', { callback = recompute_status_bar_colors } )
+end )
 
 -----------------------------------------------------------------
 -- Global state.
@@ -261,21 +252,32 @@ vim.lsp.handlers["textDocument/clangd.fileStatus"]
 -----------------------------------------------------------------
 -- Auto-commands.
 -----------------------------------------------------------------
+local group = augroup( 'StatusBarGroup', { clear= true } )
+
 -- We need this because when the second-to-last window closes we
 -- need to update the status bar of the remaining window because
 -- when there is only one window left the status bar background
 -- color changes.
-autocmd( 'WinEnter', { callback = rebuild_from_event } )
+autocmd( 'WinEnter', {
+  group = group,
+  callback = rebuild_from_event
+} )
 
 -- This is needed so that if the status bar changes in a window
 -- on tab Y while editing in tab X, then when we switch to tab Y
 -- we will see the diagnostics updated in tab Y's status bar.
-autocmd( 'TabEnter', { callback = rebuild_for_current_tab  } )
+autocmd( 'TabEnter', {
+  group = group,
+  callback = rebuild_for_current_tab
+} )
 
 -- This is because the LSP is always working in the background,
 -- and we want the status bar to be updated whenever it has new
 -- results.
-autocmd( 'DiagnosticChanged', { callback = rebuild_from_event } )
+autocmd( 'DiagnosticChanged', {
+  group = group,
+  callback = rebuild_from_event
+} )
 
 -- Set the status bar immediately for the first buffer, otherwise
 -- it won't get updated until on of the above autocmd actions
@@ -315,7 +317,7 @@ end
 local function user_autocmd( event, callback )
   autocmd( 'User', {
     pattern  = event,
-    group    = augroup( 'StatusBar' .. event, { clear=true } ),
+    group    = group,
     callback = callback
   } )
 end

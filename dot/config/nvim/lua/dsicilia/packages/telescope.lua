@@ -9,6 +9,7 @@ local mappers = require( 'dsicilia.mappers' )
 local telescope = require( 'telescope' )
 local builtin = require( 'telescope.builtin' )
 local actions = require( 'telescope.actions' )
+local colors = require( 'dsicilia.colors' )
 
 -----------------------------------------------------------------
 -- Aliases
@@ -54,6 +55,15 @@ telescope.setup {
 
 -- Use fzf as the sorter.
 telescope.load_extension( 'fzf' )
+
+-----------------------------------------------------------------
+-- Colors.
+-----------------------------------------------------------------
+colors.hl_setter( 'Telescope', function( hi )
+  local GRUVBOX_NEUTRAL_BLUE = '#458588'
+  hi.TelescopeBorder    = { fg=GRUVBOX_NEUTRAL_BLUE }
+  hi.TelescopeSelection = { bg=GRUVBOX_NEUTRAL_BLUE }
+end )
 
 -----------------------------------------------------------------
 -- Keymaps.

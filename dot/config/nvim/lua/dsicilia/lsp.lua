@@ -8,6 +8,7 @@ local M = {}
 -----------------------------------------------------------------
 local protocol = require( 'vim.lsp.protocol' )
 local telescope = require( 'telescope.builtin' )
+local colors = require( 'dsicilia.colors' )
 
 -----------------------------------------------------------------
 -- Aliases.
@@ -51,29 +52,20 @@ local YLW = '#fabd2f' -- gruvbox "bright_yellow".
 local BLK = '#1d2021' -- gruvbox "dark0_hard".
 local WHT = '#fbf1c7' -- gruvbox "light0".
 
-local function recompute_diagnostic_colors()
-  vim.api.nvim_set_hl( 0, 'DiagnosticVirtualTextError', { fg=RED } )
-  vim.api.nvim_set_hl( 0, 'DiagnosticFloatingError',    { fg=RED } )
-  vim.api.nvim_set_hl( 0, 'DiagnosticVirtualTextWarn',  { fg=YLW } )
-  vim.api.nvim_set_hl( 0, 'DiagnosticFloatingWarn',     { fg=YLW } )
-  vim.api.nvim_set_hl( 0, 'DiagnosticVirtualTextHint',  { fg=WHT } )
-  vim.api.nvim_set_hl( 0, 'DiagnosticFloatingHint',     { fg=WHT } )
-  vim.api.nvim_set_hl( 0, 'DiagnosticVirtualTextInfo',  { fg=WHT } )
-  vim.api.nvim_set_hl( 0, 'DiagnosticFloatingInfo',     { fg=WHT } )
-  vim.api.nvim_set_hl( 0, 'DiagnosticError',    { fg=BLK, bg=RED } )
-  vim.api.nvim_set_hl( 0, 'DiagnosticWarn',     { fg=BLK, bg=YLW } )
-  vim.api.nvim_set_hl( 0, 'DiagnosticHint',     { fg=BLK, bg=WHT } )
-  vim.api.nvim_set_hl( 0, 'DiagnosticInfo',     { fg=BLK, bg=WHT } )
-end
-
-recompute_diagnostic_colors()
-
--- When we set the colorscheme we need to update these. This is
--- so that after we e.g. load the gruvbox plugin (which sets our
--- colorscheme) the status bar colors will be recomputed, so that
--- way we don't have to worry about importing this module in any
--- order with respect to loading that plugin.
-autocmd( 'ColorScheme', { callback = recompute_diagnostic_colors } )
+colors.hl_setter( 'LspDiag', function( hi )
+  hi.DiagnosticVirtualTextError = { fg=RED }
+  hi.DiagnosticFloatingError    = { fg=RED }
+  hi.DiagnosticVirtualTextWarn  = { fg=YLW }
+  hi.DiagnosticFloatingWarn     = { fg=YLW }
+  hi.DiagnosticVirtualTextHint  = { fg=WHT }
+  hi.DiagnosticFloatingHint     = { fg=WHT }
+  hi.DiagnosticVirtualTextInfo  = { fg=WHT }
+  hi.DiagnosticFloatingInfo     = { fg=WHT }
+  hi.DiagnosticError            = { fg=BLK, bg=RED }
+  hi.DiagnosticWarn             = { fg=BLK, bg=YLW }
+  hi.DiagnosticHint             = { fg=BLK, bg=WHT }
+  hi.DiagnosticInfo             = { fg=BLK, bg=WHT }
+end )
 
 -----------------------------------------------------------------
 -- Hover window.
