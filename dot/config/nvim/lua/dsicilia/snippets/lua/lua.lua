@@ -15,11 +15,19 @@ local function add_s( tbl )
   table.insert( S, s( unpack( tbl ) ) )
 end
 
+-- Normally the supplied function in a function node takes a list
+-- of arguments; this will unpack them so that our function can
+-- just take normal arguments.
+local function wrapf( func )
+  return function( args )
+    return func( unpack( args ) )
+  end
+end
+
 -----------------------------------------------------------------
 -- Snippets.
 -----------------------------------------------------------------
-local function center_offset( nodes )
-  local node = nodes[1]
+local function center_offset( node )
   local text = node[1]
   local len = #text
   local preamble_len = 3 -- "-- "
@@ -43,9 +51,32 @@ add_s {
       {}
     ]],
     {
-      f( center_offset, { 1 } ),
+      f( wrapf( center_offset ), { 1 } ),
       i( 1 ),
       i( 0 ),
+    }
+  )
+}
+
+local function required_last( node )
+  local text = node[1]
+  print( 'text:', text )
+  local last = text:match( '.*%.(.*)' )
+  last = last or text
+  last = last:gsub( '-', '_' )
+  return last or '???'
+end
+
+-- This is a smart require statement that will extract the last
+-- component of the module being required and will use it to name
+-- the local variable holding the module.
+add_s {
+  '=req',
+  fmt(
+    "local {} = require( '{}' )",
+    {
+      f( wrapf( required_last ), { 1 } ),
+      i( 1 )
     }
   )
 }
