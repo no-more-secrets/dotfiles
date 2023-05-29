@@ -51,13 +51,16 @@ return require( 'packer' ).startup( function( use )
   -- Syntax file for OpenGL shaders..
   use 'tikhomirov/vim-glsl'
 
-  -- Configs for language servers..
+  -- Configs for language servers.
   use {
     'neovim/nvim-lspconfig',
     config = function()
       require( 'dsicilia.packages.nvim-lspconfig' )
     end
   }
+
+  -- Language server for bash.
+  use 'bash-lsp/bash-language-server'
 
   -- Auto-commenter plugin.
   use {
