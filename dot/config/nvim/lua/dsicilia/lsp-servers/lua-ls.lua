@@ -27,7 +27,7 @@ lspconfig.lua_ls.setup {
       },
       diagnostics = {
         -- Get the language server to recognize the `vim` global.
-        globals = { 'vim', 'ROOT', 'log', 'ROOT_TS' },
+        globals = { 'vim' },
       },
       workspace = {
         -- Make the server aware of Neovim runtime files.
