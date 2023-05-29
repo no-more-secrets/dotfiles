@@ -315,7 +315,7 @@ end
 local function user_autocmd( event, callback )
   autocmd( 'User', {
     pattern  = event,
-    group    = augroup( 'StatusBar' .. event, {} ),
+    group    = augroup( 'StatusBar' .. event, { clear=true } ),
     callback = callback
   } )
 end

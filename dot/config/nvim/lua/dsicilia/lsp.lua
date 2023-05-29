@@ -18,6 +18,12 @@ local ErrorCodes = protocol.ErrorCodes
 
 local sign_define = vim.fn.sign_define
 local autocmd = vim.api.nvim_create_autocmd
+local augroup = vim.api.nvim_create_augroup
+
+-----------------------------------------------------------------
+-- Constants.
+-----------------------------------------------------------------
+local LSP_SEMANTIC_HIGHLIGHTING = false
 
 -----------------------------------------------------------------
 -- Logging.
@@ -69,23 +75,6 @@ recompute_diagnostic_colors()
 -- order with respect to loading that plugin.
 autocmd( 'ColorScheme', { callback = recompute_diagnostic_colors } )
 
-function M.disable_semantic_highlighting()
-  local highlight_groups =
-      vim.fn.getcompletion( "@lsp", "highlight" )
-  for _, group in ipairs( highlight_groups ) do
-    vim.api.nvim_set_hl( 0, group, {} )
-  end
-end
-
--- This can optionally be used to turn off semantic highlighting.
--- But once it is off, it cannot be turned back on without
--- restarting the editor.
-if false then
-  autocmd( 'ColorScheme', {
-    callback = M.disable_semantic_highlighting
-  } )
-end
-
 -----------------------------------------------------------------
 -- Hover window.
 -----------------------------------------------------------------
@@ -117,9 +106,15 @@ end
 -- Performs actions only after the language server attaches to
 -- the current buffer. These actions will apply to all language
 -- servers, so should be generic.
-function M.on_lsp_attach( args )
+local function on_lsp_attach( args )
   local bufnr = args.buf
   local client = vim.lsp.get_client_by_id( args.data.client_id )
+
+  if LSP_SEMANTIC_HIGHLIGHTING == false then
+    -- Turn off the highlighting from the LSP and fall back to
+    -- whatever else if highlighting (probably treesitter).
+    client.server_capabilities.semanticTokensProvider = nil
+  end
 
   -- Buffer local mappings.
   -- See `:help vim.lsp.*` for documentation on any of the below functions
@@ -153,6 +148,14 @@ function M.on_lsp_attach( args )
   vmap['<leader>ca'] = buf.code_action
   nmap['<C-C>']      = buf.format
 end
+
+-----------------------------------------------------------------
+-- Auto-commands.
+-----------------------------------------------------------------
+autocmd( 'LspAttach', {
+  group = augroup( 'UserLspConfig', { clear=true } ),
+  callback = on_lsp_attach
+} )
 
 -----------------------------------------------------------------
 -- Diagnostics.

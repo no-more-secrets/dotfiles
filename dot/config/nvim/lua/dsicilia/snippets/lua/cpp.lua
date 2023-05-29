@@ -1,18 +1,26 @@
 -----------------------------------------------------------------
 -- C++ snippets.
 -----------------------------------------------------------------
-local assembler = require( 'dsicilia.snippets.assemble' )
-local S = {}
+local ls = require( "luasnip" )
+local parse = ls.parser.parse_snippet
+
+local up = 'unpack'; local unpack = _G[up] -- fool the linter.
+
+local S = {} -- Will hold result.
+
+local function add_p( tbl )
+  table.insert( S, parse( unpack( tbl ) ) )
+end
 
 -----------------------------------------------------------------
 -- Snippets.
 -----------------------------------------------------------------
--- Sample lua snippet: parameter label. This theoretically is
--- supposed to work in all languages, but it doesn't seem to work
--- in Lua.
-S.plabel = '$BLOCK_COMMENT_START$1=$BLOCK_COMMENT_END$0'
+add_p {
+  '=plabel',
+  '$BLOCK_COMMENT_START$1=$BLOCK_COMMENT_END$0'
+}
 
 -----------------------------------------------------------------
--- Assemble and parse snippets.
+-- Finished
 -----------------------------------------------------------------
-return assembler.assemble( S )
+return {}, S

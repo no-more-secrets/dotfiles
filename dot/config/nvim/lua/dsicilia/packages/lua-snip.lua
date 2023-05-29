@@ -53,6 +53,6 @@ require( "luasnip.loaders.from_snipmate" ).lazy_load {
 -- side lua files. This method is the most flexible, but is more
 -- difficult to use.  Most standard/simple snippets should be
 -- defined in the snipmate files further below.
-require( "luasnip.loaders.from_lua" ).load {
+require( "luasnip.loaders.from_lua" ).lazy_load {
   paths = { SNIPPETS_FOLDER .. '/lua' }
 }

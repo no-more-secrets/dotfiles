@@ -1,16 +1,28 @@
 -----------------------------------------------------------------
--- Snippets for all file types.
+-- Snippets for all occasions and filetypes.
 -----------------------------------------------------------------
-local assembler = require( 'dsicilia.snippets.assemble' )
-local S = {}
+local ls = require( "luasnip" )
+local parse = ls.parser.parse_snippet
+
+local up = 'unpack'; local unpack = _G[up] -- fool the linter.
+
+local S = {} -- Will hold result.
+
+local function add_p( tbl )
+  table.insert( S, parse( unpack( tbl ) ) )
+end
 
 -----------------------------------------------------------------
 -- Snippets.
 -----------------------------------------------------------------
--- Doesn't seem to work in all environments.
-S.clip = '$CLIPBOARD$0'
+-- Doesn't seem to do what one would expect in all environments;
+-- in some cases it just pastes what is in the + register.
+add_p {
+  '=paste',
+  '$CLIPBOARD$0'
+}
 
 -----------------------------------------------------------------
--- Assemble and parse snippets.
+-- Finished
 -----------------------------------------------------------------
-return assembler.assemble( S )
+return {}, S
