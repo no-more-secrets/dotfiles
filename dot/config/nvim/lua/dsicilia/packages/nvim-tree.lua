@@ -16,18 +16,12 @@ local nmap = mappers.nmap
 -----------------------------------------------------------------
 -- Setup.
 -----------------------------------------------------------------
-require( "nvim-tree" ).setup {
-  view = {
-    width = 30,
-  },
+require( 'nvim-tree' ).setup{
+  view={ width=30 },
 
-  renderer = {
-    group_empty = true,
-  },
+  renderer={ group_empty=true },
 
-  filters = {
-    dotfiles = true,
-  },
+  filters={ dotfiles=true },
 }
 
 -----------------------------------------------------------------

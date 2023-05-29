@@ -13,9 +13,7 @@ function M.close_current_tab()
   -- Starts at 1. Need to measure this before closing the tab.
   local old_tab = vim.call( 'tabpagenr' )
   vim.cmd[[tabclose]]
-  if old_tab ~= 1 and old_tab ~= num_tabs then
-    vim.cmd[[tabp]]
-  end
+  if old_tab ~= 1 and old_tab ~= num_tabs then vim.cmd[[tabp]] end
 end
 
 return M

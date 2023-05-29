@@ -26,9 +26,7 @@ local format = string.format
 function M.cwd_in_rn()
   local cwd = vim.fn.getcwd()
   local rn_start, rn_end = cwd:find( '.*revolution%-now' )
-  if rn_start then
-    return cwd:sub( rn_start, rn_end )
-  end
+  if rn_start then return cwd:sub( rn_start, rn_end ) end
   return nil
 end
 
@@ -36,9 +34,7 @@ end
 -- Source .nvimrc when appropriate.
 -----------------------------------------------------------------
 local rn = M.cwd_in_rn()
-if rn then
-  vim.cmd( format( 'source %s/.nvimrc', rn ) )
-end
+if rn then vim.cmd( format( 'source %s/.nvimrc', rn ) ) end
 
 -----------------------------------------------------------------
 -- Finished.

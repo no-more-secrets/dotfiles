@@ -1,4 +1,4 @@
-require 'dsicilia.packages.use'
+require'dsicilia.packages.use'
 
 -- Note that we don't require the individual package config mod-
 -- ules here; we do that in each package's post-startup config in

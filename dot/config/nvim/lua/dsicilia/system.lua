@@ -22,7 +22,7 @@ function M.system( cmd, input )
   local output = vim.fn.system( cmd, input )
   if vim.v.shell_error ~= 0 then
     error( format( 'error: command %s returned error code %d.',
-                    vim.inspect( cmd ), vim.v.shell_error ) )
+                   vim.inspect( cmd ), vim.v.shell_error ) )
   end
   return output
 end

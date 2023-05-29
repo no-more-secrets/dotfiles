@@ -1,7 +1,6 @@
 -----------------------------------------------------------------
 -- Package: telescope
 -----------------------------------------------------------------
-
 -----------------------------------------------------------------
 -- Imports.
 -----------------------------------------------------------------
@@ -19,37 +18,37 @@ local nmap, vmap = mappers.nmap, mappers.vmap
 -----------------------------------------------------------------
 -- Setup/extensions.
 -----------------------------------------------------------------
-telescope.setup {
-  defaults = {
-    layout_config = {
-      mirror = false,
-      prompt_position = 'top',
-      scroll_speed = 1,
-      --vertical = { width = 0.5 }
+telescope.setup{
+  defaults={
+    layout_config={
+      mirror=false,
+      prompt_position='top',
+      scroll_speed=1,
+      -- vertical = { width = 0.5 }
       -- other layout configuration here
     },
 
     -- More relevant results are placed at the top of the results
     -- window.
-    sorting_strategy = 'ascending',
+    sorting_strategy='ascending',
 
-    mappings = {
-      i = {
+    mappings={
+      i={
         -- Shows the mappings for your picker.
-        ['<C-h>'] = actions.which_key,
-        ['<C-j>'] = actions.move_selection_next,
-        ['<C-k>'] = actions.move_selection_previous,
-        ['<C-u>'] = actions.preview_scrolling_down,
-        ['<C-i>'] = actions.preview_scrolling_up,
+        ['<C-h>']=actions.which_key,
+        ['<C-j>']=actions.move_selection_next,
+        ['<C-k>']=actions.move_selection_previous,
+        ['<C-u>']=actions.preview_scrolling_down,
+        ['<C-i>']=actions.preview_scrolling_up,
         -- Comment this out for the default behavior, which is
         -- that the input line in telescope uses a vim modal
         -- style with vim key bindings in normal mode, but you
         -- can only get to normal mode by hitting escape. Here,
         -- we have escape configured to just close the window;
         -- otherwise, it would take you into normal mode.
-        ['<ESC>'] = actions.close,
-      }
-    }
+        ['<ESC>']=actions.close,
+      },
+    },
   },
 }
 
@@ -61,7 +60,7 @@ telescope.load_extension( 'fzf' )
 -----------------------------------------------------------------
 colors.hl_setter( 'Telescope', function( hi )
   local GRUVBOX_NEUTRAL_BLUE = '#458588'
-  hi.TelescopeBorder    = { fg=GRUVBOX_NEUTRAL_BLUE }
+  hi.TelescopeBorder = { fg=GRUVBOX_NEUTRAL_BLUE }
   hi.TelescopeSelection = { bg=GRUVBOX_NEUTRAL_BLUE }
 end )
 
@@ -79,7 +78,7 @@ end )
 nmap['<leader>t?'] = builtin.builtin
 
 -- General.
-nmap['<C-t>']      = builtin.find_files -- under cwd
+nmap['<C-t>'] = builtin.find_files -- under cwd
 nmap['<leader>tt'] = function() builtin.find_files{ cwd='~' } end
 nmap['<leader>ta'] = builtin.live_grep
 nmap['<leader>tA'] = function() builtin.live_grep{ cwd='~' } end

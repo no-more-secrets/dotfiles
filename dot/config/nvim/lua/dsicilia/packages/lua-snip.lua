@@ -1,7 +1,6 @@
 -----------------------------------------------------------------
 -- Package: luasnip
 -----------------------------------------------------------------
-
 -----------------------------------------------------------------
 -- Imports.
 -----------------------------------------------------------------
@@ -16,10 +15,10 @@ local imap = mappers.imap
 -----------------------------------------------------------------
 -- Setup.
 -----------------------------------------------------------------
-ls.config.setup {
-  history = true,
-  updateevents = 'TextChanged,TextChangedI',
-  enable_autosnippets = true,
+ls.config.setup{
+  history=true,
+  updateevents='TextChanged,TextChangedI',
+  enable_autosnippets=true,
 }
 
 -----------------------------------------------------------------
@@ -45,14 +44,14 @@ local SNIPPETS_FOLDER = '~/.config/nvim/lua/dsicilia/snippets'
 -- This will load snippets from SnipMate files. This should be
 -- the default way to store simple snippets, unless the more pow-
 -- erful Lua method (below) is needed.
-require( "luasnip.loaders.from_snipmate" ).lazy_load {
-  paths = { SNIPPETS_FOLDER .. '/snipmate' }
+require( 'luasnip.loaders.from_snipmate' ).lazy_load{
+  paths={ SNIPPETS_FOLDER .. '/snipmate' },
 }
 
 -- This will load snippets defined as strings (to be parsed) in-
 -- side lua files. This method is the most flexible, but is more
 -- difficult to use.  Most standard/simple snippets should be
 -- defined in the snipmate files further below.
-require( "luasnip.loaders.from_lua" ).lazy_load {
-  paths = { SNIPPETS_FOLDER .. '/lua' }
+require( 'luasnip.loaders.from_lua' ).lazy_load{
+  paths={ SNIPPETS_FOLDER .. '/lua' },
 }

@@ -6,14 +6,14 @@ local M = {}
 -----------------------------------------------------------------
 -- Imports.
 -----------------------------------------------------------------
-local lsp    = require( 'dsicilia.lsp' )
-local uri    = require( 'vim.uri' )
+local lsp = require( 'dsicilia.lsp' )
+local uri = require( 'vim.uri' )
 local colors = require( 'dsicilia.colors' )
 
 -----------------------------------------------------------------
 -- Aliases.
 -----------------------------------------------------------------
-local match   = string.match
+local match = string.match
 
 local autocmd = vim.api.nvim_create_autocmd
 local augroup = vim.api.nvim_create_augroup
@@ -38,8 +38,8 @@ local function make_bold_fg( template, new_hl, color )
   end )
 end
 
-local GRUVBOX_LIGHT0        = '#fbf1c7'
-local GRUVBOX_LIGHT2        = '#d5c4a1'
+local GRUVBOX_LIGHT0 = '#fbf1c7'
+local GRUVBOX_LIGHT2 = '#d5c4a1'
 local GRUVBOX_BRIGHT_ORANGE = '#fe8019'
 
 colors.hl_setter( 'StatusBar', function( _ )
@@ -50,14 +50,18 @@ colors.hl_setter( 'StatusBar', function( _ )
   -- For when there is only one window open we use LineNr for the
   -- status line so that it will have a transparent background,
   -- which tends to look better when there is only one window.
-  clone_hl( 'LineNr',       'Status1Win' )
+  clone_hl( 'LineNr', 'Status1Win' )
   clone_hl( 'StatusLineNC', 'StatusNWin' )
 
-  make_bold_fg( 'Status1Win', 'LspIndexingMsg1Win', GRUVBOX_LIGHT2 )
-  make_bold_fg( 'StatusNWin', 'LspIndexingMsgNWin', GRUVBOX_LIGHT2 )
+  make_bold_fg( 'Status1Win', 'LspIndexingMsg1Win',
+                GRUVBOX_LIGHT2 )
+  make_bold_fg( 'StatusNWin', 'LspIndexingMsgNWin',
+                GRUVBOX_LIGHT2 )
 
-  make_bold_fg( 'Status1Win', 'Compiling1Win', GRUVBOX_BRIGHT_ORANGE )
-  make_bold_fg( 'StatusNWin', 'CompilingNWin', GRUVBOX_BRIGHT_ORANGE )
+  make_bold_fg( 'Status1Win', 'Compiling1Win',
+                GRUVBOX_BRIGHT_ORANGE )
+  make_bold_fg( 'StatusNWin', 'CompilingNWin',
+                GRUVBOX_BRIGHT_ORANGE )
 
   make_bold_fg( 'Status1Win', 'HintInfo1Win', GRUVBOX_LIGHT0 )
   make_bold_fg( 'StatusNWin', 'HintInfoNWin', GRUVBOX_LIGHT0 )
@@ -110,11 +114,12 @@ local function build_impl( buf )
   -- which case we make the status bar background color to be
   -- darker since it looks better.
   local n_wins = vim.fn.winnr( '$' )
-  local bg = (n_wins == 1) and '%#Status1Win#' or '%#StatusNWin#'
   local choose_hi = function( prefix )
-    return '%#'..prefix..((n_wins == 1) and '1Win#' or 'NWin#')
+    return '%#' .. prefix ..
+               ((n_wins == 1) and '1Win#' or 'NWin#')
   end
-  local progress_color  = choose_hi( 'LspIndexingMsg' )
+  local bg = choose_hi( 'Status' )
+  local progress_color = choose_hi( 'LspIndexingMsg' )
   local compiling_color = choose_hi( 'Compiling' )
   local hint_info_color = choose_hi( 'HintInfo' )
 
@@ -132,8 +137,8 @@ local function build_impl( buf )
     if diags.errors > 0 then
       return '%#ErrorMsg#errors: ' .. diags.errors
     elseif diags.warnings > 0 then
-      return '%#SyntasticWarningSign#' ..
-             'warnings: ' .. diags.warnings
+      return '%#SyntasticWarningSign#' .. 'warnings: ' ..
+                 diags.warnings
     elseif diags.infos > 0 then
       return hint_info_color .. 'infos: ' .. diags.infos
     elseif diags.hints > 0 then
@@ -144,14 +149,14 @@ local function build_impl( buf )
 
   -- No string.format here as it messes up the inline highlights.
   local function indexing()
-    local clients = vim.lsp.get_active_clients{ bufnr = buf }
+    local clients = vim.lsp.get_active_clients{ bufnr=buf }
     local indexing_lst = {}
     for _, client in ipairs( clients ) do
       local name = client.name
       local msg = lsp_indexing_progress[name]
       if msg and msg.done ~= true and msg.message then
         local indexing_msg = 'indexing: ' .. progress_color ..
-                               msg.message .. bg
+                                 msg.message .. bg
         table.insert( indexing_lst, indexing_msg )
       end
     end
@@ -162,24 +167,24 @@ local function build_impl( buf )
 
   -- No string.format here as it messes up the inline highlights.
   local function lsp_state()
-    local clients = vim.lsp.get_active_clients{ bufnr = buf }
+    local clients = vim.lsp.get_active_clients{ bufnr=buf }
     if #clients == 0 then return end
     return ' [' .. diagnostics() .. bg .. ']' .. indexing()
   end
 
-  return
-  --                     Status bar layout.
+  return --                     Status bar layout.
   --  _____________________________A_______________________________
   -- [                             |                               ]
-     { bg,' %f',lsp_state,' %m',  '%=',' %y',' %p%%',' %l:%2c',' ' }
+  {
+    bg, ' %f', lsp_state, ' %m', '%=', ' %y', ' %p%%', ' %l:%2c',
+    ' ',
+  }
 end
 
 local function build( buf )
   local list = build_impl( buf )
   for i, v in ipairs( list ) do
-    if type( v ) == 'function' then
-      list[i] = v() or ''
-    end
+    if type( v ) == 'function' then list[i] = v() or '' end
   end
   return table.concat( list )
 end
@@ -205,6 +210,9 @@ local function rebuild_for_buffer( buf )
       vim.wo[win_id].statusline = build( buf )
     end
   end
+  -- Note: redrawstatus does not seem to be needed here. But, ei-
+  -- ther way, DO NOT do `redrawstatus!` as it is way too slow
+  -- when opening many tabs in the ide mode.
 end
 
 local function rebuild_from_event( ev )
@@ -228,17 +236,16 @@ local function clangd_file_status_handler( result, _, _ )
   -- buffer number from the URI of the file in question.
   local buf = assert( uri.uri_to_bufnr( result.uri ) )
   local stage = assert( result.state )
-  local queued       = match( stage, 'queued' )  ~= nil
-  local idle         = match( stage, 'idle' )    ~= nil
-  local building_ast = match( stage, 'AST' )     ~= nil
-  local parsing      = match( stage, 'parsing' ) ~= nil
+  local queued = match( stage, 'queued' ) ~= nil
+  local idle = match( stage, 'idle' ) ~= nil
+  local building_ast = match( stage, 'AST' ) ~= nil
+  local parsing = match( stage, 'parsing' ) ~= nil
   local any = queued or idle or building_ast or parsing
   assert( any )
   local compiling = parsing or building_ast
   if buffer_clangd_compilation_begun[buf] or compiling then
-    buffer_clangd_compilation_begun[buf] = {
-      compiling=compiling
-    }
+    buffer_clangd_compilation_begun[buf] =
+        { compiling=compiling }
   end
   rebuild_for_buffer( buf )
 end
@@ -246,38 +253,34 @@ end
 -- This is a non-standard LSP API extension provided by clangd
 -- that allows receiving realtime state on the compilation status
 -- of an individual file.
-vim.lsp.handlers["textDocument/clangd.fileStatus"]
-    = lsp.with_error_handler( clangd_file_status_handler )
+vim.lsp.handlers['textDocument/clangd.fileStatus'] =
+    lsp.with_error_handler( clangd_file_status_handler )
 
 -----------------------------------------------------------------
 -- Auto-commands.
 -----------------------------------------------------------------
-local group = augroup( 'StatusBarGroup', { clear= true } )
+local group = augroup( 'StatusBarGroup', { clear=true } )
 
 -- We need this because when the second-to-last window closes we
 -- need to update the status bar of the remaining window because
 -- when there is only one window left the status bar background
--- color changes.
-autocmd( 'WinEnter', {
-  group = group,
-  callback = rebuild_from_event
-} )
+-- color changes. Also there is an edge case of when we open an
+-- existing buffer in a window where it will have a different
+-- status line color then this will ensure that it has the right
+-- color in all windows.
+autocmd( 'BufEnter', { group=group, callback=rebuild_from_event } )
 
 -- This is needed so that if the status bar changes in a window
 -- on tab Y while editing in tab X, then when we switch to tab Y
 -- we will see the diagnostics updated in tab Y's status bar.
-autocmd( 'TabEnter', {
-  group = group,
-  callback = rebuild_for_current_tab
-} )
+autocmd( 'TabEnter',
+         { group=group, callback=rebuild_for_current_tab } )
 
 -- This is because the LSP is always working in the background,
 -- and we want the status bar to be updated whenever it has new
 -- results.
-autocmd( 'DiagnosticChanged', {
-  group = group,
-  callback = rebuild_from_event
-} )
+autocmd( 'DiagnosticChanged',
+         { group=group, callback=rebuild_from_event } )
 
 -- Set the status bar immediately for the first buffer, otherwise
 -- it won't get updated until on of the above autocmd actions
@@ -315,11 +318,8 @@ end
 -- These are "user auto-commands" which means that they are exe-
 -- cuted manually, and the "pattern" holds the event name.
 local function user_autocmd( event, callback )
-  autocmd( 'User', {
-    pattern  = event,
-    group    = group,
-    callback = callback
-  } )
+  autocmd( 'User',
+           { pattern=event, group=group, callback=callback } )
 end
 
 user_autocmd( 'LspRequest', on_progress )

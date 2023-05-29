@@ -7,7 +7,7 @@ local M = {}
 -----------------------------------------------------------------
 -- Imports.
 -----------------------------------------------------------------
-local system = require 'dsicilia.system'
+local system = require'dsicilia.system'
 
 -----------------------------------------------------------------
 -- Aliases.
@@ -20,7 +20,7 @@ local empty = vim.fn.empty
 -- Constants.
 -----------------------------------------------------------------
 local INSTALL_PATH = vim.fn.stdpath( 'data' ) ..
-    '/site/pack/packer/start/packer.nvim'
+                         '/site/pack/packer/start/packer.nvim'
 
 -----------------------------------------------------------------
 -- Functions.

@@ -34,15 +34,19 @@ local LSP_SEMANTIC_HIGHLIGHTING = false
 -- log file that can be seen by running :LspInfo, typically in
 -- ~/.local/state/nvim/lsp.log. We don't leave it on all the time
 -- because otherwise it seems to grow indefinitely.
-vim.lsp.set_log_level( "OFF" )
+vim.lsp.set_log_level( 'OFF' )
 
 -----------------------------------------------------------------
 -- Gutter signs.
 -----------------------------------------------------------------
-sign_define( 'DiagnosticSignError', { text='ER', texthl='DiagnosticError' } )
-sign_define( 'DiagnosticSignWarn',  { text='WN', texthl='DiagnosticWarn'  } )
-sign_define( 'DiagnosticSignHint',  { text='HN', texthl='DiagnosticHint'  } )
-sign_define( 'DiagnosticSignInfo',  { text='IN', texthl='DiagnosticInfo'  } )
+sign_define( 'DiagnosticSignError',
+             { text='ER', texthl='DiagnosticError' } )
+sign_define( 'DiagnosticSignWarn',
+             { text='WN', texthl='DiagnosticWarn' } )
+sign_define( 'DiagnosticSignHint',
+             { text='HN', texthl='DiagnosticHint' } )
+sign_define( 'DiagnosticSignInfo',
+             { text='IN', texthl='DiagnosticInfo' } )
 
 -----------------------------------------------------------------
 -- Colors
@@ -54,17 +58,17 @@ local WHT = '#fbf1c7' -- gruvbox "light0".
 
 colors.hl_setter( 'LspDiag', function( hi )
   hi.DiagnosticVirtualTextError = { fg=RED }
-  hi.DiagnosticFloatingError    = { fg=RED }
-  hi.DiagnosticVirtualTextWarn  = { fg=YLW }
-  hi.DiagnosticFloatingWarn     = { fg=YLW }
-  hi.DiagnosticVirtualTextHint  = { fg=WHT }
-  hi.DiagnosticFloatingHint     = { fg=WHT }
-  hi.DiagnosticVirtualTextInfo  = { fg=WHT }
-  hi.DiagnosticFloatingInfo     = { fg=WHT }
-  hi.DiagnosticError            = { fg=BLK, bg=RED }
-  hi.DiagnosticWarn             = { fg=BLK, bg=YLW }
-  hi.DiagnosticHint             = { fg=BLK, bg=WHT }
-  hi.DiagnosticInfo             = { fg=BLK, bg=WHT }
+  hi.DiagnosticFloatingError = { fg=RED }
+  hi.DiagnosticVirtualTextWarn = { fg=YLW }
+  hi.DiagnosticFloatingWarn = { fg=YLW }
+  hi.DiagnosticVirtualTextHint = { fg=WHT }
+  hi.DiagnosticFloatingHint = { fg=WHT }
+  hi.DiagnosticVirtualTextInfo = { fg=WHT }
+  hi.DiagnosticFloatingInfo = { fg=WHT }
+  hi.DiagnosticError = { fg=BLK, bg=RED }
+  hi.DiagnosticWarn = { fg=BLK, bg=YLW }
+  hi.DiagnosticHint = { fg=BLK, bg=WHT }
+  hi.DiagnosticInfo = { fg=BLK, bg=WHT }
 end )
 
 -----------------------------------------------------------------
@@ -110,26 +114,26 @@ local function on_lsp_attach( args )
 
   -- Buffer local mappings.
   -- See `:help vim.lsp.*` for documentation on any of the below functions
-  local mappers  = require( 'dsicilia.mappers' )
-  local opts = { buffer = bufnr }
+  local mappers = require( 'dsicilia.mappers' )
+  local opts = { buffer=bufnr }
   local nmap = mappers.build_mapper( 'n', opts )
   local vmap = mappers.build_mapper( 'v', opts )
   local buf = vim.lsp.buf
 
   -- These actions cause the cursor/view to go somewhere.
-  nmap['gp']         = vim.diagnostic.goto_prev
-  nmap['gn']         = vim.diagnostic.goto_next
-  nmap['gD']         = buf.declaration
-  nmap['gd']         = buf.definition
-  nmap['gi']         = buf.implementation
-  nmap['gt']         = buf.type_definition
+  nmap['gp'] = vim.diagnostic.goto_prev
+  nmap['gn'] = vim.diagnostic.goto_next
+  nmap['gD'] = buf.declaration
+  nmap['gd'] = buf.definition
+  nmap['gi'] = buf.implementation
+  nmap['gt'] = buf.type_definition
   if client.name == 'clangd' then
-    nmap['gS']  = vim.cmd.ClangdSwitchSourceHeader
+    nmap['gS'] = vim.cmd.ClangdSwitchSourceHeader
   end
 
   -- These actions cause a box to open with info somewhere.
-  nmap['K']          = toggle_hover
-  nmap['gr']         = telescope.lsp_references
+  nmap['K'] = toggle_hover
+  nmap['gr'] = telescope.lsp_references
   nmap['<leader>ee'] = vim.diagnostic.open_float
   nmap['<leader>eq'] = telescope.diagnostics
   nmap['<leader>es'] = buf.signature_help
@@ -138,15 +142,17 @@ local function on_lsp_attach( args )
   nmap['<leader>er'] = buf.rename
   nmap['<leader>ca'] = buf.code_action
   vmap['<leader>ca'] = buf.code_action
-  nmap['<C-C>']      = buf.format
+
+  -- NOTE: auto-formatting (via buf.format and otherwise) is han-
+  -- dled in a separate module.
 end
 
 -----------------------------------------------------------------
 -- Auto-commands.
 -----------------------------------------------------------------
 autocmd( 'LspAttach', {
-  group = augroup( 'UserLspConfig', { clear=true } ),
-  callback = on_lsp_attach
+  group=augroup( 'UserLspConfig', { clear=true } ),
+  callback=on_lsp_attach,
 } )
 
 -----------------------------------------------------------------
@@ -155,25 +161,25 @@ autocmd( 'LspAttach', {
 function M.diagnostics_for_buffer( buf )
   assert( buf )
   local LEVELS = {
-    errors = vim.diagnostic.severity.ERROR,
-    warnings = vim.diagnostic.severity.WARN,
-    infos = vim.diagnostic.severity.INFO,
-    hints = vim.diagnostic.severity.HINT,
+    errors=vim.diagnostic.severity.ERROR,
+    warnings=vim.diagnostic.severity.WARN,
+    infos=vim.diagnostic.severity.INFO,
+    hints=vim.diagnostic.severity.HINT,
   }
   local res = {}
   for name, level in pairs( LEVELS ) do
-    res[name] = #vim.diagnostic.get( buf, { severity = level } )
+    res[name] = #vim.diagnostic.get( buf, { severity=level } )
   end
   return res
 end
 
-vim.diagnostic.config {
-  virtual_text = true,
-  underline = true,
-  signs = true,
+vim.diagnostic.config{
+  virtual_text=true,
+  underline=true,
+  signs=true,
   -- Set this to true to have the LSP work in realtime while in-
   -- serting text in insert mode.
-  update_in_insert = false,
+  update_in_insert=false,
 }
 
 -----------------------------------------------------------------
@@ -190,7 +196,7 @@ function M.with_error_handler( fn )
     if err.code == ErrorCodes.ContentModified then return end
     -- See vim.lsp.handlers for a more sophisticated version.
     local msg = format( 'LSP:%s: %s', tostring( err.code ),
-                         vim.inspect( err.message ) )
+                        vim.inspect( err.message ) )
     vim.notify( msg, vim.log.levels.ERROR )
   end
 end

@@ -1,8 +1,8 @@
 -----------------------------------------------------------------
 -- Imports.
 -----------------------------------------------------------------
-local lspconfig  = require( 'lspconfig' )
-local paths      = require( 'dsicilia.paths' )
+local lspconfig = require( 'lspconfig' )
+local paths = require( 'dsicilia.paths' )
 
 -----------------------------------------------------------------
 -- Aliases.
@@ -15,21 +15,22 @@ local format = string.format
 local clangd = lspconfig.clangd
 
 assert( paths.TOOLS )
-local CLANGD = format( '%s/llvm-current/bin/clangd', paths.TOOLS )
+local CLANGD =
+    format( '%s/llvm-current/bin/clangd', paths.TOOLS )
 
 local autocomplete_capabilities =
     require( 'cmp_nvim_lsp' ).default_capabilities()
 
-clangd.setup {
-  cmd = { CLANGD },
-  capabilities = autocomplete_capabilities,
-  init_options = {
+clangd.setup{
+  cmd={ CLANGD },
+  capabilities=autocomplete_capabilities,
+  init_options={
     -- See clangd.llvm.org/extensions for a list of protocol
     -- extensions and options.
 
     -- Enables a custom LSP API extension provided by clangd that
     -- gives the realtime status on the compilation of each file.
-    clangdFileStatus = true,
+    clangdFileStatus=true,
 
     -- This can be set to the path of a folder in which clangd
     -- should look for the compile commands json file. It will

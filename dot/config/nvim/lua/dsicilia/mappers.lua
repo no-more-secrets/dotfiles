@@ -8,9 +8,7 @@ local M = {}
 -- Note that `to` can be a string, or a Lua function.
 local function xnoremap( mode, keys, to, opts )
   opts = opts or {}
-  if opts.silent == nil then
-    opts.silent = true
-  end
+  if opts.silent == nil then opts.silent = true end
   vim.keymap.set( mode, keys, to, opts )
 end
 
@@ -19,7 +17,7 @@ function M.build_mapper( mode, opts )
     __newindex=function( _, keys, to )
       xnoremap( mode, keys, to, opts )
     end,
-    __index = function() error('no reading from mappers.') end
+    __index=function() error( 'no reading from mappers.' ) end,
   } )
 end
 

@@ -1,27 +1,24 @@
 -----------------------------------------------------------------
 -- Lua snippets.
 -----------------------------------------------------------------
-local ls = require( "luasnip" )
+local ls = require( 'luasnip' )
 local s = ls.snippet
 local i = ls.insert_node
 local f = ls.function_node
-local fmt = require( "luasnip.extras.fmt" ).fmt
+local fmt = require( 'luasnip.extras.fmt' ).fmt
 
-local up = 'unpack'; local unpack = _G[up] -- fool the linter.
+local up = 'unpack';
+local unpack = _G[up] -- fool the linter.
 
 local S = {} -- Will hold result.
 
-local function add_s( tbl )
-  table.insert( S, s( unpack( tbl ) ) )
-end
+local function add_s( tbl ) table.insert( S, s( unpack( tbl ) ) ) end
 
 -- Normally the supplied function in a function node takes a list
 -- of arguments; this will unpack them so that our function can
 -- just take normal arguments.
 local function wrapf( func )
-  return function( args )
-    return func( unpack( args ) )
-  end
+  return function( args ) return func( unpack( args ) ) end
 end
 
 -----------------------------------------------------------------
@@ -35,27 +32,19 @@ local function center_offset( node )
   -- ably fancier than we need here.
   local max_len = 65 - preamble_len
   if len >= max_len then return '' end
-  len = math.floor( (max_len-len)/2 )
-  return string.rep( ' ', math.max( 0, len-preamble_len ) )
+  len = math.floor( (max_len - len) / 2 )
+  return string.rep( ' ', math.max( 0, len - preamble_len ) )
 end
 
 -- This is a section header where the text entered will be cen-
 -- tered in real time as the user types.
-add_s {
-  '=csection',
-  fmt(
-    [[
+add_s{
+  '=csection', fmt( [[
       -----------------------------------------------------------------
       -- {}{}
       -----------------------------------------------------------------
       {}
-    ]],
-    {
-      f( wrapf( center_offset ), { 1 } ),
-      i( 1 ),
-      i( 0 ),
-    }
-  )
+    ]], { f( wrapf( center_offset ), { 1 } ), i( 1 ), i( 0 ) } ),
 }
 
 local function required_last( node )
@@ -70,15 +59,9 @@ end
 -- This is a smart require statement that will extract the last
 -- component of the module being required and will use it to name
 -- the local variable holding the module.
-add_s {
-  '=req',
-  fmt(
-    "local {} = require( '{}' )",
-    {
-      f( wrapf( required_last ), { 1 } ),
-      i( 1 )
-    }
-  )
+add_s{
+  '=req', fmt( 'local {} = require( \'{}\' )',
+               { f( wrapf( required_last ), { 1 } ), i( 1 ) } ),
 }
 
 -----------------------------------------------------------------

@@ -40,54 +40,11 @@ nnoremap z. :call ZeeDot()<CR>
 
 nnoremap <Leader>Y :set syntax=yaml<CR>
 
-let g:tools = $HOME . '/dev/tools'
-
-function! LuaFormatAll()
-  let g:lua_format_path = g:tools . '/lua-format-current/bin/lua-format'
-  " For some reason the :%! command will move the cursor to the
-  " top of the document, so we need to save it and restore it.
-  let pos_info = getpos( '.' )
-  let line = pos_info[1]
-  let col = pos_info[2]
-  " undojoin will prevent the undo list from getting messed up,
-  " although I'm not exactly sure how it works.
-  :undojoin | exec ':%!' . g:lua_format_path
-  :call setpos( '.', pos_info )
-endfunction
-
-function! SmartFormatAll()
-  let ext = expand( '%:e' ) " current file extension
-  if ext == 'lua'
-    call LuaFormatAll()
-  else
-    echo 'Cannot format this file type: ' . ext
-  endif
-endfunction
-
 function! ReplaceWord()
     let l:w = expand( "<cword>" )
     call feedkeys( ":%s/" . l:w . "//g\<Left>\<Left>" )
 endfunction
 nnoremap <Leader>r :call ReplaceWord()<CR>
-
-" Enable GDB integration.  This is an auto command because it
-" seems that if we issue this anywhere in the vimrc file itself
-" then the debugging interface does not have the right colors (?).
-" So we use an auto-load command which likely works because it
-" loads it after the colorscheme is loaded.
-au BufRead *.cpp,*.c :packadd termdebug
-
-" Key bindings for use during debugging from the source window.
-nnoremap <Leader>gb :Break<CR>
-nnoremap <Leader>gn :Over<CR>
-nnoremap <Leader>gs :Step<CR>
-nnoremap <Leader>gc :Cont<CR>
-nnoremap <Leader>gx :Clear<CR>
-nnoremap <Leader>ge :Evaluate<CR>
-nnoremap <Leader>gr :Run<CR>
-
-" Use a vertical split in debug mode.
-let g:termdebug_wide = 1
 
 " Apparently this is the best way to programmatically get the
 " currently selected text in visual mode.

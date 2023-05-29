@@ -1,10 +1,11 @@
 -----------------------------------------------------------------
 -- C++ snippets.
 -----------------------------------------------------------------
-local ls = require( "luasnip" )
+local ls = require( 'luasnip' )
 local parse = ls.parser.parse_snippet
 
-local up = 'unpack'; local unpack = _G[up] -- fool the linter.
+local up = 'unpack';
+local unpack = _G[up] -- fool the linter.
 
 local S = {} -- Will hold result.
 
@@ -15,10 +16,7 @@ end
 -----------------------------------------------------------------
 -- Snippets.
 -----------------------------------------------------------------
-add_p {
-  '=plabel',
-  '$BLOCK_COMMENT_START$1=$BLOCK_COMMENT_END$0'
-}
+add_p{ '=plabel', '$BLOCK_COMMENT_START$1=$BLOCK_COMMENT_END$0' }
 
 -----------------------------------------------------------------
 -- Finished

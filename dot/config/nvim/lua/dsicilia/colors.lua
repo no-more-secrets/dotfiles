@@ -13,9 +13,9 @@ local augroup = vim.api.nvim_create_augroup
 -- Highlight group manipulation.
 -----------------------------------------------------------------
 local hi = setmetatable( {}, {
-  __newindex = function( _, hi_name, value )
+  __newindex=function( _, hi_name, value )
     vim.api.nvim_set_hl( 0, hi_name, value )
-  end
+  end,
 } )
 
 -- This captures a common pattern that frequently arises when we
@@ -27,8 +27,8 @@ function M.hl_setter( label, setter )
   assert( setter )
   setter( hi )
   autocmd( 'ColorScheme', {
-    group = augroup( label .. 'ColorScheme', { clear=true } ),
-    callback = function() setter( hi ) end
+    group=augroup( label .. 'ColorScheme', { clear=true } ),
+    callback=function() setter( hi ) end,
   } )
 end
 
@@ -44,9 +44,8 @@ function M.clone_hl( template, new_hl, modifier_fn )
 end
 
 M.hl_setter( 'CommentsItalic', function( _ )
-  M.clone_hl( 'Comment', 'Comment', function( opts )
-    opts.italic = true
-  end )
+  M.clone_hl( 'Comment', 'Comment',
+              function( opts ) opts.italic = true end )
 end )
 
 -----------------------------------------------------------------
