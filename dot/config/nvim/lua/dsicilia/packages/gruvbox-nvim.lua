@@ -39,19 +39,16 @@ gruvbox.setup( {
     -- ground of our terminal.
     dark0='#262626',
   },
-  overrides={},
+  overrides={
+    WinSeparator={ bg=C.bg1 },
+    TabLineFill={ fg=P.light4, bg=C.bg1, reverse=INVERT },
+    TabLineSel={ fg=P.light1, bg=P.faded_orange },
+    CursorLineNr={ fg=C.yellow, bg=C.bg0 },
+    Function={ fg=C.green },
+    String={ fg=C.neutral_green },
+  },
 } )
 
 -- Need to do this after calling setup I believe.
 vim.o.background = BACKGROUND
 vim.cmd.colorscheme'gruvbox'
-
--- I believe we need to do this after setting the colorscheme.
-require( 'dsicilia.colors' ).hl_setter( 'Gruvbox', function( hi )
-  hi.WinSeparator = { bg=C.bg1 }
-  hi.TabLineFill = { fg=P.light4, bg=C.bg1, reverse=INVERT }
-  hi.TabLineSel = { fg=P.light1, bg=P.faded_orange }
-  hi.CursorLineNr = { fg=C.yellow, bg=C.bg0 }
-  hi.Function = { fg=C.green }
-  hi.String = { fg=C.neutral_green }
-end )
