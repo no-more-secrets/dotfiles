@@ -30,10 +30,9 @@ return require( 'packer' ).startup( function( use )
 
   -- Color scheme.
   use{
-    'morhetz/gruvbox',
+    'ellisonleao/gruvbox.nvim',
     config=function()
-      vim.cmd[[set background=dark]]
-      vim.cmd.colorscheme( 'gruvbox' )
+      require( 'dsicilia.packages.gruvbox-nvim' )
     end,
   }
 
