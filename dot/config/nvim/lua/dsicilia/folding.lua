@@ -1,7 +1,19 @@
 -----------------------------------------------------------------
 --                           Folding
 -----------------------------------------------------------------
+-- TODO
 local M = {}
+
+-----------------------------------------------------------------
+-- Imports
+-----------------------------------------------------------------
+local mappers = require( 'dsicilia.mappers' )
+local colors = require( 'dsicilia.colors' )
+
+-----------------------------------------------------------------
+-- Aliases
+-----------------------------------------------------------------
+local nmap = mappers.nmap
 
 -----------------------------------------------------------------
 --                           Aliases
@@ -10,14 +22,48 @@ local getline = vim.fn.getline
 local format = string.format
 
 -----------------------------------------------------------------
+-- Constants.
+-----------------------------------------------------------------
+local MAX_FOLD_LENGTH = 65
+
+-----------------------------------------------------------------
 --                           Options
 -----------------------------------------------------------------
+vim.o.foldenable = true
 -- Fold based on the syntax of the language in question.
-vim.o.foldmethod = 'syntax'
+vim.o.foldmethod = 'expr'
 -- Don't initially fold anything.
 vim.o.foldlevel = 1000
+vim.o.foldexpr = 'nvim_treesitter#foldexpr()'
 
-local MAX_FOLD_LENGTH = 65
+-----------------------------------------------------------------
+-- Key bindings.
+-----------------------------------------------------------------
+-- Toggle fold under cursor.
+nmap['Z'] = 'za'
+
+-----------------------------------------------------------------
+-- Colors.
+-----------------------------------------------------------------
+colors.hl_setter( 'Folding', function( hi )
+  -- Must be require'd after plugins are loaded.
+  local color_maps =
+      require( 'gruvbox.palette' ).get_base_colors( 'dark' )
+  -- This is so that we don't see an ugly horizontal bar when
+  -- code is folded.
+  hi.Folded = { fg = color_maps.fg4, bg = color_maps.bg0 }
+end )
+
+-----------------------------------------------------------------
+-- Foldtext.
+-----------------------------------------------------------------
+-- The 'foldtext' option is an option that takes a string con-
+-- taining a vimscript expression that is then executed to yield
+-- another string that will be the fold line string. So we need a
+-- vimscript expression that runs our lua function above each
+-- time it is evaluated.
+vim.o.foldtext =
+    [[luaeval( 'require( "dsicilia.folding" ).fold_text_gen()' )]]
 
 function M.fold_text_gen()
   local linetext = getline( vim.v.foldstart )
@@ -47,12 +93,7 @@ function M.fold_text_gen()
   return format( FMT, linetext, num_lines_folded )
 end
 
--- The 'foldtext' option is an option that takes a string con-
--- taining a vimscript expression that is then executed to yield
--- another string that will be the fold line string. So we need a
--- vimscript expression that runs our lua function above each
--- time it is evaluated.
-vim.o.foldtext =
-    [[luaeval( 'require( "dsicilia.folding" ).fold_text_gen()' )]]
-
+-----------------------------------------------------------------
+-- Finished.
+-----------------------------------------------------------------
 return M

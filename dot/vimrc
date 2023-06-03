@@ -98,7 +98,7 @@ let g:netrw_altv=2          " open splits to the right
 " NOTE: all options are off by default, but do not support
 " setting to 0 for off; so to turn an option off comment it out.
 let g:lua_syntax_fancynotequal = 1
-let g:lua_syntax_nofold = 1
+" let g:lua_syntax_nofold = 1
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 "                            Buffers
@@ -128,10 +128,6 @@ au FileType make    let g:commentstring="# %s"
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 "                             Themes
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-" This is so that we don't see an ugly horizontal bar when code
-" is folded.
-highlight Folded guibg=#262626
-
 " Return to last edit position when opening files and make that
 " line in the center of the screen.
 autocmd BufReadPost *
