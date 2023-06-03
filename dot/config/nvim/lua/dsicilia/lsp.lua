@@ -7,7 +7,6 @@ local M = {}
 -- Imports.
 -----------------------------------------------------------------
 local protocol = require( 'vim.lsp.protocol' )
-local telescope = require( 'telescope.builtin' )
 local colors = require( 'dsicilia.colors' )
 
 -----------------------------------------------------------------
@@ -103,6 +102,7 @@ end
 -- the current buffer. These actions will apply to all language
 -- servers, so should be generic.
 local function on_lsp_attach( args )
+  local telescope = require( 'telescope.builtin' )
   local bufnr = args.buf
   local client = vim.lsp.get_client_by_id( args.data.client_id )
 
