@@ -13,6 +13,7 @@ local P = palette.colors
 local C = palette.get_base_colors( BACKGROUND )
 
 local INVERT = config.invert_signs
+local BOLD = config.bold
 
 -- Setup must be called before loading the colorscheme.
 gruvbox.setup( {
@@ -34,6 +35,7 @@ gruvbox.setup( {
     CursorLineNr={ fg=C.yellow, bg=C.bg0 },
     Function={ fg=C.green },
     String={ fg=C.neutral_green },
+    Todo={ fg=P.light0, bg=C.bg0, bold=BOLD },
   },
 } )
 
