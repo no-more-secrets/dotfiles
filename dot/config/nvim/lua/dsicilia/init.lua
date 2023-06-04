@@ -10,6 +10,7 @@ require'dsicilia.status-bar'
 require'dsicilia.colors'
 require'dsicilia.format'
 require'dsicilia.dev'
+require'dsicilia.resize'
 
 -- Temporary until migration is complete.
 vim.cmd[[source ~/.vimrc]]
