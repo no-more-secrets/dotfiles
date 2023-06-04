@@ -134,7 +134,3 @@ autocmd BufReadPost *
      \ if line("'\"") > 0 && line("'\"") <= line("$") |
      \   exe "normal! g`\"z." |
      \ endif
-
-" Prevents ~ (tildes) from appearing on post-buffer lines by
-" making them the same color as the background.
-au BufEnter * highlight EndOfBuffer guifg=bg

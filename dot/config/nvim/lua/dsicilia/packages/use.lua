@@ -1,7 +1,6 @@
 -----------------------------------------------------------------
 -- packer.nvim package setup.
 -----------------------------------------------------------------
-
 -----------------------------------------------------------------
 -- Aliases.
 -----------------------------------------------------------------
@@ -22,12 +21,12 @@ local bootstrapping = bootstrap.ensure_packer()
 -- is changed via an update from version control then PackerSync
 -- will still have to be run manually.
 autocmd( 'BufWritePost', {
-    pattern='use.lua',
+  pattern='use.lua',
   group=augroup( 'PackerAutoReload', { clear=true } ),
   callback=function()
     vim.cmd.source( vim.fn.expand( '<afile>' ) )
     vim.cmd.PackerSync()
-  end
+  end,
 } )
 
 -----------------------------------------------------------------
@@ -48,9 +47,18 @@ return require( 'packer' ).startup( {
       end,
     }
 
+    -- Not sure if we're going to keep this... hop.nvim seems
+    -- better.
     use{
       'ggandor/leap.nvim',
       config=function() require( 'dsicilia.packages.leap' ) end,
+    }
+
+    -- Neovim version of EasyMotion.
+    use{
+      'phaazon/hop.nvim',
+      branch='v2',
+      config=function() require( 'dsicilia.packages.hop' ) end,
     }
 
     -- Color scheme.

@@ -47,11 +47,11 @@ nmap['Z'] = 'za'
 -----------------------------------------------------------------
 colors.hl_setter( 'Folding', function( hi )
   -- Must be require'd after plugins are loaded.
-  local color_maps =
+  local C =
       require( 'gruvbox.palette' ).get_base_colors( 'dark' )
   -- This is so that we don't see an ugly horizontal bar when
   -- code is folded.
-  hi.Folded = { fg = color_maps.fg4, bg = color_maps.bg0 }
+  hi.Folded = { fg=C.fg4, bg=C.bg0 }
 end )
 
 -----------------------------------------------------------------

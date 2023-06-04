@@ -51,10 +51,8 @@ vim.o.signcolumn = 'number'
 
 vim.o.sidescroll = 1
 
-if has( 'nvim' ) then
-  -- TODO: When neovim releases this uncomment it.
-  -- vim.o.cmdheight = 0
-end
+-- Oh yeah...
+vim.o.cmdheight = 0
 
 -- Detect if we are in diff mode.
 if vim.o.diff then vim.o.cmdheight = 2 end

@@ -4,6 +4,7 @@
 # Grey
 # -----------------------------
 themecolor=colour172
+#bgcolor='#3c3836' # vim separator color with gruvbox.
 bgcolor=colour235
 
 lg_color4=colour250
