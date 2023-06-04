@@ -42,7 +42,7 @@ vim.o.fillchars = 'vert: '
 vim.opt.completeopt:remove( 'preview' )
 
 -- This disables the intro message that appears when vim starts.
-vim.o.shortmess = 'I'
+vim.opt.shortmess:append( 'I' )
 
 -- This will cause the error signs to appear over the line num-
 -- bers instead of putting them in the 'gutter' and taking up an
