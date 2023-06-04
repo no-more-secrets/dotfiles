@@ -69,7 +69,9 @@ telescope.load_extension( 'fzf' )
 -----------------------------------------------------------------
 colors.hl_setter( 'Telescope', function( hi )
   local GRUVBOX_NEUTRAL_BLUE = '#458588'
-  hi.TelescopeBorder = { fg=GRUVBOX_NEUTRAL_BLUE }
+  hi.TelescopePromptBorder = { fg=GRUVBOX_NEUTRAL_BLUE }
+  hi.TelescopePreviewBorder = { fg=GRUVBOX_NEUTRAL_BLUE }
+  hi.TelescopeResultsBorder = { fg=GRUVBOX_NEUTRAL_BLUE }
   hi.TelescopeSelection = { bg=GRUVBOX_NEUTRAL_BLUE }
 end )
 

@@ -9,6 +9,7 @@ local M = {}
 local function xnoremap( mode, keys, to, opts )
   opts = opts or {}
   if opts.silent == nil then opts.silent = true end
+  if opts.nowait == nil then opts.nowait = true end
   vim.keymap.set( mode, keys, to, opts )
 end
 
