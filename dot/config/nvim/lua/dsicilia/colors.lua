@@ -12,6 +12,17 @@ local nvim_get_hl = vim.api.nvim_get_hl
 local nvim_set_hl = vim.api.nvim_set_hl
 
 -----------------------------------------------------------------
+-- Message box in color.
+-----------------------------------------------------------------
+-- This will print a fragment (no newline) to the message box
+-- with a highlight color, e.g. echo_hi( 'Comment', 'hello' ).
+function M.echon_hi( hi, msg )
+  vim.cmd.echohl( hi )
+  msg = msg:gsub( '"', [[\"]] )
+  vim.cmd.echon( '"' .. msg .. '"' ) -- echo w/ no newline.
+end
+
+-----------------------------------------------------------------
 -- Highlight group manipulation.
 -----------------------------------------------------------------
 -- This captures a common pattern that frequently arises when we

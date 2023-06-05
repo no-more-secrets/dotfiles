@@ -106,6 +106,11 @@ local function on_lsp_attach( args )
   local bufnr = args.buf
   local client = vim.lsp.get_client_by_id( args.data.client_id )
 
+  local clangd
+  if client.name == 'clangd' then
+    clangd = require( 'dsicilia.lsp-servers.clangd' )
+  end
+
   if LSP_SEMANTIC_HIGHLIGHTING == false then
     -- Turn off the highlighting from the LSP and fall back to
     -- whatever else if highlighting (probably treesitter).
@@ -127,9 +132,7 @@ local function on_lsp_attach( args )
   nmap['gd'] = buf.definition
   nmap['gi'] = buf.implementation
   nmap['gt'] = buf.type_definition
-  if client.name == 'clangd' then
-    nmap['gS'] = vim.cmd.ClangdSwitchSourceHeader
-  end
+  if clangd then nmap['gS'] = vim.cmd.ClangdSwitchSourceHeader end
 
   -- These actions cause a box to open with info somewhere.
   nmap['K'] = toggle_hover
@@ -137,6 +140,7 @@ local function on_lsp_attach( args )
   nmap['<leader>ee'] = vim.diagnostic.open_float
   nmap['<leader>eq'] = telescope.diagnostics
   nmap['<leader>es'] = buf.signature_help
+  if clangd then nmap['<leader>et'] = clangd.GetType end
 
   -- These perform actions on the code.
   nmap['<leader>er'] = buf.rename

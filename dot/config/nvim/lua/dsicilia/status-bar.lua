@@ -41,8 +41,9 @@ end
 local GRUVBOX_LIGHT0 = '#fbf1c7'
 local GRUVBOX_LIGHT2 = '#d5c4a1'
 local GRUVBOX_BRIGHT_ORANGE = '#fe8019'
+local GRUVBOX_BRIGHT_YELLOW = '#fabd2f'
 
-colors.hl_setter( 'StatusBar', function( _ )
+colors.hl_setter( 'StatusBar', function( hi )
   -- StatusLineNC is the status line on non-active windows; we
   -- use it for all windows when there are multiple windows be-
   -- cause it has a non-highlighted color (unlike StatusLine)
@@ -65,6 +66,8 @@ colors.hl_setter( 'StatusBar', function( _ )
 
   make_bold_fg( 'Status1Win', 'HintInfo1Win', GRUVBOX_LIGHT0 )
   make_bold_fg( 'StatusNWin', 'HintInfoNWin', GRUVBOX_LIGHT0 )
+
+  hi.LspWarningMsg = { fg=GRUVBOX_BRIGHT_YELLOW, reverse=true }
 end )
 
 -----------------------------------------------------------------
@@ -137,8 +140,7 @@ local function build_impl( buf )
     if diags.errors > 0 then
       return '%#ErrorMsg#errors: ' .. diags.errors
     elseif diags.warnings > 0 then
-      return '%#SyntasticWarningSign#' .. 'warnings: ' ..
-                 diags.warnings
+      return '%#LspWarningMsg#' .. 'warnings: ' .. diags.warnings
     elseif diags.infos > 0 then
       return hint_info_color .. 'infos: ' .. diags.infos
     elseif diags.hints > 0 then

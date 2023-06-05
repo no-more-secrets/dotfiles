@@ -60,7 +60,9 @@ imap['<C-g>'] = '<ESC>:tabn<CR>i'
 -----------------------------------------------------------------
 -- Auto formatting.
 -----------------------------------------------------------------
-vmap['<Leader>f'] = ':!sfmt 65<CR>'
+-- The double <CR> is to deal with the 'Press enter to continue'
+-- prompt.
+vmap['<Leader>f'] = ':!sfmt 65<CR><CR>'
 
 -----------------------------------------------------------------
 -- Editing
