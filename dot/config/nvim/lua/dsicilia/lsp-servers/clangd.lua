@@ -126,18 +126,15 @@ local function get_type_under_cursor()
   local clients = buf_request_sync( 0, 'textDocument/hover',
                                     at_cursor )
   if not clients or #clients == 0 then
-    comment = 'No LSP clients responded'
-    return type, comment
+    error( 'No LSP clients responded' )
   end
   local client = clients[1]
   if not client.result then
-    comment = 'Type not available'
-    return type, comment
+    error( 'Type not available' )
   end
   local markdown = assert( client.result.contents.value )
   if #markdown:gsub( '%s+', '' ) == 0 then
-    comment = 'Markdown not available'
-    return type, comment
+    error( 'Markdown not available' )
   end
   local multiline = markdown:match( '```cpp\n(.*)```' )
   local singleline = markdown:match( 'Type: `([^`]+)`' )
@@ -177,6 +174,8 @@ local function get_type_under_cursor()
     comment = trim( comment )
   end
   type = trim( type )
+  type = type:gsub( ' &', '&' )
+  type = type:gsub( ' %*', '*' )
   return type, comment
 end
 
@@ -201,8 +200,16 @@ end
 -- GetType
 -----------------------------------------------------------------
 function M.GetType()
-  local type, comment = get_type_under_cursor()
+  local success, type, comment = pcall( get_type_under_cursor )
+  if not success then
+    print( type ) -- error msg.
+    return
+  end
   with_cmdheight( print_colored_type, type, comment )
+end
+
+function M.type_under_cursor()
+  return assert( get_type_under_cursor() )
 end
 
 -----------------------------------------------------------------

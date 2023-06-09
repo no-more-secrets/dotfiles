@@ -21,7 +21,8 @@ lspconfig.lua_ls.setup{
       runtime={
         -- Tell the language server which version of Lua you're
         -- using (most likely LuaJIT in the case of Neovim).
-        version='5.4.3',
+        -- version='5.4.3',
+        version='5.1.5',
       },
       diagnostics={
         -- Get the language server to recognize the `vim` global.

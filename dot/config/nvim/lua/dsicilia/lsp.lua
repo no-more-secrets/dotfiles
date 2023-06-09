@@ -19,6 +19,7 @@ local ErrorCodes = protocol.ErrorCodes
 local sign_define = vim.fn.sign_define
 local autocmd = vim.api.nvim_create_autocmd
 local augroup = vim.api.nvim_create_augroup
+local nvim_create_user_command = vim.api.nvim_create_user_command
 
 -----------------------------------------------------------------
 -- Constants.
@@ -103,6 +104,7 @@ end
 -- servers, so should be generic.
 local function on_lsp_attach( args )
   local telescope = require( 'telescope.builtin' )
+  local lsp_comp = require( 'dsicilia.lsp-completion' )
   local bufnr = args.buf
   local client = vim.lsp.get_client_by_id( args.data.client_id )
 
@@ -140,7 +142,12 @@ local function on_lsp_attach( args )
   nmap['<leader>ee'] = vim.diagnostic.open_float
   nmap['<leader>eq'] = telescope.diagnostics
   nmap['<leader>es'] = buf.signature_help
-  if clangd then nmap['<leader>et'] = clangd.GetType end
+  if clangd then
+    nmap['<leader>et'] = clangd.GetType
+    nvim_create_user_command( 'GetType', clangd.GetType,
+                              { bang=true } )
+    nmap['<leader>le'] = lsp_comp.expand_enum_switch
+  end
 
   -- These perform actions on the code.
   nmap['<leader>er'] = buf.rename
