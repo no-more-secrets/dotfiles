@@ -19,7 +19,6 @@ local ErrorCodes = protocol.ErrorCodes
 local sign_define = vim.fn.sign_define
 local autocmd = vim.api.nvim_create_autocmd
 local augroup = vim.api.nvim_create_augroup
-local nvim_create_user_command = vim.api.nvim_create_user_command
 
 -----------------------------------------------------------------
 -- Constants.

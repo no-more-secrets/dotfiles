@@ -47,13 +47,6 @@ return require( 'packer' ).startup( {
       end,
     }
 
-    -- Not sure if we're going to keep this... hop.nvim seems
-    -- better.
-    use{
-      'ggandor/leap.nvim',
-      config=function() require( 'dsicilia.packages.leap' ) end,
-    }
-
     -- Neovim version of EasyMotion.
     use{
       'phaazon/hop.nvim',
