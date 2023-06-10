@@ -64,6 +64,14 @@ add_s{
                { f( wrapf( required_last ), { 1 } ), i( 1 ) } ),
 }
 
+-- This is a smart alias statement that will extract the last
+-- component of the thing being aliased and will use it to name
+-- the alias.
+add_s{
+  '=ali', fmt( 'local {} = {}',
+               { f( wrapf( required_last ), { 1 } ), i( 1 ) } ),
+}
+
 -----------------------------------------------------------------
 -- Finished
 -----------------------------------------------------------------

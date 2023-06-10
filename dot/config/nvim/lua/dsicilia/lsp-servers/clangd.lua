@@ -22,6 +22,7 @@ local buf_request_sync = vim.lsp.buf_request_sync
 local echon_hi = colors.echon_hi
 local with_cmdheight = messages.with_cmdheight
 local trim = vim.fn.trim
+local with_errors_to_messages = messages.with_errors_to_messages
 
 -----------------------------------------------------------------
 -- Setup.
@@ -129,9 +130,7 @@ local function get_type_under_cursor()
     error( 'No LSP clients responded' )
   end
   local client = clients[1]
-  if not client.result then
-    error( 'Type not available' )
-  end
+  if not client.result then error( 'Type not available' ) end
   local markdown = assert( client.result.contents.value )
   if #markdown:gsub( '%s+', '' ) == 0 then
     error( 'Markdown not available' )
@@ -174,8 +173,6 @@ local function get_type_under_cursor()
     comment = trim( comment )
   end
   type = trim( type )
-  type = type:gsub( ' &', '&' )
-  type = type:gsub( ' %*', '*' )
   return type, comment
 end
 
@@ -200,16 +197,13 @@ end
 -- GetType
 -----------------------------------------------------------------
 function M.GetType()
-  local success, type, comment = pcall( get_type_under_cursor )
-  if not success then
-    print( type ) -- error msg.
-    return
-  end
-  with_cmdheight( print_colored_type, type, comment )
+  with_errors_to_messages( function()
+    with_cmdheight( print_colored_type,  get_type_under_cursor() )
+  end )
 end
 
 function M.type_under_cursor()
-  return assert( get_type_under_cursor() )
+  return get_type_under_cursor()
 end
 
 -----------------------------------------------------------------

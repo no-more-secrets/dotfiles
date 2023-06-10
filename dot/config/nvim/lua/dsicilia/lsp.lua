@@ -144,9 +144,13 @@ local function on_lsp_attach( args )
   nmap['<leader>es'] = buf.signature_help
   if clangd then
     nmap['<leader>et'] = clangd.GetType
-    nvim_create_user_command( 'GetType', clangd.GetType,
-                              { bang=true } )
-    nmap['<leader>le'] = lsp_comp.expand_enum_switch
+    local messages = require( 'dsicilia.messages' )
+    local wrap_with_errors_to_messages =
+        messages.wrap_with_errors_to_messages
+    nmap['<leader>le'] = wrap_with_errors_to_messages(
+                             lsp_comp.expand_enum_switch )
+    nmap['<leader>lv'] = wrap_with_errors_to_messages(
+                             lsp_comp.expand_variant_switch )
   end
 
   -- These perform actions on the code.

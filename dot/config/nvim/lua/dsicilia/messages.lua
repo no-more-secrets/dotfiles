@@ -48,6 +48,28 @@ print =
     function( ... ) M.with_cmdheight( M.default_print, ... ) end
 
 -----------------------------------------------------------------
+-- Run function sending error to message box.
+-----------------------------------------------------------------
+-- The given function can both take and return multiple args.
+function M.with_errors_to_messages( func, ... )
+  local results = { pcall( func, ... ) }
+  local success = results[1]
+  if not success then
+    local err = results[2]
+    print( err ) -- error msg.
+    return
+  end
+  table.remove( results, 1 )
+  return unpack( results )
+end
+
+function M.wrap_with_errors_to_messages( func )
+  return function( ... )
+    return M.with_errors_to_messages( func, ... )
+  end
+end
+
+-----------------------------------------------------------------
 -- Finished.
 -----------------------------------------------------------------
 return M

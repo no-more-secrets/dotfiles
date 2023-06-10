@@ -25,72 +25,120 @@ local cur_line = vim.api.nvim_get_current_line
 
 local trim = vim.fn.trim
 
------------------------------------------------------------------
--- C/C++ enum expansion.
------------------------------------------------------------------
-function M.expand_enum_switch()
+local function set_line( row, what )
+  nvim_buf_set_lines( 0, row - 1, row, false, { what } )
+end
+
+local function type_of_current_line( modifier )
+  modifier = modifier or function( x ) return x end
   local row = assert( nvim_win_get_cursor( 0 )[1] )
 
-  local function set_line( what )
-    nvim_buf_set_lines( 0, row - 1, row, false, { what } )
-  end
+  local indent = cur_line():match( '^([%s]*)' ) or ''
 
-  local indent = cur_line():match( '^([%s]*)' )
-
-  -- Get expression.
-  local expr = trim( cur_line() )
+  -- Get expression and apply modifier.
+  local expr = modifier( trim( cur_line() ) )
 
   -- Generate `auto _ = <expr>;` and put the cursor on the _ to
   -- get the type.
-  set_line( indent .. 'auto _ = ' .. expr .. ';' )
+  set_line( row, indent .. 'auto _ = ' .. expr .. ';' )
   local underscore = #indent + 5
   nvim_win_set_cursor( 0, { row, underscore } )
 
   -- Get type of expression.
   local clangd = require( 'dsicilia.lsp-servers.clangd' )
-  local success, type = pcall( clangd.type_under_cursor )
-  if not success then
-    print( type )
-    return
-  end
-  -- Add an extra space so that, when in normal mode, our cursor
-  -- can sit to the right of the '::'.
-  set_line( indent .. type .. ':: ' )
-  nvim_win_set_cursor( 0, { row, #cur_line() } )
+  return clangd.type_under_cursor()
+end
 
-  -- Get enum values.
+local function completion_at_cursor()
   local at_cursor = make_position_params()
   local clients = buf_request_sync( 0, 'textDocument/completion',
                                     at_cursor )
   if not clients or #clients == 0 then
-    print( 'textDocument/completion: no LSP clients responded.' )
-    return
+    error( 'textDocument/completion: no LSP clients responded.' )
   end
   local client = assert( clients[1] )
   local result = client.result
   if not result then
-    print( 'textDocument/completion: no result returned.' )
-    return
+    error( 'textDocument/completion: no result returned.' )
   end
-  local items = to_complete_items( result, '' )
+  return to_complete_items( result, '' )
+end
 
+local function clear_line( row, indent )
   nvim_buf_set_lines( 0, row - 1, row, false, { indent .. ' ' } )
+end
+
+-----------------------------------------------------------------
+-- C/C++ enum expansion.
+-----------------------------------------------------------------
+function M.expand_enum_switch()
+  local row = assert( nvim_win_get_cursor( 0 )[1] )
+  local indent = cur_line():match( '^([%s]*)' )
+  local expr = trim( cur_line() )
+
+  local type = type_of_current_line()
+
+  -- Add an extra space so that, when in normal mode, our cursor
+  -- can sit to the right of the '::'.
+  set_line( row, indent .. type .. ':: ' )
+  nvim_win_set_cursor( 0, { row, #cur_line() } )
+  local items = completion_at_cursor()
+  if #items > 60 then error( 'too many items:', #items ) end
+
+  clear_line( row, indent )
   local lines = {}
-  if #items > 60 then
-    print( 'too many items:', #items )
-    return
-  end
   local function L( ... ) table.insert( lines, format( ... ) ) end
   L( 'switch( %s ) {', expr )
   for i, item in ipairs( items ) do
     L( '  case %s::%s: {', type, item.word )
-    L( '    $%d// TODO.', i )
+    L( '    ${%d:// TODO}', i )
     L( '    break;' )
     L( '  }' )
   end
   L( '}' )
-  local snip = table.concat( lines, '\n' )
-  luasnip.lsp_expand( snip )
+  luasnip.lsp_expand( table.concat( lines, '\n' ) )
+end
+
+-----------------------------------------------------------------
+-- Rds variant switch expansion.
+-----------------------------------------------------------------
+function M.expand_variant_switch()
+  local row = assert( nvim_win_get_cursor( 0 )[1] )
+  local indent = cur_line():match( '^([%s]*)' )
+  local expr = trim( cur_line() )
+
+  -- LuaFormatter off
+  local type = type_of_current_line( function( line )
+    return line .. '.to_enum()'
+  end )
+  -- LuaFormatter on
+
+  -- "Enum (aka rn::unit_orders::e)" ==> "rn::unit_orders"
+  type = type:gsub( [[.*%(aka (.+)::e%)$]], '%1' )
+  if not type then error( 'failed to parse type info.' ) end
+  type = trim( type )
+  if #type == 0 then error( 'empty type after parsing.' ) end
+
+  -- Add an extra space so that, when in normal mode, our cursor
+  -- can sit to the right of the '::'.
+  set_line( row, indent .. type .. '::e:: ' )
+  nvim_win_set_cursor( 0, { row, #cur_line() } )
+  local items = completion_at_cursor()
+  if #items > 60 then error( 'too many items:', #items ) end
+
+  clear_line( row, indent )
+  local lines = {}
+  local function L( ... ) table.insert( lines, format( ... ) ) end
+  L( 'SWITCH( %s ) {', expr )
+  for i, item in ipairs( items ) do
+    L( '  CASE( %s ) {', item.word )
+    L( '    ${%d:// TODO}', i )
+    L( '    break;' )
+    L( '  }' )
+  end
+  L( '  END_CASES;' )
+  L( '}' )
+  luasnip.lsp_expand( table.concat( lines, '\n' ) )
 end
 
 -----------------------------------------------------------------
