@@ -14,7 +14,7 @@ local augroup = vim.api.nvim_create_augroup
 -- Re-proportion window splits on all tabs when terminal is re-
 -- sized.
 local function reproportion_window_splits()
-  local old_tab = vim.fn.tabpagenr()
+  local old_tab = vim.api.nvim_get_current_tabpage()
   vim.cmd[[tabdo wincmd =]]
   -- The above command will have left us on the last tab page, so
   -- restore the tab that we were on.
