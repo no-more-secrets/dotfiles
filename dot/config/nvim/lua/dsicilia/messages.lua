@@ -24,6 +24,7 @@ local last_cmdheight_timer
 function M.with_cmdheight( func, ... )
   local function reset()
     last_cmdheight_timer = nil
+    vim.cmd.messages( 'clear' )
     vim.o.cmdheight = 0
   end
   if last_cmdheight_timer then
