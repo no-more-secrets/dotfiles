@@ -84,23 +84,6 @@ function! AgWordVisual()
 endfunction
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-"                             netrw
-" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-" Default file manager
-let g:netrw_banner=0        " no useless banner
-let g:netrw_liststyle=3     " tree view
-let g:netrw_browse_split=4  " open in prior window
-let g:netrw_altv=2          " open splits to the right
-
-" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-"                  vim-lua syntax highlighting
-" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-" NOTE: all options are off by default, but do not support
-" setting to 0 for off; so to turn an option off comment it out.
-let g:lua_syntax_fancynotequal = 1
-" let g:lua_syntax_nofold = 1
-
-" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 "                            Buffers
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 " Put these after the plugin stuff above since it looks like some

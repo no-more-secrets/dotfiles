@@ -98,7 +98,13 @@ return require( 'packer' ).startup( {
     }
 
     -- Improved lua syntax highlighting.
-    use'tbastos/vim-lua'
+    use{
+      'tbastos/vim-lua',
+      config=function()
+        -- FIXME: not working.
+        vim.g.lua_syntax_fancynotequal = 1
+      end,
+    }
 
     -- Modern C++ syntax highlighting. Note that this won't really
     -- be used when clangd or tree-sitter are providing semantic
