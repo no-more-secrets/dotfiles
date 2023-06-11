@@ -164,6 +164,10 @@ return require( 'packer' ).startup( {
 
     use'sbdchd/neoformat'
 
+    use{ 'lewis6991/gitsigns.nvim',  config = function()
+      require( 'dsicilia.packages.gitsigns-nvim' )
+    end}
+
     -- Should go last.
     if bootstrapping then require( 'packer' ).sync() end
   end,

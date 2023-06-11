@@ -30,6 +30,7 @@ gruvbox.setup( {
   },
   overrides={
     WinSeparator={ bg=C.bg1 },
+    SignColumn={bg=C.bg0},
     TabLineFill={ fg=P.light4, bg=C.bg1, reverse=INVERT },
     TabLineSel={ fg=P.light1, bg=P.faded_orange },
     CursorLineNr={ fg=C.yellow, bg=C.bg0 },

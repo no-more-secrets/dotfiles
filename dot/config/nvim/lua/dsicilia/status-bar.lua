@@ -14,6 +14,7 @@ local colors = require( 'dsicilia.colors' )
 -- Aliases.
 -----------------------------------------------------------------
 local match = string.match
+local format = string.format
 
 local autocmd = vim.api.nvim_create_autocmd
 local augroup = vim.api.nvim_create_augroup
@@ -29,7 +30,16 @@ vim.o.laststatus = 2
 -- Colors.
 -----------------------------------------------------------------
 -- Takes a highlight group and clones it but makes the foreground
--- text bright bold white.
+-- text be the given color.
+local function make_fg( template, new_hl, color )
+  clone_hl( template, new_hl, function( opts )
+    local fb = opts.reverse and 'bg' or 'fg'
+    opts[fb] = color
+  end )
+end
+
+-- Takes a highlight group and clones it but makes the foreground
+-- text to be the given color and bold.
 local function make_bold_fg( template, new_hl, color )
   clone_hl( template, new_hl, function( opts )
     opts.bold = true
@@ -42,6 +52,7 @@ local GRUVBOX_LIGHT0 = '#fbf1c7'
 local GRUVBOX_LIGHT2 = '#d5c4a1'
 local GRUVBOX_BRIGHT_ORANGE = '#fe8019'
 local GRUVBOX_BRIGHT_YELLOW = '#fabd2f'
+local GRUVBOX_NEUTRAL_ORANGE = '#d65d0e'
 
 colors.hl_setter( 'StatusBar', function( hi )
   -- StatusLineNC is the status line on non-active windows; we
@@ -66,6 +77,11 @@ colors.hl_setter( 'StatusBar', function( hi )
 
   make_bold_fg( 'Status1Win', 'HintInfo1Win', GRUVBOX_LIGHT0 )
   make_bold_fg( 'StatusNWin', 'HintInfoNWin', GRUVBOX_LIGHT0 )
+
+  make_fg( 'LineNr', 'StatusGitBranch1Win',
+           GRUVBOX_NEUTRAL_ORANGE )
+  make_fg( 'StatusLineNC', 'StatusGitBranchNWin',
+           GRUVBOX_NEUTRAL_ORANGE )
 
   hi.LspWarningMsg = { fg=GRUVBOX_BRIGHT_YELLOW, reverse=true }
 end )
@@ -105,6 +121,13 @@ local function has_clangd_attached( buf )
   return false
 end
 
+function M.get_gitsigns_status()
+  local status = vim.b.gitsigns_status
+  if not status then return '' end
+  if #status == 0 then return '' end
+  return format( '  (%s)', status )
+end
+
 -- Vim allows one to put function calls inline in the status bar
 -- text so that they will be called whenever the status bar is
 -- updated. However, we don't want to do that since the status
@@ -125,6 +148,7 @@ local function build_impl( buf )
   local progress_color = choose_hi( 'LspIndexingMsg' )
   local compiling_color = choose_hi( 'Compiling' )
   local hint_info_color = choose_hi( 'HintInfo' )
+  local branch_color = choose_hi( 'StatusGitBranch' )
 
   -- No string.format here as it messes up the inline highlights.
   local function diagnostics()
@@ -174,12 +198,24 @@ local function build_impl( buf )
     return ' [' .. diagnostics() .. bg .. ']' .. indexing()
   end
 
-  return --                     Status bar layout.
-  --  _____________________________A_______________________________
-  -- [                             |                               ]
-  {
-    bg, ' %f', lsp_state, ' %m', '%=', ' %y', ' %p%%', ' %l:%2c',
-    ' ',
+  local git = ''
+  if vim.b[buf].gitsigns_head then
+    -- The current buffer holds a file that is tracked in git.
+    local function app( x ) git = git .. x end
+    app( ' ' )
+    app( branch_color )
+    app( '%{get( b:,\'gitsigns_head\',\'\' )}' )
+    app( bg )
+    app( "%{luaeval( 'require(\"dsicilia.status-bar\").get_gitsigns_status()' )}" )
+  end
+
+  -- LuaFormatter off
+  return {
+  --                      Status bar layout.
+  --  ____________________________A______________________________
+  -- [                            |                              ]
+    bg,' %f',git,lsp_state,' %m','%=',' %y',' %p%%',' %l:%2c',' ',
+  -- LuaFormatter on
   }
 end
 
@@ -195,7 +231,7 @@ local function window_ids_in_current_tab()
   return vim.fn.gettabinfo( vim.fn.tabpagenr() )[1].windows
 end
 
-local function rebuild_for_buffer( buf )
+function M.rebuild_for_buffer( buf )
   assert( type( buf ) == 'number' )
   -- statusline is a window-level option, but we can't use vim.wo
   -- because that would give us the current window; we need to
@@ -218,13 +254,13 @@ local function rebuild_for_buffer( buf )
 end
 
 local function rebuild_from_event( ev )
-  rebuild_for_buffer( assert( ev.buf ) )
+  M.rebuild_for_buffer( assert( ev.buf ) )
 end
 
 local function rebuild_for_current_tab()
   -- Iterate over all buffers visible in tab.
   for _, bufnr in ipairs( vim.fn.tabpagebuflist() ) do
-    rebuild_for_buffer( bufnr )
+    M.rebuild_for_buffer( bufnr )
   end
 end
 
@@ -249,7 +285,7 @@ local function clangd_file_status_handler( result, _, _ )
     buffer_clangd_compilation_begun[buf] =
         { compiling=compiling }
   end
-  rebuild_for_buffer( buf )
+  M.rebuild_for_buffer( buf )
 end
 
 -- This is a non-standard LSP API extension provided by clangd
@@ -287,7 +323,7 @@ autocmd( 'DiagnosticChanged',
 -- Set the status bar immediately for the first buffer, otherwise
 -- it won't get updated until on of the above autocmd actions
 -- happens.
-rebuild_for_buffer( 1 )
+M.rebuild_for_buffer( 1 )
 
 -----------------------------------------------------------------
 -- Progress messages.

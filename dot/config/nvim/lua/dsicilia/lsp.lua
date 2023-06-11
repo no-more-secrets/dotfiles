@@ -8,6 +8,7 @@ local M = {}
 -----------------------------------------------------------------
 local protocol = require( 'vim.lsp.protocol' )
 local colors = require( 'dsicilia.colors' )
+local win = require( 'dsicilia.win' )
 
 -----------------------------------------------------------------
 -- Aliases.
@@ -73,24 +74,11 @@ end )
 -----------------------------------------------------------------
 -- Hover window.
 -----------------------------------------------------------------
-local function close_all_floating_windows()
-  local n_closed = 0
-  for _, win_id in ipairs( vim.api.nvim_list_wins() ) do
-    -- Test if window is floating.
-    if vim.api.nvim_win_get_config( win_id ).relative ~= '' then
-      -- Force close if called with !
-      vim.api.nvim_win_close( win_id, {} )
-      n_closed = n_closed + 1
-    end
-  end
-  return n_closed
-end
-
 -- This allows us to open and close the hover window with the
 -- same key binding. Otherwise we'd have to close it by pressing
 -- one of the motion keys which moves the cursor.
 local function toggle_hover()
-  local n_closed = close_all_floating_windows()
+  local n_closed = win.close_all_floating_windows()
   if n_closed > 0 then return end
   vim.lsp.buf.hover()
 end
@@ -135,21 +123,22 @@ local function on_lsp_attach( args )
   nmap['gt'] = buf.type_definition
   if clangd then nmap['gS'] = vim.cmd.ClangdSwitchSourceHeader end
 
-  -- These actions cause a box to open with info somewhere.
+  -- These actions can cause a box to open with info somewhere.
   nmap['K'] = toggle_hover
   nmap['gr'] = telescope.lsp_references
   nmap['<leader>ee'] = vim.diagnostic.open_float
   nmap['<leader>eq'] = telescope.diagnostics
   nmap['<leader>es'] = buf.signature_help
+
+  -- These are special actions where we manually call the LSP to
+  -- get info and either display it in the message box or insert
+  -- a snippet.
   if clangd then
     nmap['<leader>et'] = clangd.GetType
     local messages = require( 'dsicilia.messages' )
-    local wrap_with_errors_to_messages =
-        messages.wrap_with_errors_to_messages
-    nmap['<leader>le'] = wrap_with_errors_to_messages(
-                             lsp_comp.expand_enum_switch )
-    nmap['<leader>lv'] = wrap_with_errors_to_messages(
-                             lsp_comp.expand_variant_switch )
+    local wrap = messages.wrap_with_errors_to_messages
+    nmap['<leader>le'] = wrap( lsp_comp.expand_enum_switch )
+    nmap['<leader>lv'] = wrap( lsp_comp.expand_variant_switch )
   end
 
   -- These perform actions on the code.
