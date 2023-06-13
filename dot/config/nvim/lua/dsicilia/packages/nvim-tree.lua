@@ -7,6 +7,7 @@ local M = {}
 -- Imports.
 -----------------------------------------------------------------
 local mappers = require( 'dsicilia.mappers' )
+local resize = require( 'dsicilia.resize' )
 
 -----------------------------------------------------------------
 -- Aliases.
@@ -38,14 +39,41 @@ local function on_attach( bufnr )
 end
 
 require( 'nvim-tree' ).setup{
-  view={ width=30 },
-
-  renderer={ group_empty=true },
-
+  view={ width=resize.calc_nvim_tree_width() },
+  renderer={
+    group_empty=false,
+    indent_markers={
+      enable=true,
+      inline_arrows=false,
+      icons={
+        corner='└',
+        edge='│',
+        item='│',
+        bottom='─',
+        none=' ',
+      },
+    },
+    icons={
+      webdev_colors=false,
+      padding=' ',
+      symlink_arrow=' ➛ ',
+      show={
+        file=false,
+        folder=false,
+        folder_arrow=false,
+        git=false,
+        modified=false,
+      },
+      glyphs={
+        default='-',
+        symlink='-',
+        bookmark='-',
+        modified='-',
+      },
+    },
+  },
   filters={ dotfiles=true },
-
   on_attach=on_attach,
-
   -- Nvim-tree supports an interactive "window picker" which al-
   -- lows the user to select a window relative to which a file
   -- gets opened in e.g. a vertical split or horizontal split,

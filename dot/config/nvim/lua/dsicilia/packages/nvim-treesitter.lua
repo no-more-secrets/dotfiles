@@ -1,6 +1,22 @@
 -----------------------------------------------------------------
 -- Package: nvim-treesitter
 -----------------------------------------------------------------
+
+-----------------------------------------------------------------
+-- Imports.
+-----------------------------------------------------------------
+local work = require( 'dsicilia.work' )
+
+-----------------------------------------------------------------
+-- Setup.
+-----------------------------------------------------------------
+if work.iscit() then
+  -- This might be slower, but otherwise tree-sitter will try to
+  -- use curl to download the parsers which won't work in all of
+  -- our environments.
+  require( 'nvim-treesitter.install' ).prefer_git = true
+end
+
 require( 'nvim-treesitter.configs' ).setup{
   -- A list of parser names, or "all".
   ensure_installed={
