@@ -168,6 +168,11 @@ return require( 'packer' ).startup( {
       require( 'dsicilia.packages.gitsigns-nvim' )
     end}
 
+    -- Document tree outline in right side bar.
+    use{ 'stevearc/aerial.nvim', config = function()
+      require( 'dsicilia.packages.aerial-nvim' )
+    end}
+
     -- Should go last.
     if bootstrapping then require( 'packer' ).sync() end
   end,

@@ -42,6 +42,14 @@ vim.o.foldexpr = 'nvim_treesitter#foldexpr()'
 -- Toggle fold under cursor.
 nmap['Z'] = 'za'
 
+-- Close all folds except those minimal set that are needed to
+-- reveal the current line. This works by setting a mark, closing
+-- all folds, then returning to that mark, then putting it at the
+-- center of the screen. This replaces the normal zv which seems
+-- to do something similar but is not quite what we want since it
+-- doesn't close all the other folds.
+nmap['zv'] = 'mzzMzv`zz.'
+
 -----------------------------------------------------------------
 -- Colors.
 -----------------------------------------------------------------

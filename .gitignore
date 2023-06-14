@@ -24,3 +24,5 @@ dot/tmux/plugins/*
 .luarc.json
 
 Session.vim
+
+.htoprc

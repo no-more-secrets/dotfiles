@@ -18,7 +18,11 @@ set PATH ~/bin ~/.local/bin ~/.cargo/bin $PATH
 
 set -g fish_prompt_pwd_dir_length 2
 
-set -gx EDITOR $HOME/dev/tools/nvim-current/bin/nvim
+if which nvim >/dev/null 2>&1
+  set -gx EDITOR nvim
+else
+  set -gx EDITOR vim
+end
 
 export COLUMNS
 

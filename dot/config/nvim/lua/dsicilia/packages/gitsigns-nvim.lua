@@ -45,7 +45,7 @@ gitsigns.setup{
   linehl=false, -- Toggle with `:Gitsigns toggle_linehl`.
   word_diff=false, -- Toggle with `:Gitsigns toggle_word_diff`.
   watch_gitdir={ interval=1000, follow_files=true },
-  attach_to_untracked=true,
+  attach_to_untracked=false,
   current_line_blame=true,
   current_line_blame_opts={
     virt_text=true,

@@ -108,10 +108,9 @@ local function on_lsp_attach( args )
 
   -- Buffer local mappings.
   -- See `:help vim.lsp.*` for documentation on any of the below functions
-  local mappers = require( 'dsicilia.mappers' )
-  local opts = { buffer=bufnr }
-  local nmap = mappers.build_mapper( 'n', opts )
-  local vmap = mappers.build_mapper( 'v', opts )
+  local mappers =
+      require( 'dsicilia.mappers' ).for_buffer( bufnr )
+  local nmap, vmap = mappers.nmap, mappers.vmap
   local buf = vim.lsp.buf
 
   -- These actions cause the cursor/view to go somewhere.
