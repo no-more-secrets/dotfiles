@@ -90,26 +90,6 @@ return require( 'packer' ).startup( {
       end,
     }
 
-    -- Improved lua syntax highlighting.
-    use{
-      'tbastos/vim-lua',
-      config=function()
-        -- FIXME: not working.
-        vim.g.lua_syntax_fancynotequal = 1
-      end,
-    }
-
-    -- Modern C++ syntax highlighting. Note that this won't really
-    -- be used when clangd or tree-sitter are providing semantic
-    -- highlighting. It's mainly for when we are viewing a cpp file
-    -- and don't have clangd running.
-    use{
-      'bfrg/vim-cpp-modern',
-      config=function()
-        require( 'dsicilia.packages.vim-cpp-modern' )
-      end,
-    }
-
     use{
       'nvim-treesitter/nvim-treesitter',
       config=function()

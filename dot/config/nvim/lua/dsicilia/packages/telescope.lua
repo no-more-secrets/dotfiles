@@ -91,8 +91,19 @@ nmap['<leader>t?'] = builtin.builtin
 -- General.
 nmap['<C-t>'] = builtin.find_files -- under cwd
 nmap['<leader>tt'] = function() builtin.find_files{ cwd='~' } end
-nmap['<leader>ta'] = builtin.live_grep
+nmap['<leader>ta'] = function()
+  -- This mirrors the behavior of :Ag in fzf-vim, in that it will
+  -- just start reading/indexing all lines from all files below
+  -- the cwd and allow filtering on them using fzf.
+  builtin.grep_string{ search='' }
+end
+-- For this one we use live_grep, which doesn't automatically
+-- read everything under the cwd like grep_string{search=''}
+-- above, but that is because it sometimes causes vim to use too
+-- much memory and crashes. So for this one we need to start
+-- typing something before searching.
 nmap['<leader>tA'] = function() builtin.live_grep{ cwd='~' } end
+
 nmap['<leader>tb'] = builtin.buffers
 nmap['<leader>tw'] = builtin.grep_string
 -- FIXME: this one is supposed to search for the highlighted
