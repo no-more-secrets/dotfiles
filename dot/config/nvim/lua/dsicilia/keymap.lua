@@ -34,6 +34,20 @@ nmap['Q'] = ':qa<CR>'
 nmap['}'] = '$'
 nmap['{'] = '^'
 
+-- "Press" the unmapped version of a key in normal mode.
+local function norm_unmapped( c )
+  return vim.cmd{ cmd='norm', args={c}, bang=true }
+end
+
+-- When searching for something that yields no results, vim nor-
+-- mally sends an error message to the message box, which causes
+-- issues when cmdheight=0, since then it asks to press enter.
+-- These will effectively silence that until the issue has a
+-- better workaround. See: github.com/neovim/neovim/issues/24059
+vim.cmd[[nnoremap / :silent! /]]
+nmap['n'] = function() pcall( norm_unmapped, 'n' ) end
+nmap['N'] = function() pcall( norm_unmapped, 'N' ) end
+
 -- These are `back` and `forward` actions, analogous to web
 -- browsing. However we swap them because <C-I> "should" repre-
 -- sent `back` because it is to the left of the 'O' key and the
