@@ -24,7 +24,9 @@ local augroup = vim.api.nvim_create_augroup
 -----------------------------------------------------------------
 -- Constants.
 -----------------------------------------------------------------
-local LSP_SEMANTIC_HIGHLIGHTING = true
+-- FIXME: get neovim to assign higher priority to treesitter col-
+-- oring so that we can leave this on.
+local LSP_SEMANTIC_HIGHLIGHTING = false
 
 -----------------------------------------------------------------
 -- Logging.
