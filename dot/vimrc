@@ -84,31 +84,6 @@ function! AgWordVisual()
 endfunction
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-"                            Buffers
-" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-" Put these after the plugin stuff above since it looks like some
-" syntax settings can be overwridden there.
-au BufNewFile,BufRead *.cc,*.cpp,*.hpp,*.h,*.inl set syntax=cpp
-au BufNewFile,BufRead *.cc,*.cpp,*.hpp,*.h,*.inl set ft=cpp
-au BufNewFile,BufRead *.hs                       set syntax=haskell
-au BufNewFile,BufRead *.hs                       set ft=haskell
-au BufNewFile,BufRead *.mkh                      set ft=make
-au BufNewFile,BufRead *.fish                     set syntax=fish
-au BufNewFile,BufRead *.glsl,*.vert,*.frag       set ft=glsl
-
-au BufNewFile,BufRead *.diff set ft=diff
-au BufNewFile,BufRead *.diff set syntax=diff
-
-" :h commentstring seems to say that this is only currently used
-" to 'add markers for folding.'
-au FileType vim     let g:commentstring="\" %s"
-au FileType sh      let g:commentstring="# %s"
-au FileType python  let g:commentstring="# %s"
-au FileType haskell let g:commentstring="-- %s"
-au FileType cpp     let g:commentstring="// %s"
-au FileType make    let g:commentstring="# %s"
-
-" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 "                             Themes
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 " Return to last edit position when opening files and make that
