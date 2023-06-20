@@ -9,6 +9,7 @@ local M = {}
 local protocol = require( 'vim.lsp.protocol' )
 local colors = require( 'dsicilia.colors' )
 local win = require( 'dsicilia.win' )
+local messages = require( 'dsicilia.messages' )
 
 -----------------------------------------------------------------
 -- Aliases.
@@ -136,7 +137,6 @@ local function on_lsp_attach( args )
   -- a snippet.
   if clangd then
     nmap['<leader>et'] = clangd.GetType
-    local messages = require( 'dsicilia.messages' )
     local wrap = messages.wrap_with_errors_to_messages
     nmap['<leader>le'] = wrap( lsp_comp.expand_enum_switch )
     nmap['<leader>lv'] = wrap( lsp_comp.expand_variant_switch )

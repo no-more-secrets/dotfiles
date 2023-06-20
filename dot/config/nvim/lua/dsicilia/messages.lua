@@ -45,8 +45,22 @@ end
 -----------------------------------------------------------------
 M.default_print = print
 
-print =
-    function( ... ) M.with_cmdheight( M.default_print, ... ) end
+-- This does two things:
+--
+--   1. Wraps print with a cmdheight adjuster so that it works
+--      the way we want when cmdheight=0, and
+--   2. Schedules the print instead of running it immediately.
+--      There are times when printing to the message box does not
+--      seem to appear (e.g. in a BufNewFile handler), and so
+--      scheduling it seems to fix that and should do no harm
+--      otherwise.
+--
+print = function( ... )
+  local args = { ... }
+  vim.schedule( function()
+    M.with_cmdheight( M.default_print, unpack( args ) )
+  end )
+end
 
 -----------------------------------------------------------------
 -- Run function sending error to message box.

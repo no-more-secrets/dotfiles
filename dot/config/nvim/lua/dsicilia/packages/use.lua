@@ -65,9 +65,6 @@ return require( 'packer' ).startup( {
     -- Expand selected region.
     use'terryma/vim-expand-region'
 
-    -- File templates with placeholders.
-    use'tibabit/vim-templates'
-
     -- Syntax file for OpenGL shaders..
     use'tikhomirov/vim-glsl'
 
