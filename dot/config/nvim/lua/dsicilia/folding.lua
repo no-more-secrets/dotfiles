@@ -21,6 +21,9 @@ local nmap = mappers.nmap
 local getline = vim.fn.getline
 local format = string.format
 
+local autocmd = vim.api.nvim_create_autocmd
+local augroup = vim.api.nvim_create_augroup
+
 -----------------------------------------------------------------
 -- Constants.
 -----------------------------------------------------------------
@@ -35,6 +38,18 @@ vim.o.foldmethod = 'expr'
 -- Don't initially fold anything.
 vim.o.foldlevel = 1000
 vim.o.foldexpr = 'nvim_treesitter#foldexpr()'
+
+-- Update folds so that it will be possible to immediately start
+-- folding text without having to edit. This could potentially be
+-- due to a bug in nvim-treesitter, which we're using as a
+-- folding mechanism. See:
+--
+--   https://github.com/nvim-treesitter/nvim-treesitter/issues/1337
+--
+autocmd( 'BufWinEnter', {
+  group=augroup( 'FixFolds', { clear=true } ),
+  callback=function() vim.cmd[[normal! zx]] end,
+} )
 
 -----------------------------------------------------------------
 -- Key bindings.
@@ -70,8 +85,9 @@ end )
 -- another string that will be the fold line string. So we need a
 -- vimscript expression that runs our lua function above each
 -- time it is evaluated.
-vim.o.foldtext =
-    [[luaeval( 'require( "dsicilia.folding" ).fold_text_gen()' )]]
+vim.o.foldtext = [[
+  luaeval( 'require( "dsicilia.folding" ).fold_text_gen()' )
+]]
 
 function M.fold_text_gen()
   local linetext = getline( vim.v.foldstart )
