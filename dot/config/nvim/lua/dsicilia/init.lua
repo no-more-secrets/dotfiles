@@ -6,6 +6,7 @@ vim.loader.enable()
 -- Should go first.
 require'dsicilia.packages'
 
+require'dsicilia.autocmds'
 require'dsicilia.colors'
 require'dsicilia.dev'
 require'dsicilia.folding'
@@ -17,6 +18,3 @@ require'dsicilia.options'
 require'dsicilia.resize'
 require'dsicilia.rn'
 require'dsicilia.status-bar'
-
--- Temporary until migration is complete.
-vim.cmd.source( '~/.vimrc' )

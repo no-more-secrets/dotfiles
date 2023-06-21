@@ -75,7 +75,6 @@ main() {
         tmux
         tmux.conf
         vim
-        vimrc
     '
 
     for f in $list; do safe_link $f; done
