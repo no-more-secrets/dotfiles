@@ -54,9 +54,12 @@ end
 -- issues when cmdheight=0, since then it asks to press enter.
 -- These will effectively silence that until the issue has a
 -- better workaround. See: github.com/neovim/neovim/issues/24059
-vim.cmd[[nnoremap / :silent! /]]
 nmap['n'] = function() pcall( norm_unmapped, 'n' ) end
 nmap['N'] = function() pcall( norm_unmapped, 'N' ) end
+-- FIXME: technically we also need this, but this has the disad-
+-- vantage that we no longer get Neovim's live highlighting as we
+-- type the search characters.
+-- vim.cmd[[nnoremap / :silent! /]]
 
 -- These are `back` and `forward` actions, analogous to web
 -- browsing. However we swap them because <C-I> "should" repre-

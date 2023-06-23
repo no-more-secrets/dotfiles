@@ -141,14 +141,28 @@ return require( 'packer' ).startup( {
 
     use'sbdchd/neoformat'
 
-    use{ 'lewis6991/gitsigns.nvim',  config = function()
-      require( 'dsicilia.packages.gitsigns-nvim' )
-    end}
+    use{
+      'lewis6991/gitsigns.nvim',
+      config=function()
+        require( 'dsicilia.packages.gitsigns-nvim' )
+      end,
+    }
 
     -- Document tree outline in right side bar.
-    use{ 'stevearc/aerial.nvim', config = function()
-      require( 'dsicilia.packages.aerial-nvim' )
-    end}
+    use{
+      'stevearc/aerial.nvim',
+      config=function()
+        require( 'dsicilia.packages.aerial-nvim' )
+      end,
+    }
+
+    use{
+      'kdheepak/lazygit.nvim',
+      config=function()
+        require( 'dsicilia.packages.lazygit' )
+      end,
+      requires={ 'nvim-lua/plenary.nvim' },
+    }
 
     -- Should go last.
     if bootstrapping then require( 'packer' ).sync() end
