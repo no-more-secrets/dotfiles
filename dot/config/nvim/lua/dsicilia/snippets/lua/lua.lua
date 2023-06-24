@@ -49,7 +49,6 @@ add_s{
 
 local function required_last( node )
   local text = node[1]
-  print( 'text:', text )
   local last = text:match( '.*%.(.*)' )
   last = last or text
   last = last:gsub( '-', '_' )
