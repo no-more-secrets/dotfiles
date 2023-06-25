@@ -164,11 +164,19 @@ return require( 'packer' ).startup( {
       requires={ 'nvim-lua/plenary.nvim' },
     }
 
-    use {
-      'Xuyuanp/scrollbar.nvim',
+    use{
+      'petertriho/nvim-scrollbar',
       config=function()
-        require( 'dsicilia.packages.scrollbar-nvim' )
+        require( 'dsicilia.packages.nvim-scrollbar' )
       end,
+      requires={
+        {
+          'kevinhwang91/nvim-hlslens',
+          config=function()
+            require( 'dsicilia.packages.nvim-hlslens' )
+          end,
+        },
+      },
     }
 
     -- Should go last.

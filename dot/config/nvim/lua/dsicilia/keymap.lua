@@ -164,7 +164,7 @@ nmap['z.'] = zee_dot
 nmap['<CR>'] = ':noh<CR><CR>'
 
 -- Type & to highlight all instances of word under cursor.
-nmap['&'] = function()
+function M.ampersand()
   -- Basically does this:
   --   :let @/ = '\V\<some_keyword\>'
   --   :set hls
@@ -176,6 +176,8 @@ nmap['&'] = function()
   vim.cmd( highlight_cmd )
   vim.cmd( 'set hls' )
 end
+
+nmap['&'] = M.ampersand
 
 -- Saves a bit of time by pre-populating the command used to re-
 -- place the word under the cursor.
