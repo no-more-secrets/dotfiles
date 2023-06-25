@@ -308,6 +308,12 @@ local group = augroup( 'StatusBarGroup', { clear=true } )
 -- color in all windows.
 autocmd( 'BufEnter', { group=group, callback=rebuild_from_event } )
 
+-- This is so that when we open a help window, which causes a
+-- split, but which does not trigger BufEnter (because the cursor
+-- stays in the current window) we will redraw the status bar
+-- since we might be therefore going from one window to two.
+autocmd( 'WinResized', { group=group, callback=rebuild_from_event } )
+
 -- This is needed so that if the status bar changes in a window
 -- on tab Y while editing in tab X, then when we switch to tab Y
 -- we will see the diagnostics updated in tab Y's status bar.
