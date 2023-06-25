@@ -29,7 +29,11 @@ ls.config.setup{
 -- live after leaving it.
 autocmd( { 'TextChanged', 'InsertLeave' }, {
   group=augroup( 'Snippets', { clear=true } ),
-  callback=function() vim.cmd.LuaSnipUnlinkCurrent() end,
+  callback=function()
+    if ls.expand_or_jumpable() then
+      vim.cmd.LuaSnipUnlinkCurrent()
+    end
+  end,
 } )
 
 -----------------------------------------------------------------
