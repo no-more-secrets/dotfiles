@@ -15,13 +15,15 @@ local keymap = require( 'dsicilia.keymap' )
 -- Aliases.
 -----------------------------------------------------------------
 local nmap = mappers.nmap
+local max = math.max
+local cmd = vim.cmd
 
 -----------------------------------------------------------------
 -- Setup.
 -----------------------------------------------------------------
 hlslens.setup{
   auto_enable=true,
-  nearest_only=false,
+  nearest_only=true,
   nearest_float_when='never',
   -- This is so that the virtual text will take priority over
   -- other virtual text such as git-blame and diagnostics.
@@ -37,7 +39,12 @@ hlslens.setup{
 -----------------------------------------------------------------
 local function norm_cmd_then_start( c )
   nmap[c] = function()
-    vim.cmd{ cmd='normal', args={ c }, bang=true }
+    -- This lets us do e.g. 5n to repeat the command 5 times. If
+    -- no number precedes the command then it will be 0.
+    local n = max( vim.v.count, 1 )
+    pcall( function()
+      cmd{ cmd='normal', args={ tostring( n ) .. c }, bang=true }
+    end )
     hlslens.start()
   end
 end

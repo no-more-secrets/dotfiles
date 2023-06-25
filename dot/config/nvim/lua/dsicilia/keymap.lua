@@ -12,15 +12,16 @@ local tabs = require( 'dsicilia.tabs' )
 -----------------------------------------------------------------
 -- Aliases
 -----------------------------------------------------------------
-local nmap, imap, vmap = mappers.nmap, mappers.imap, mappers.vmap
+local cmd = vim.cmd
 local expand = vim.fn.expand
-local nvim_replace_termcodes = vim.api.nvim_replace_termcodes
-local nvim_feedkeys = vim.api.nvim_feedkeys
-local reltime = vim.fn.reltime
-local reltimefloat = vim.fn.reltimefloat
-local line = vim.fn.line
-local format = string.format
 local floor = math.floor
+local format = string.format
+local line = vim.fn.line
+local nmap, imap, vmap = mappers.nmap, mappers.imap, mappers.vmap
+local nvim_feedkeys = vim.api.nvim_feedkeys
+local nvim_replace_termcodes = vim.api.nvim_replace_termcodes
+local reltimefloat = vim.fn.reltimefloat
+local reltime = vim.fn.reltime
 
 -----------------------------------------------------------------
 -- The Leader
@@ -43,23 +44,6 @@ nmap['Q'] = ':qa<CR>'
 
 nmap['}'] = '$'
 nmap['{'] = '^'
-
--- "Press" the unmapped version of a key in normal mode.
-local function norm_unmapped( c )
-  return vim.cmd{ cmd='norm', args={ c }, bang=true }
-end
-
--- When searching for something that yields no results, vim nor-
--- mally sends an error message to the message box, which causes
--- issues when cmdheight=0, since then it asks to press enter.
--- These will effectively silence that until the issue has a
--- better workaround. See: github.com/neovim/neovim/issues/24059
-nmap['n'] = function() pcall( norm_unmapped, 'n' ) end
-nmap['N'] = function() pcall( norm_unmapped, 'N' ) end
--- FIXME: technically we also need this, but this has the disad-
--- vantage that we no longer get Neovim's live highlighting as we
--- type the search characters.
--- vim.cmd[[nnoremap / :silent! /]]
 
 -- These are `back` and `forward` actions, analogous to web
 -- browsing. However we swap them because <C-I> "should" repre-
@@ -173,8 +157,8 @@ function M.ampersand()
   local search = expand( '<cword>' )
   local suffix = [[\>']]
   local highlight_cmd = prefix .. search .. suffix
-  vim.cmd( highlight_cmd )
-  vim.cmd( 'set hls' )
+  cmd( highlight_cmd )
+  cmd( 'set hls' )
 end
 
 nmap['&'] = M.ampersand
