@@ -10,6 +10,8 @@ local lspconfig = require( 'lspconfig' )
 local paths = require( 'dsicilia.paths' )
 local colors = require( 'dsicilia.colors' )
 local messages = require( 'dsicilia.messages' )
+local gruvbox = require( 'gruvbox' )
+local palette = require( 'gruvbox.palette' )
 
 -----------------------------------------------------------------
 -- Aliases.
@@ -23,6 +25,7 @@ local echon_hi = colors.echon_hi
 local with_cmdheight = messages.with_cmdheight
 local trim = vim.fn.trim
 local with_errors_to_messages = messages.with_errors_to_messages
+local BOLD = gruvbox.config.bold
 
 -----------------------------------------------------------------
 -- Setup.
@@ -176,13 +179,18 @@ local function get_type_under_cursor()
   return type, comment
 end
 
+colors.hl_setter( 'ClangdLspExtColors', function( hi )
+  local P = palette.colors
+  hi.ClangdLspType = { fg=P.neutral_aqua, bold=BOLD }
+end )
+
 local function print_colored_type( type, comment )
   -- This first blank echo is needed to work around a strange bug
   -- that happens in cmdheight=0 mode where occassionally, in
   -- this function, the first echo statement prints as all
   -- spaces.
   echon_hi( 'Normal', ' ' )
-  echon_hi( 'Todo', 'type: ' )
+  echon_hi( 'ClangdLspType', 'type: ' )
   echon_hi( 'Normal', type )
   if comment then
     echon_hi( 'Normal', '; ' )

@@ -164,6 +164,13 @@ return require( 'packer' ).startup( {
       requires={ 'nvim-lua/plenary.nvim' },
     }
 
+    use {
+      'Xuyuanp/scrollbar.nvim',
+      config=function()
+        require( 'dsicilia.packages.scrollbar-nvim' )
+      end,
+    }
+
     -- Should go last.
     if bootstrapping then require( 'packer' ).sync() end
   end,
