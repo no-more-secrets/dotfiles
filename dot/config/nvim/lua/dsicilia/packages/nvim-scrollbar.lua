@@ -1,6 +1,15 @@
 -----------------------------------------------------------------
 -- Package: nvim-scrollbar.
 -----------------------------------------------------------------
+-- This must be first, otherwise it seems that the scrollbar
+-- plugin, if initialized first, will initialize the hlslens
+-- plugin with a default config and then the hlslens plugin won't
+-- pick up our own config.
+require( 'dsicilia.packages.nvim-hlslens' )
+
+-----------------------------------------------------------------
+-- Imports.
+-----------------------------------------------------------------
 local scrollbar = require( 'scrollbar' )
 local search = require( 'scrollbar.handlers.search' )
 local gitsigns = require( 'scrollbar.handlers.gitsigns' )
