@@ -8,6 +8,7 @@ local M = {}
 -----------------------------------------------------------------
 local mappers = require( 'dsicilia.mappers' )
 local tabs = require( 'dsicilia.tabs' )
+local quitting = require( 'dsicilia.quitting' )
 
 -----------------------------------------------------------------
 -- Aliases
@@ -22,6 +23,7 @@ local nvim_feedkeys = vim.api.nvim_feedkeys
 local nvim_replace_termcodes = vim.api.nvim_replace_termcodes
 local reltimefloat = vim.fn.reltimefloat
 local reltime = vim.fn.reltime
+local quit_all = quitting.quit_all
 
 -----------------------------------------------------------------
 -- The Leader
@@ -40,7 +42,7 @@ nmap['<C-K>'] = '<C-W>k'
 imap['<C-J>'] = '<ESC><C-W>j'
 imap['<C-K>'] = '<ESC><C-W>k'
 
-nmap['Q'] = ':qa<CR>'
+nmap['Q'] = quit_all
 
 nmap['}'] = '$'
 nmap['{'] = '^'
