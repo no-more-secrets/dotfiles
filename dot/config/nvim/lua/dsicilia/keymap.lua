@@ -149,8 +149,9 @@ nmap['z.'] = zee_dot
 -- Two <CR>s to keep <CR> working with the quickfix list.
 nmap['<CR>'] = ':noh<CR><CR>'
 
--- Type & to highlight all instances of word under cursor.
-function M.ampersand()
+-- Type * to highlight all instances of word under cursor but
+-- without automatically jumping to the next instance.
+function M.star_no_move()
   -- Basically does this:
   --   :let @/ = '\V\<some_keyword\>'
   --   :set hls
@@ -163,7 +164,7 @@ function M.ampersand()
   cmd( 'set hls' )
 end
 
-nmap['&'] = M.ampersand
+nmap['*'] = M.star_no_move
 
 -- Saves a bit of time by pre-populating the command used to re-
 -- place the word under the cursor.

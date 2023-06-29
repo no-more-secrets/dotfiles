@@ -51,10 +51,9 @@ end
 
 norm_cmd_then_start( 'n' )
 norm_cmd_then_start( 'N' )
-norm_cmd_then_start( '*' )
 norm_cmd_then_start( '#' )
 
-nmap['&'] = function()
-  keymap.ampersand()
+nmap['*'] = function()
+  keymap.star_no_move()
   hlslens.start()
 end
