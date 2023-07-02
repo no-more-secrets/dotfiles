@@ -40,27 +40,13 @@ return require( 'packer' ).startup( {
     use'wbthomason/packer.nvim'
 
     -- Undo tree.
-    use{
-      'mbbill/undotree',
-      config=function()
-        require( 'dsicilia.packages.undotree' )
-      end,
-    }
+    use'mbbill/undotree'
 
     -- Neovim version of EasyMotion.
-    use{
-      'phaazon/hop.nvim',
-      branch='v2',
-      config=function() require( 'dsicilia.packages.hop' ) end,
-    }
+    use{ 'phaazon/hop.nvim', branch='v2' }
 
     -- Color scheme.
-    use{
-      'ellisonleao/gruvbox.nvim',
-      config=function()
-        require( 'dsicilia.packages.gruvbox-nvim' )
-      end,
-    }
+    use'ellisonleao/gruvbox.nvim'
 
     -- Expand selected region.
     use'terryma/vim-expand-region'
@@ -69,36 +55,15 @@ return require( 'packer' ).startup( {
     use'tikhomirov/vim-glsl'
 
     -- Configs for language servers.
-    use{
-      'neovim/nvim-lspconfig',
-      config=function()
-        require( 'dsicilia.packages.nvim-lspconfig' )
-      end,
-    }
+    use'neovim/nvim-lspconfig'
 
     -- Auto-commenter plugin.
-    use{
-      'numToStr/Comment.nvim',
-      config=function()
-        require( 'dsicilia.packages.comments' )
-      end,
-    }
+    use'numToStr/Comment.nvim'
 
-    use{
-      'nvim-treesitter/nvim-treesitter',
-      config=function()
-        require( 'dsicilia.packages.nvim-treesitter' )
-      end,
-    }
+    use'nvim-treesitter/nvim-treesitter'
 
     -- Auto-completion Engine.
-    use{
-      'hrsh7th/nvim-cmp',
-      config=function()
-        require( 'dsicilia.packages.nvim-cmp' )
-      end,
-      requires={ 'L3MON4D3/LuaSnip' },
-    }
+    use'hrsh7th/nvim-cmp'
 
     -- Auto-completion sources.
     use'hrsh7th/cmp-buffer' -- Source from current buffer.
@@ -109,71 +74,35 @@ return require( 'packer' ).startup( {
     use'hrsh7th/cmp-nvim-lsp' -- Source from Neovim LSP.
 
     -- Snippet engine.
-    use{
-      'L3MON4D3/LuaSnip',
-      config=function()
-        require( 'dsicilia.packages.lua-snip' )
-      end,
-    }
+    use'L3MON4D3/LuaSnip'
 
     -- Telescope fuzzy finder.
     use{
       'nvim-telescope/telescope.nvim',
       branch='0.1.x',
-      config=function()
-        require( 'dsicilia.packages.telescope' )
-      end,
       requires={
         { 'nvim-lua/plenary.nvim' },
         { 'nvim-telescope/telescope-fzf-native.nvim', run='make' },
       },
     }
 
-    use{
-      'nvim-tree/nvim-tree.lua',
-      config=function()
-        require( 'dsicilia.packages.nvim-tree' )
-      end,
-    }
+    use'nvim-tree/nvim-tree.lua'
 
     use'sbdchd/neoformat'
 
-    use{
-      'lewis6991/gitsigns.nvim',
-      config=function()
-        require( 'dsicilia.packages.gitsigns-nvim' )
-      end,
-    }
+    use'lewis6991/gitsigns.nvim'
 
     -- Document tree outline in right side bar.
-    use{
-      'stevearc/aerial.nvim',
-      config=function()
-        require( 'dsicilia.packages.aerial-nvim' )
-      end,
-    }
+    use'stevearc/aerial.nvim'
 
     use{
       'kdheepak/lazygit.nvim',
-      config=function()
-        require( 'dsicilia.packages.lazygit' )
-      end,
       requires={ 'nvim-lua/plenary.nvim' },
     }
 
     use{
       'petertriho/nvim-scrollbar',
-      config=function()
-        require( 'dsicilia.packages.nvim-scrollbar' )
-      end,
-      requires={
-        {
-          'kevinhwang91/nvim-hlslens',
-          config=function()
-            require( 'dsicilia.packages.nvim-hlslens' )
-          end,
-        },
-      },
+      requires={ 'kevinhwang91/nvim-hlslens' },
     }
 
     -- Should go last.
