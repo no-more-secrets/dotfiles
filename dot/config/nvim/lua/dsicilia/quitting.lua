@@ -38,7 +38,7 @@ function M.quit_all()
       end
     end
   end
-  vim.cmd{ cmd='qa', bang=true }
+  vim.cmd[[qa]]
 end
 
 -----------------------------------------------------------------
