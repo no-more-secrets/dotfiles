@@ -18,12 +18,6 @@ set PATH ~/bin ~/.local/bin ~/.cargo/bin $PATH
 
 set -g fish_prompt_pwd_dir_length 2
 
-if which nvim >/dev/null 2>&1
-  set -gx EDITOR nvim
-else
-  set -gx EDITOR vim
-end
-
 export COLUMNS
 
 set -x LUA_INIT @$HOME/.config/lua/startup.lua
@@ -66,9 +60,11 @@ if test -e $fish_local_config
     source $fish_local_config
 end
 
-# Someone is setting this above, don't know who, so we need to
-# set it down here.
-set -x EDITOR $HOME/dev/tools/vim-current/bin/vim
+if which nvim >/dev/null 2>&1
+  set -gx EDITOR nvim
+else
+  set -gx EDITOR vim
+end
 
 export DSICILIA_NINJA_STATUS_PRINT_MODE=scrolling
 export DSICILIA_NINJA_REFORMAT_MODE=pretty

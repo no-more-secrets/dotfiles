@@ -9,8 +9,20 @@ local lspconfig = require( 'lspconfig' )
 local autocomplete_capabilities =
     require( 'cmp_nvim_lsp' ).default_capabilities()
 
-if vim.fn.executable( 'bash-language-server' ) == 0 then return end
--- Shellcheck is needed to get diagnostics.
-if vim.fn.executable( 'shellcheck' ) == 0 then return end
+if vim.fn.executable( 'pyright-langserver' ) == 0 then return end
 
-lspconfig.bashls.setup{ capabilities=autocomplete_capabilities }
+lspconfig.pyright.setup{
+  cmd={ 'pyright-langserver', '--stdio' },
+  capabilities=autocomplete_capabilities,
+  settings={
+    python={
+      analysis={
+        autoImportCompletions=true,
+        autoSearchPaths=true,
+        diagnosticMode='workspace',
+        typeCheckingMode='basic',
+        useLibraryCodeForTypes=true,
+      },
+    },
+  },
+}

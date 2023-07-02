@@ -76,9 +76,6 @@ return require( 'packer' ).startup( {
       end,
     }
 
-    -- Language server for bash.
-    use'bash-lsp/bash-language-server'
-
     -- Auto-commenter plugin.
     use{
       'numToStr/Comment.nvim',

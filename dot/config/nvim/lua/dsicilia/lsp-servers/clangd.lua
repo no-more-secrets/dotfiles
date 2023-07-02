@@ -21,7 +21,7 @@ local split = vim.fn.split
 local join = vim.fn.join
 local make_position_params = vim.lsp.util.make_position_params
 local buf_request_sync = vim.lsp.buf_request_sync
-local echon_hi = colors.echon_hi
+local color_message = colors.color_message
 local with_cmdheight = messages.with_cmdheight
 local trim = vim.fn.trim
 local with_errors_to_messages = messages.with_errors_to_messages
@@ -185,20 +185,12 @@ colors.hl_setter( 'ClangdLspExtColors', function( hi )
 end )
 
 local function print_colored_type( type, comment )
-  -- This first blank echo is needed to work around a strange bug
-  -- that happens in cmdheight=0 mode where occassionally, in
-  -- this function, the first echo statement prints as all
-  -- spaces.
-  echon_hi( 'Normal', ' ' )
-  echon_hi( 'ClangdLspType', 'type: ' )
-  echon_hi( 'Normal', type )
+  local msg = '{{ClangdLspType}}type{{Operator}}: {{Normal}}'
+  msg = msg .. type
   if comment then
-    echon_hi( 'Normal', '; ' )
-    echon_hi( 'Comment', '// ' )
-    echon_hi( 'Comment', comment )
-    echon_hi( 'Comment', '.' )
+    msg = msg .. format( '{{Comment}}; // %s.', comment )
   end
-  echon_hi( 'Normal', '' )
+  color_message( msg )
 end
 
 -----------------------------------------------------------------
@@ -206,13 +198,11 @@ end
 -----------------------------------------------------------------
 function M.GetType()
   with_errors_to_messages( function()
-    with_cmdheight( print_colored_type,  get_type_under_cursor() )
+    with_cmdheight( print_colored_type, get_type_under_cursor() )
   end )
 end
 
-function M.type_under_cursor()
-  return get_type_under_cursor()
-end
+function M.type_under_cursor() return get_type_under_cursor() end
 
 -----------------------------------------------------------------
 -- Finished.

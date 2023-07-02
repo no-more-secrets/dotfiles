@@ -4,22 +4,70 @@
 local M = {}
 
 -----------------------------------------------------------------
+-- Imports.
+-----------------------------------------------------------------
+local table_util = require( 'dsicilia.table-util' )
+
+-----------------------------------------------------------------
 -- Aliases.
 -----------------------------------------------------------------
 local autocmd = vim.api.nvim_create_autocmd
 local augroup = vim.api.nvim_create_augroup
 local nvim_get_hl = vim.api.nvim_get_hl
 local nvim_set_hl = vim.api.nvim_set_hl
+local format = string.format
 
 -----------------------------------------------------------------
 -- Message box in color.
 -----------------------------------------------------------------
 -- This will print a fragment (no newline) to the message box
 -- with a highlight color, e.g. echo_hi( 'Comment', 'hello' ).
-function M.echon_hi( hi, msg )
+local function echon_hi( hi, msg )
   vim.cmd.echohl( hi )
   msg = msg:gsub( '"', [[\"]] )
   vim.cmd.echon( '"' .. msg .. '"' ) -- echo w/ no newline.
+end
+
+-- Find the last instance of `divider` and return all the text
+-- before and after it.
+local function either_side( str, l, r )
+  return str:match( format( '(.*)%s(.*)%s(.*)', l, r ) )
+end
+
+local function parse_color_msg( msg )
+  local res = {}
+  local function add( hi, txt )
+    table.insert( res, { hi=hi, txt=txt } )
+  end
+  while true do
+    local pre, hi, txt = either_side( msg, '{{', '}}' )
+    if not pre then
+      if #msg > 0 then add( 'Normal', msg ) end
+      return table_util.reversed( res )
+    end
+    add( hi, txt )
+    msg = pre
+  end
+end
+
+-- Example:
+--
+--    color_message( 'Hello, {{ErrorMsg}}%s{{Normal}}!!!', name )
+--
+function M.color_message( ... )
+  local msg = format( ... )
+  -- FIXME: this first blank echo is needed to work around a
+  -- strange bug that happens in cmdheight=0 mode where occasion-
+  -- ally, in this function, the first echo statement prints as
+  -- all spaces.
+  msg = '{{Normal}} ' .. msg
+  -- This is so that we don't leave the message box in a colored
+  -- state.
+  msg = msg .. '{{Normal}}'
+  local tbl = parse_color_msg( msg )
+  for _, segment in ipairs( tbl ) do
+    echon_hi( segment.hi, segment.txt )
+  end
 end
 
 -----------------------------------------------------------------
