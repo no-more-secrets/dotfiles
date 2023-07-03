@@ -18,12 +18,13 @@ local expand = vim.fn.expand
 local floor = math.floor
 local format = string.format
 local line = vim.fn.line
-local nmap, imap, vmap = mappers.nmap, mappers.imap, mappers.vmap
 local nvim_feedkeys = vim.api.nvim_feedkeys
 local nvim_replace_termcodes = vim.api.nvim_replace_termcodes
 local reltimefloat = vim.fn.reltimefloat
 local reltime = vim.fn.reltime
 local quit_all = quitting.quit_all
+local nmap, imap, vmap, tmap = mappers.nmap, mappers.imap,
+                               mappers.vmap, mappers.tmap
 
 -----------------------------------------------------------------
 -- The Leader
@@ -175,6 +176,14 @@ nmap['<leader>r'] = function()
                    ':%s/' .. w .. '//g' .. [[<Left><Left>]] )
   M.feedkeys( keys )
 end
+
+-----------------------------------------------------------------
+-- Embedded terminal.
+-----------------------------------------------------------------
+-- This puts us back into normal mode in the terminal, which we
+-- normally (no pun intended) can't get to from insert mode be-
+-- cause all of the keys are sent to the terminal, even ESC.
+tmap[ [[<C-space>]] ] = [[<C-\><C-N>]]
 
 -----------------------------------------------------------------
 -- Copy/Paste
