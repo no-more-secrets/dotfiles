@@ -91,6 +91,13 @@ return require( 'packer' ).startup( {
       end,
     }
 
+    use{
+      'nvim-treesitter/playground',
+      config=function()
+        require( 'dsicilia.packages.ts-playground' )
+      end,
+    }
+
     -- Auto-completion Engine.
     use{
       'hrsh7th/nvim-cmp',

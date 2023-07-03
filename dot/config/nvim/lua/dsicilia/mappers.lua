@@ -25,6 +25,7 @@ end
 M.nmap = M.build_mapper( 'n' )
 M.imap = M.build_mapper( 'i' )
 M.vmap = M.build_mapper( 'v' )
+M.tmap = M.build_mapper( 't' )
 
 function M.for_buffer( bufnr, opts )
   opts = opts or {}
@@ -33,6 +34,7 @@ function M.for_buffer( bufnr, opts )
     nmap=M.build_mapper( 'n', opts ),
     imap=M.build_mapper( 'i', opts ),
     vmap=M.build_mapper( 'v', opts ),
+    tmap=M.build_mapper( 't', opts ),
   }
 end
 
