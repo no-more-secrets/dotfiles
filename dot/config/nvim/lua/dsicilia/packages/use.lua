@@ -183,6 +183,15 @@ return require( 'packer' ).startup( {
       },
     }
 
+    -- Upon opening a new buffer, guess-indent looks at the first
+    -- few hundred lines and uses them to determine how the
+    -- buffer should be indented. It then automatically updates
+    -- the buffer options so that they match the opened file.
+    use{
+      'NMAC427/guess-indent.nvim',
+      config=function() require( 'guess-indent' ).setup{} end,
+    }
+
     -- Should go last.
     if bootstrapping then require( 'packer' ).sync() end
   end,
