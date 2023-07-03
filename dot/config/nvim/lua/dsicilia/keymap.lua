@@ -195,14 +195,21 @@ nmap['Y'] = 'y$'
 -- simulate it using a temporary file. Note we don't support
 -- deleting here, and also these only support entire lines as op-
 -- posed to selections within a line.
-
--- Standard paste below cursor
-nmap['<Leader>p'] = ':r ~/.vimbuf<CR>'
--- Standard paste above cursor
-nmap['<Leader>P'] = ':.-1r ~/.vimbuf<CR>'
--- Yank into tmp file (will yank entire line always).
-vmap['<Leader>y'] = ':w! ~/.vimbuf<CR>'
-nmap['<Leader>yy'] = 'V<Leader>y'
+--
+-- Normally, when we do have clipboard access, the options module
+-- will set the clipboard option to a value such that all normal
+-- vim yanks/pastes/deletes will go to the clipboard. This then
+-- allows copy/pasting not only across terminals, but across
+-- servers, and thus the .vimbuf file is not needed. But, all
+-- servers being used need to be logged into using -XY.
+if vim.fn.has( 'clipboard' ) == 0 then
+  -- Standard paste below cursor
+  nmap['<Leader>p'] = ':r ~/.vimbuf<CR>'
+  -- Standard paste above cursor
+  nmap['<Leader>P'] = ':.-1r ~/.vimbuf<CR>'
+  -- Yank into tmp file (will yank entire line always).
+  vmap['<Leader>y'] = ':w! ~/.vimbuf<CR>'
+end
 
 -----------------------------------------------------------------
 -- Finished.

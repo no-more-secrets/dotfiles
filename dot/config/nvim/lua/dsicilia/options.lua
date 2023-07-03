@@ -115,9 +115,11 @@ vim.o.mouse = 'a'
 
 -- Clipboard
 -- ==============================================================
--- If vim has clipboard support then just use that by default for
--- yanking.
-if has( 'clipboard' ) then vim.o.clipboard = 'unnamed' end
+-- Always use the clipboard for ALL operations (instead of inter-
+-- acting with the "+" and/or "*" registers explicitly).
+if has( 'clipboard' ) then
+  vim.opt.clipboard:append( 'unnamedplus' )
+end
 
 -- Security
 -- ==============================================================

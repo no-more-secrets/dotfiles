@@ -11,5 +11,5 @@ function linode
   #      menu services. Multiple -t options force tty allocation,
   #      even if ssh has no local tty.
   #
-  ssh linode -t tmux attach
+  ssh -XY linode -t tmux attach
 end
