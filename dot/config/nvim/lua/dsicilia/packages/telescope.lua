@@ -56,6 +56,7 @@ telescope.setup{
         -- we have escape configured to just close the window;
         -- otherwise, it would take you into normal mode.
         ['<ESC>']=actions.close,
+        ['<CR>']=actions.select_default + actions.center,
       },
     },
   },
