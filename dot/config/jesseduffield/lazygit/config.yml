@@ -1,4 +1,5 @@
 gui:
+  windowSize: 'half' # one of 'normal' | 'half' | 'full' default is 'normal'.
   git:
     disableforcepushing: true
 reporting: "off"
