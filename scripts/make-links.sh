@@ -31,13 +31,15 @@ safe_link() {
     else
         # Source file exists
         [[ ! -L "$src" ]] && {
-            # Source file exists and  is  not  a  link,  so to be
-            # safe, let's just exit with an error.
-            error "file $src already exists and is not a link."
+            # Source file exists and is not a link; let's just
+            # rename it.
+            mv "$src" "$src.bak"; check "rename $src"
         }
-        # Source file exists and is  a  link,  so remove the link
-        # and proceed.
-        rm "$src"; check "remove $src"
+        [[   -L "$src" ]] && {
+          # Source file exists and is a link, so remove the link
+          # and proceed.
+          rm "$src"; check "remove $src"
+        }
     fi
     ln -s "$target" "$src"; check "create link $src"
 }
