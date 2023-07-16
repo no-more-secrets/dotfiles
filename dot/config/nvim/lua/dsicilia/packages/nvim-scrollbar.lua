@@ -12,9 +12,13 @@ require( 'dsicilia.packages.nvim-hlslens' )
 -----------------------------------------------------------------
 local scrollbar = require( 'scrollbar' )
 local search = require( 'scrollbar.handlers.search' )
-local gitsigns = require( 'scrollbar.handlers.gitsigns' )
 local colors = require( 'dsicilia.colors' )
 local palette = require( 'gruvbox.palette' )
+
+-----------------------------------------------------------------
+-- Settings.
+-----------------------------------------------------------------
+local INCLUDE_GITSIGNS = false
 
 -----------------------------------------------------------------
 -- Colors.
@@ -42,7 +46,7 @@ scrollbar.setup{
   handlers={
     cursor=false, -- would show dot at cursor location.
     diagnostic=true,
-    gitsigns=true, -- Requires gitsigns
+    gitsigns=INCLUDE_GITSIGNS, -- Requires gitsigns
     handle=true,
     search=true, -- Requires hlslens
   },
@@ -51,5 +55,11 @@ scrollbar.setup{
 -- Show marks representing search results in the scrollbar.
 search.setup{}
 
--- Show marks representing git changes in the scrollbar.
-gitsigns.setup()
+-----------------------------------------------------------------
+-- Gitsigns integration.
+-----------------------------------------------------------------
+if INCLUDE_GITSIGNS then
+  local gitsigns = require( 'scrollbar.handlers.gitsigns' )
+  -- Show marks representing git changes in the scrollbar.
+  gitsigns.setup()
+end
