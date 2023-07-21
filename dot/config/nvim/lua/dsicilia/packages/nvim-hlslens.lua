@@ -37,6 +37,8 @@ hlslens.setup{
 -----------------------------------------------------------------
 -- Key bindings.
 -----------------------------------------------------------------
+local function start_lens() hlslens.start() end
+
 local function norm_cmd_then_start( c )
   nmap[c] = function()
     -- This lets us do e.g. 5n to repeat the command 5 times. If
@@ -45,15 +47,21 @@ local function norm_cmd_then_start( c )
     pcall( function()
       cmd{ cmd='normal', args={ tostring( n ) .. c }, bang=true }
     end )
-    hlslens.start()
+    start_lens()
   end
 end
 
 norm_cmd_then_start( 'n' )
 norm_cmd_then_start( 'N' )
-norm_cmd_then_start( '#' )
 
 nmap['*'] = function()
-  keymap.star_no_move()
-  hlslens.start()
+  keymap.highlight_no_move()
+  vim.v.searchforward = 1
+  start_lens()
+end
+
+nmap['#'] = function()
+  keymap.highlight_no_move()
+  vim.v.searchforward = 0
+  start_lens()
 end
