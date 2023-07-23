@@ -79,6 +79,10 @@ gitsigns.setup{
 
     local gs = gitsigns
 
+    nmap['<leader>gg'] = function()
+      vim.cmd.Gitsigns( 'toggle_signs' )
+    end
+
     nmap['<leader>gn'] = gs.next_hunk
     nmap['<leader>gk'] = gs.prev_hunk
 

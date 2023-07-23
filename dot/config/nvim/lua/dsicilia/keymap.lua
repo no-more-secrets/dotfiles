@@ -147,8 +147,24 @@ nmap['z.'] = zee_dot
 -----------------------------------------------------------------
 -- Searching/Replacing.
 -----------------------------------------------------------------
--- Two <CR>s to keep <CR> working with the quickfix list.
-nmap['<CR>'] = ':noh<CR><CR>'
+-- This is non-trivial because we want the enter key to do dif-
+-- ferent things depending on whether we are editing a normal
+-- file (in which case it removes search highlights without
+-- moving the cursor), or if we're in e.g. the quickfix window
+-- (in which case we want it to select the thing under the
+-- curosr).
+nmap['<CR>'] = function()
+  local wintype = vim.fn.win_gettype()
+  -- wintype will be empty if we are editing a normal buffer.
+  if #wintype == 0 then
+    vim.cmd[[noh]]
+    return
+  end
+  -- We are e.g. in the quickfix window, in which case we just
+  -- want to actually hit enter to select the item under the cur-
+  -- sor. This was surprisingly tricky to get right.
+  vim.cmd.execute( [["normal! \<CR>"]] )
+end
 
 -- Highlight all instances of word under cursor but without auto-
 -- matically jumping to the next instance.
