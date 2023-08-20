@@ -112,10 +112,6 @@ sudo apt update
 
 sudo apt install $list --yes
 
-if ! which gcert &>/dev/null; then
-  sudo apt install system76-power --yes
-fi
-
 rm -f ~/bin/bat
 ln -s "$(which batcat)" ~/bin/bat
 
