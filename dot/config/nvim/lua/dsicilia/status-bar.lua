@@ -125,7 +125,13 @@ function M.get_gitsigns_status()
   local status = vim.b.gitsigns_status
   if not status then return '' end
   if #status == 0 then return '' end
-  return format( '  (%s)', status )
+  return format( ' (%s)', status )
+end
+
+function M.is_buffer_compiling( buf )
+  return has_clangd_attached( buf ) and
+             buffer_clangd_compilation_begun[buf] and
+             buffer_clangd_compilation_begun[buf].compiling
 end
 
 -- Vim allows one to put function calls inline in the status bar
@@ -188,6 +194,9 @@ local function build_impl( buf )
     end
     local indexing_str = table.concat( indexing_lst, ', ' )
     if indexing_str == '' then return '' end
+    -- Try to shorten a few things so as to avoid taking up too
+    -- much space on the status bar.
+    indexing_str = indexing_str:gsub( 'indexing', 'idx' )
     return ' [' .. indexing_str .. ']'
   end
 
@@ -202,11 +211,11 @@ local function build_impl( buf )
   if vim.b[buf].gitsigns_head then
     -- The current buffer holds a file that is tracked in git.
     local function app( x ) git = git .. x end
-    app( ' ' )
     app( branch_color )
-    app( '%{get( b:,\'gitsigns_head\',\'\' )}' )
-    app( bg )
+    -- LuaFormatter off
     app( "%{luaeval( 'require(\"dsicilia.status-bar\").get_gitsigns_status()' )}" )
+    -- LuaFormatter on
+    app( bg )
   end
 
   -- LuaFormatter off
@@ -267,6 +276,14 @@ end
 -----------------------------------------------------------------
 -- Clangd file status.
 -----------------------------------------------------------------
+-- Users can register callbacks here to be called when the file
+-- status changes.
+local filestatus_hooks = {}
+
+function M.register_filestatus_hook( fn )
+  table.insert( filestatus_hooks, fn )
+end
+
 local function clangd_file_status_handler( result, _, _ )
   -- The code in vim.lsp.handlers would seem to suggest that the
   -- buffer number should be accessible via ctx.bufnr, but that
@@ -286,6 +303,7 @@ local function clangd_file_status_handler( result, _, _ )
         { compiling=compiling }
   end
   M.rebuild_for_buffer( buf )
+  for _, hook in ipairs( filestatus_hooks ) do hook() end
 end
 
 -- This is a non-standard LSP API extension provided by clangd

@@ -91,7 +91,8 @@ function M.expand_enum_switch()
   L( 'switch( %s ) {', expr )
   for i, item in ipairs( items ) do
     L( '  case %s::%s: {', type, item.word )
-    L( '    ${%d:// TODO}', i )
+    -- L( '    ${%d:// TODO}', i )
+    L( '    $0// TODO', i )
     L( '    break;' )
     L( '  }' )
   end
