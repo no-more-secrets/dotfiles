@@ -2,7 +2,7 @@ function binding-C-k
     set -l result ""
     set -l handled 1 # initially not handled
 
-    if test -e Makefile
+    if test -e CMakeLists.txt
       ~/dev/utilities/cmake/build-options.sh
       # This is a hack to allow the error code to propagate out
       # of this function and into the visual indicator in the
