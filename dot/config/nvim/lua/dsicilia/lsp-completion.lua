@@ -91,8 +91,7 @@ function M.expand_enum_switch()
   L( 'switch( %s ) {', expr )
   for i, item in ipairs( items ) do
     L( '  case %s::%s: {', type, item.word )
-    -- L( '    ${%d:// TODO}', i )
-    L( '    $0// TODO', i )
+    L( '    // TODO', i )
     L( '    break;' )
     L( '  }' )
   end
@@ -133,11 +132,10 @@ function M.expand_variant_switch()
   L( 'SWITCH( %s ) {', expr )
   for i, item in ipairs( items ) do
     L( '  CASE( %s ) {', item.word )
-    L( '    ${%d:// TODO}', i )
+    L( '    // TODO', i )
     L( '    break;' )
     L( '  }' )
   end
-  L( '  END_CASES;' )
   L( '}' )
   luasnip.lsp_expand( table.concat( lines, '\n' ) )
 end
