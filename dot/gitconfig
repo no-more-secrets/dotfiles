@@ -45,3 +45,6 @@
   autostash = true
 [checkout]
   defaultRemote = origin
+[stash]
+    showIncludeUntracked = true
+    showPatch = true
