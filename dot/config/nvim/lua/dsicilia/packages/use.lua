@@ -57,6 +57,8 @@ return require( 'packer' ).startup( {
     -- Color scheme.
     use{
       'ellisonleao/gruvbox.nvim',
+      -- TODO: update to latest version which breaks us.
+      commit='df149bccb19a02c5c2b9fa6ec0716f0c0487feb0',
       config=function()
         require( 'dsicilia.packages.gruvbox-nvim' )
       end,
