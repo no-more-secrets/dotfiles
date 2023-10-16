@@ -194,6 +194,16 @@ return require( 'packer' ).startup( {
       config=function() require( 'guess-indent' ).setup{} end,
     }
 
+    -- Auto-detects binary files and opens them in "hex mode"
+    -- using xxd. Supports reading/editing/writing, though sub-
+    -- ject to the limitations of `xxd -r`.
+    use{
+      'RaafatTurki/hex.nvim',
+      config=function()
+        require( 'dsicilia.packages.hex-nvim' )
+      end,
+    }
+
     -- Should go last.
     if bootstrapping then require( 'packer' ).sync() end
   end,
