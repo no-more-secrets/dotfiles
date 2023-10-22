@@ -1,7 +1,6 @@
 -----------------------------------------------------------------
 -- Package: nvim-treesitter
 -----------------------------------------------------------------
-
 -----------------------------------------------------------------
 -- Imports.
 -----------------------------------------------------------------
@@ -23,9 +22,9 @@ require( 'nvim-treesitter.configs' ).setup{
     'c', 'cpp', 'lua', 'vim', 'vimdoc', 'query', 'glsl',
     'haskell', 'awk', 'bash', 'cmake', 'diff', 'fish',
     'git_config', 'gitignore', 'gitcommit', 'html', 'ini',
-    'java', 'json', 'passwd', 'perl', 'python', 'regex', 'rust',
-    'sql', 'toml', 'yaml', 'make', 'markdown', 'ninja',
-    'comment',
+    'java', 'json', 'passwd', 'python', 'regex', 'rust', 'sql',
+    'toml', 'yaml', 'make', 'markdown', 'ninja', 'comment',
+    'luap',
   },
 
   -- Install parsers synchronously (only applied to
