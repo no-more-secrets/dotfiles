@@ -19,10 +19,12 @@ local nmap = mappers.nmap
 --                           Aliases
 -----------------------------------------------------------------
 local getline = vim.fn.getline
+local getfsize = vim.fn.getfsize
 local format = string.format
 
 local autocmd = vim.api.nvim_create_autocmd
 local augroup = vim.api.nvim_create_augroup
+local buf_get_name = vim.api.nvim_buf_get_name
 
 -----------------------------------------------------------------
 -- Constants.
@@ -33,11 +35,34 @@ local MAX_FOLD_LENGTH = 65
 --                           Options
 -----------------------------------------------------------------
 vim.o.foldenable = true
--- Fold based on the syntax of the language in question.
-vim.o.foldmethod = 'expr'
--- Don't initially fold anything.
-vim.o.foldlevel = 1000
-vim.o.foldexpr = 'nvim_treesitter#foldexpr()'
+
+-----------------------------------------------------------------
+--                       Autocommands
+-----------------------------------------------------------------
+-- This is to prevent treesitter-based folding on large files
+-- since it causes massive slowdowns in buffer load time.
+autocmd( 'BufReadPre', {
+  group=augroup( 'EnableFolding', { clear=true } ),
+  callback=function( ev )
+    local fname = assert( buf_get_name( assert( ev.buf ) ) )
+    local size = assert( getfsize( fname ) )
+    if size > 1024 * 1024 then
+      -- Simpler (non-treesitter) folding method if file is too
+      -- big. Treesitter folding is way to slow on large files
+      -- and makes startup time balloon to minutes.
+      vim.wo.foldmethod = 'indent'
+      -- Don't initially fold anything.
+      vim.wo.foldlevel = 99
+      print( 'folding disabled for large file.' )
+    else
+      -- Fold based on the syntax of the language in question.
+      vim.wo.foldmethod = 'expr'
+      -- Don't initially fold anything.
+      vim.wo.foldlevel = 99
+      vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+    end
+  end,
+} )
 
 -- Update folds so that it will be possible to immediately start
 -- folding text without having to edit. This could potentially be
