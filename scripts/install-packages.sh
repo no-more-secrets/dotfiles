@@ -106,15 +106,21 @@ list="
     zip
 "
 
-if ! which gcert &>/dev/null; then
-  sudo apt-add-repository -y ppa:system76-dev/stable
-fi
-sudo apt update
+sudo apt-add-repository -y ppa:system76-dev/stable
 
+sudo apt update
 sudo apt install $list --yes
 
-rm -f ~/bin/bat
-ln -s "$(which batcat)" ~/bin/bat
+# ---------------------------------------------------------------
+# Lua
+# ---------------------------------------------------------------
+luarocks config lua_version 5.4
 
+luarocks install luaposix --local
+luarocks install lunajson --local
+
+# ---------------------------------------------------------------
+# Python
+# ---------------------------------------------------------------
 pip3 install --user \
   spotipy  # For the spotify playlist sync script.
