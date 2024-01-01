@@ -71,6 +71,7 @@ list="
     light
     lua5.4
     lua-posix
+    luarocks
     ncal
     ncdu
     ninja-build
