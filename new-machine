@@ -83,6 +83,7 @@ clone_rn revolution-now rn-music
 clone    Haskell-Utils haskell
 clone    utilities
 clone    suckless
+clone    moonlib
 
 # ---------------------------------------------------------------
 # Source bashlib

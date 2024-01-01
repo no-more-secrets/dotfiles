@@ -19,13 +19,12 @@ end
 -----------------------------------------------------------------
 -- Package path.
 -----------------------------------------------------------------
-local function path_add( what )
+local function path_add( fmt, ... )
+  local what = format( fmt, ... )
   package.path = format( '%s;%s', package.path, what )
 end
 
-local moonlib = format( '%s%s', HOME,
-                        '/dev/utilities/moonlib/?.lua' )
-path_add( moonlib )
+path_add( '%s%s', HOME, '/dev/moonlib/?.lua' )
 
 -----------------------------------------------------------------
 -- Globals.
