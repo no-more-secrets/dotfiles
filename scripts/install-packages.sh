@@ -103,6 +103,7 @@ list="
     vim
     wget
     xclip
+    xdotool
     zip
 "
 
