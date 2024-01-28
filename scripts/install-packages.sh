@@ -115,10 +115,17 @@ sudo apt install $list --yes
 # ---------------------------------------------------------------
 # Lua
 # ---------------------------------------------------------------
+rocks="
+    luaposix
+    lunajson
+"
+
 luarocks config lua_version 5.4
 
-luarocks install luaposix --local
-luarocks install lunajson --local
+for rock in $rocks; do
+    echo "installing luarock: $rock"
+    luarocks install "$rock" --local
+done
 
 # ---------------------------------------------------------------
 # Python
