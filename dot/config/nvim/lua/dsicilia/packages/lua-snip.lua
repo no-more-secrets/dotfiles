@@ -11,8 +11,6 @@ local mappers = require( 'dsicilia.mappers' )
 -- Aliases.
 -----------------------------------------------------------------
 local imap = mappers.imap
-local autocmd = vim.api.nvim_create_autocmd
-local augroup = vim.api.nvim_create_augroup
 
 -----------------------------------------------------------------
 -- Setup.
@@ -21,20 +19,8 @@ ls.config.setup{
   history=true,
   updateevents='TextChanged,TextChangedI',
   enable_autosnippets=true,
-  -- delete_check_events='InsertLeave',
+  delete_check_events='InsertLeave',
 }
-
--- The `delete_check_events` above is supposed to do this, but it
--- does not seem to work. Thus without this, a snippet can stay a
--- live after leaving it.
-autocmd( { 'TextChanged', 'InsertLeave' }, {
-  group=augroup( 'Snippets', { clear=true } ),
-  callback=function()
-    if ls.expand_or_jumpable() then
-      vim.cmd.LuaSnipUnlinkCurrent()
-    end
-  end,
-} )
 
 -----------------------------------------------------------------
 -- Keymaps.
