@@ -97,6 +97,7 @@ function M.expand_enum_switch()
   end
   L( '}' )
   luasnip.lsp_expand( table.concat( lines, '\n' ) )
+  vim.schedule( function() vim.cmd[[stopinsert]] end )
 end
 
 -----------------------------------------------------------------
@@ -109,7 +110,7 @@ function M.expand_variant_switch()
 
   -- LuaFormatter off
   local type = type_of_current_line( function( line )
-    return line .. '.to_enum()'
+    return '(' .. line .. ').to_enum()'
   end )
   -- LuaFormatter on
 
@@ -138,6 +139,7 @@ function M.expand_variant_switch()
   end
   L( '}' )
   luasnip.lsp_expand( table.concat( lines, '\n' ) )
+  vim.schedule( function() vim.cmd[[stopinsert]] end )
 end
 
 -----------------------------------------------------------------
