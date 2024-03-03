@@ -43,7 +43,9 @@ local function autoformat()
   local clients = vim.lsp.get_active_clients{ bufnr=bufnr }
   for _, client in ipairs( clients ) do
     if client.server_capabilities.documentFormattingProvider then
-      vim.lsp.buf.format()
+      -- The default timeout is 1 second (1000ms) which sometimes
+      -- times out for large buffers.
+      vim.lsp.buf.format{ timeout_ms=10000 }
       return
     end
   end
