@@ -1,36 +1,5 @@
-# Gets executed before each (possibly empty) command, i.e., just
-# after <enter> is hit at the prompt, but before the command
-# runs.  However, it does not get run before key bindings.
-function preexec_hook --on-event fish_preexec
-  # echo preexec handler: $argv
-end
-
-# Gets executed before each (possibly empty) command, i.e., just
-# after <enter> is hit at the prompt, but before the command
-# runs.  However, it does not get run before key bindings.
-function postexec_hook --on-event fish_postexec
-  if string length -q $argv
-    set --erase status_cache
-  end
-end
-
 function fish_prompt --description 'Write out the prompt'
     set -l last_status $status
-
-    # Unfortunately when running a fish function from a key bind-
-    # ing, the error code of the last command in the function
-    # cannot be propagated out to be visible in the command
-    # prompt. So if a function that is bound to a key wants to
-    # propagate its error code then it needs to store it in
-    # `status_cache` where it will be picked up here. This
-    # status_cache variable will then hold its value until the
-    # postexec_hook above runs and resets it, thereby allowing
-    # the error code (in status_cache) set by the key binding to
-    # linger at the prompt until the next command is run, as usu-
-    # ally happens normally with commands.
-    if string length -q $status_cache
-      set last_status $status_cache
-    end
 
     if not set -q __fish_git_prompt_show_informative_status
         set -g __fish_git_prompt_show_informative_status 1
