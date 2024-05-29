@@ -1,3 +1,3 @@
 function bat
-  command bat --style=plain $argv
+  command batcat --paging=never --style=plain $argv
 end

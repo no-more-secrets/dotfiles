@@ -26,6 +26,7 @@ list="
     flex
     fluid-soundfont-gm
     fluidsynth
+    fzf
     git
     gpick
     haskell-stack
