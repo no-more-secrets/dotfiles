@@ -57,8 +57,8 @@ nmap['<SPACE>9'] = '<C-O>'
 nmap['<SPACE>0'] = '<C-I>'
 
 -- These are now available.
--- nmap['<C-I>'] = ???
--- nmap['<C-O>'] = ???
+nmap['<C-I>'] = '^'
+nmap['<C-O>'] = '$'
 
 -- Use Shift-t to open the current buffer in a new tab.
 nmap['T'] = ':tabnew %<CR>'

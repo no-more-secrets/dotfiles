@@ -128,6 +128,11 @@ for rock in $rocks; do
     luarocks install "$rock" --local
 done
 
+lua_v_cmd="sudo update-alternatives --set lua-interpreter /usr/bin/lua5.4"
+echo "setting lua version..."
+echo "$lua_v_cmd"
+$lua_v_cmd
+
 # ---------------------------------------------------------------
 # Python
 # ---------------------------------------------------------------

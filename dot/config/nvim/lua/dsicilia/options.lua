@@ -9,8 +9,6 @@ local function has( what ) return vim.call( 'has', what ) end
 -- ==============================================================
 vim.o.enc = 'utf-8'
 vim.o.fenc = 'utf-8'
-vim.o.termencoding = 'utf-8'
-vim.o.t_Co = '256'
 
 -- Spacing
 -- ==============================================================

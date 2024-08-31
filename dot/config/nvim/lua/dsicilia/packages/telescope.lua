@@ -49,6 +49,7 @@ telescope.setup{
         ['<C-k>']=actions.move_selection_previous,
         ['<C-u>']=actions.preview_scrolling_down,
         ['<C-i>']=actions.preview_scrolling_up,
+        ['<C-x>']=actions.delete_buffer,
         -- Comment this out for the default behavior, which is
         -- that the input line in telescope uses a vim modal
         -- style with vim key bindings in normal mode, but you
