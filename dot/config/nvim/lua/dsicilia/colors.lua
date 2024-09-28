@@ -95,15 +95,6 @@ function M.hl_setter( label, setter )
   } )
 end
 
--- Fill in any nil fields, which will implicitly take on their
--- default values, which can be obtained from the 'Normal' group.
--- This makes it easier for people since they can e.g. check the
--- .fg field and assume that it always has a value.
-local function populate_hl_defaults( g )
-  local normal = nvim_get_hl( 0, { name='Normal' } )
-  for k, v in pairs( normal ) do if not g[k] then g[k] = v end end
-end
-
 -- Resolves links in highlight groups.
 local function get_resolved_hl( name )
   local hl = nvim_get_hl( 0, { name=name } )
@@ -128,12 +119,10 @@ end
 -----------------------------------------------------------------
 M.hl_setter( 'ColorsGeneral', function( _ )
   -- Prevents ~ (tildes) from appearing on post-buffer lines by
-  -- making them the same color as the background.
-  M.modify_hl( 'EndOfBuffer', function( g )
-    -- This is so that g.bg won't be nil.
-    populate_hl_defaults( g )
-    g.fg = g.bg
-  end )
+  -- making them the same color as the background. The string
+  -- value 'bg', when given to the function nvim_set_hl, acts as
+  -- alias for the background color of the normal group.
+  M.modify_hl( 'EndOfBuffer', function( g ) g.fg = 'bg' end )
 end )
 
 -----------------------------------------------------------------
