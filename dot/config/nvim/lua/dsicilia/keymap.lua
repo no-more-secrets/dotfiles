@@ -45,8 +45,8 @@ imap['<C-K>'] = '<ESC><C-W>k'
 
 nmap['Q'] = quit_all
 
-nmap['}'] = '$'
-nmap['{'] = '^'
+-- nmap['}'] = ???
+-- nmap['{'] = ???
 
 -- These are `back` and `forward` actions, analogous to web
 -- browsing. However we swap them because <C-I> "should" repre-
