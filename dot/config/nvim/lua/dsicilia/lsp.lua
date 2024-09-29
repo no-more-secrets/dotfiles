@@ -40,14 +40,10 @@ vim.lsp.set_log_level( 'OFF' )
 -----------------------------------------------------------------
 -- Gutter signs.
 -----------------------------------------------------------------
-sign_define( 'DiagnosticSignError',
-             { text='ER', texthl='DiagnosticError' } )
-sign_define( 'DiagnosticSignWarn',
-             { text='WN', texthl='DiagnosticWarn' } )
-sign_define( 'DiagnosticSignHint',
-             { text='HN', texthl='DiagnosticHint' } )
-sign_define( 'DiagnosticSignInfo',
-             { text='IN', texthl='DiagnosticInfo' } )
+sign_define( 'DiagnosticSignError', { text='ER' } )
+sign_define( 'DiagnosticSignWarn', { text='WN' } )
+sign_define( 'DiagnosticSignHint', { text='HN' } )
+sign_define( 'DiagnosticSignInfo', { text='IN' } )
 
 -----------------------------------------------------------------
 -- Colors
@@ -66,10 +62,10 @@ colors.hl_setter( 'LspDiag', function( hi )
   hi.DiagnosticFloatingHint = { fg=WHT }
   hi.DiagnosticVirtualTextInfo = { fg=WHT }
   hi.DiagnosticFloatingInfo = { fg=WHT }
-  hi.DiagnosticError = { fg=BLK, bg=RED }
-  hi.DiagnosticWarn = { fg=BLK, bg=YLW }
-  hi.DiagnosticHint = { fg=BLK, bg=WHT }
-  hi.DiagnosticInfo = { fg=BLK, bg=WHT }
+  hi.DiagnosticSignError = { fg=BLK, bg=RED }
+  hi.DiagnosticSignWarn = { fg=BLK, bg=YLW }
+  hi.DiagnosticSignHint = { fg=BLK, bg=WHT }
+  hi.DiagnosticSignInfo = { fg=BLK, bg=WHT }
 end )
 
 -----------------------------------------------------------------
@@ -94,8 +90,8 @@ local function on_lsp_attach( args )
   local telescope = require( 'telescope.builtin' )
   local lsp_comp = require( 'dsicilia.lsp-completion' )
   local bufnr = args.buf
-  local client = vim.lsp.get_client_by_id( args.data.client_id )
-
+  local client = assert( vim.lsp.get_client_by_id( args.data
+                                                       .client_id ) )
   local clangd
   if client.name == 'clangd' then
     clangd = require( 'dsicilia.lsp-servers.clangd' )
