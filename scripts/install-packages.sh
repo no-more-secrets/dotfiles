@@ -55,6 +55,7 @@ list="
     libsqlite3-0
     libsqlite3-dev
     libssl-dev
+    libtbb-dev
     libtool
     libtool-bin
     libwebp-dev
@@ -69,6 +70,7 @@ list="
     libxft-dev
     libxml2
     libxml2-dev
+    libzstd-dev
     light
     lua5.4
     lua-posix
