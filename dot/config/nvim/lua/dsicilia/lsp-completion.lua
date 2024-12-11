@@ -64,8 +64,45 @@ local function completion_at_cursor()
   return to_complete_items( result, '' )
 end
 
+local function hover_at_cursor()
+  local at_cursor = make_position_params()
+  local clients = buf_request_sync( 0, 'textDocument/hover',
+                                    at_cursor )
+  if not clients or #clients == 0 then
+    error( 'textDocument/hover: no LSP clients responded.' )
+  end
+  local client = assert( clients[1] )
+  return client.result
+end
+
 local function clear_line( row, indent )
   nvim_buf_set_lines( 0, row - 1, row, false, { indent .. ' ' } )
+end
+
+-----------------------------------------------------------------
+-- C/C++ finding headers.
+-----------------------------------------------------------------
+-- When the cursor is over some symbol for which Hover can find a
+-- header file, this will return e.g.:
+--
+--   '<vector>'
+--   '"path/to-file.hpp"'
+--
+-- i.e. it will have the quotes/angle brackets included.
+function M.find_header()
+  local hover = hover_at_cursor()
+  if not hover then return end
+  local markdown = assert( hover.contents.value )
+  -- Sample markdown text:
+  --   '...provided by `"path/to-file.hpp"` \n...'
+  --   '...provided by `<path/to-file.hpp>` \n...'
+  -- will yield '"path/to-file.hpp"' or '<path/to-file.hpp>".
+  return markdown:match( '.*provided by `(["<][^">]+[">])`.*' )
+end
+
+function M.find_quoted_header()
+  local header = M.find_header()
+  return header and header:match( '^"([^"]+)"$' )
 end
 
 -----------------------------------------------------------------
