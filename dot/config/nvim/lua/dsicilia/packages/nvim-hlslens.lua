@@ -17,6 +17,8 @@ local keymap = require( 'dsicilia.keymap' )
 local nmap = mappers.nmap
 local max = math.max
 local cmd = vim.cmd
+local line = vim.fn.line
+local feedkeys = keymap.feedkeys
 
 -----------------------------------------------------------------
 -- Setup.
@@ -35,6 +37,25 @@ hlslens.setup{
 }
 
 -----------------------------------------------------------------
+-- Helpers.
+-----------------------------------------------------------------
+-- For some reason (could be due to a plugin, since standard vim
+-- does not seem to have this issue), when hitting 'n' to move to
+-- the next search result that is beyond the end of what is vis-
+-- ible in the current window will only scroll the minimum amount
+-- to reveal the line containing the next result, leaving the
+-- highlighted text on the very last line of the window, making
+-- it hard to work with. So this will detect that scenario and
+-- center it in the window.
+local function center_if_too_low()
+  local curr = line( '.' ) - line( 'w0' )
+  if curr == 0 then return end
+  local total = vim.api.nvim_win_get_height( 0 )
+  if curr / total < 0.9 then return end
+  feedkeys( 'zz' )
+end
+
+-----------------------------------------------------------------
 -- Key bindings.
 -----------------------------------------------------------------
 local function start_lens() hlslens.start() end
@@ -48,6 +69,7 @@ local function norm_cmd_then_start( c )
       cmd{ cmd='normal', args={ tostring( n ) .. c }, bang=true }
     end )
     start_lens()
+    center_if_too_low()
   end
 end
 
