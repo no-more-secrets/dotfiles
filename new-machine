@@ -81,6 +81,7 @@ mkdir -p ~/dev
 cd ~/dev
 
 clone    calcterm
+clone    hexagon
 clone    cpp
 clone    base-util base/util
 clone_rn revolution-now revolution-now
@@ -122,6 +123,12 @@ fi
 log "Installing packages."
 cd ~/.dotfiles
 scripts/install-packages.sh
+
+# ---------------------------------------------------------------
+# Build Hexagon.
+# ---------------------------------------------------------------
+cd ~/dev/hexagon
+make
 
 # ---------------------------------------------------------------
 # Suckless utils.
