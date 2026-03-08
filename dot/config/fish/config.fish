@@ -46,15 +46,17 @@ set -x QT_AUTO_SCREEN_SCALE_FACTOR 1
 # FZF
 # ===============================================================
 set -gx FZF_DEFAULT_OPTS "
-    --height 40%
+    --height=~40%
     --reverse
     --multi
     --ansi
+    --info=inline
     --select-1
-    --walker=file
+    --walker=file,follow
     --preview-window=right:45%
-    --color fg:-1,hl:230,fg+:3,hl+:229
+    --color fg:-1,hl:202,fg+:202,hl+:229
     --color info:150,prompt:110,spinner:150,pointer:167,marker:174
+    --border=rounded
 "
 
 # If we have fd then use it as the fzf search command.
