@@ -70,6 +70,7 @@ main() {
         fonts
         ghc
         gitconfig
+        gnuplot
         hgrc
         icons
         lua-format

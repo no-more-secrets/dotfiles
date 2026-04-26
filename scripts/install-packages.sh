@@ -122,6 +122,7 @@ sudo apt install $list --yes
 rocks="
     luaposix
     lunajson
+    ftcsv
 "
 
 luarocks config lua_version 5.4
